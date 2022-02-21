@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="postgres" id="create_trip_table">
+
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="trip" />
+			</not>
+		</preConditions>
+
+		<createTable tableName="trip">
+
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true"
+							 primaryKeyName="trip_pk" />
+			</column>
+
+			<column name="version" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="start_location" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="end_location" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="start_time" type="DATETIME">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="end_time" type="DATETIME">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="customer_rate" type="FLOAT">
+				<constraints nullable="true" />
+			</column>
+
+			<column name="driver_rate" type="FLOAT">
+				<constraints nullable="true" />
+			</column>
+
+			<column name="payment_status" type="VARCHAR(32)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="trip_status" type="VARCHAR(32)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="price" type="INT">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="customer_id" type="BIGINT">
+				<constraints nullable="false"
+							 foreignKeyName="fk_customer_trip" references="customer(id)" />
+			</column>
+
+			<column name="driver_id" type="BIGINT">
+				<constraints nullable="false"
+							 foreignKeyName="fk_driver_trip" references="driver(id)" />
+			</column>
+
+			<column name="car_id" type="BIGINT">
+				<constraints nullable="false"
+							 foreignKeyName="fk_car_trip" references="car(id)" />
+			</column>
+
+		</createTable>
+	</changeSet>
+
+</databaseChangeLog>

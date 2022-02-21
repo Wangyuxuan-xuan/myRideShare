@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="postgres" id="create_customer_table">
+
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="customer" />
+			</not>
+		</preConditions>
+
+		<createTable tableName="customer">
+
+			<column autoIncrement="true" name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true"
+							 primaryKeyName="customer_pk" />
+			</column>
+
+			<column name="version" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="name" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="email" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="password" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="address" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+
+			<column name="phone" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="joined_date" type="DATE">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="rate" type="FLOAT">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="active" type="BOOLEAN" defaultValueBoolean="false">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="avatar" type="BYTEA">
+
+			</column>
+
+		</createTable>
+	</changeSet>
+
+</databaseChangeLog>
