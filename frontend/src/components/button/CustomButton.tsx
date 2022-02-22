@@ -1,4 +1,4 @@
-import "./Button.css"
+import "./CustomButton.css"
 
 const STYLES = [
     "btn--primary",
@@ -21,7 +21,9 @@ export const CustomButton = ({
     const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0]
 
     return (
-        <button className={`btn ${checkButtonStyle} ${checkButtonSize}`} onClick={onclick} type={type}>
+        <button className={`btn ${checkButtonStyle} ${checkButtonSize}`}
+                onClick={onclick}
+                type={type}>
             {children}
         </button>
     )
