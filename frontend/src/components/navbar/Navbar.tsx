@@ -51,13 +51,13 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li className= "nav-item">
-                        <Link to="/services" className="nav-links" onClick={closeMobileMenu}>
-                            Services
+                        <Link to="/search" className="nav-links" onClick={closeMobileMenu}>
+                            Search
                         </Link>
                     </li>
                     <li className= "nav-item">
-                        <Link to="/products" className="nav-links" onClick={closeMobileMenu}>
-                            product
+                        <Link to="/personal" className="nav-links" onClick={closeMobileMenu}>
+                            Personal
                         </Link>
                     </li>
                     <li className= "nav-item">
@@ -66,10 +66,17 @@ const Navbar = () => {
                         </Link>
                     </li>
                 </ul>
-                <Link to="sign-up" >
-                    {button && <CustomButton buttonStyle = "btn--outline">SIGN UP</CustomButton>}
+                <Link to="/sign-up" className= "sign-up-btn">
+                    {button && <CustomButton buttonStyle = "btn--outline">
+                        SIGN UP
+                    </CustomButton>}
                 </Link>
 
+                <Link to="/sign-in" className= "sign-in-btn">
+                    {button && <CustomButton buttonStyle = "btn--primary">
+                        SIGN IN
+                    </CustomButton>}
+                </Link>
             </nav>
         </>
 
