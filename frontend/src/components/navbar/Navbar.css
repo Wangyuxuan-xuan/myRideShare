@@ -75,6 +75,14 @@
     display: none;
 }
 
+.sign-up-btn{
+    margin-right: 15px;
+}
+
+.sign-in-btn{
+    margin-left: 15px;
+}
+
 @media screen and (max-width: 960px) {
     .NavbarItems {
         position: relative;

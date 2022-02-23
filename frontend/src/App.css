@@ -6,9 +6,10 @@
 }
 
 .home,
-.services,
-.products,
-.sign-up {
+.search,
+.personal,
+.sign-up ,
+.sign-in{
     display: flex;
     height: 90vh;
     align-items: center;
@@ -16,8 +17,8 @@
     font-size: 3rem;
 }
 
-.services {
-    background-image: url('../public/images/img-2.jpg');
+.search {
+    background-image: url('../public/images/img-9.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -25,7 +26,7 @@
     font-size: 100px;
 }
 
-.products {
+.personal {
     background-image: url("../public/images/img-2.jpg");
     background-position: center;
     background-size : cover;
@@ -36,6 +37,15 @@
 
 .sign-up {
     background-image: url('../public/images/img-8.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff;
+    font-size: 100px;
+}
+
+.sign-in {
+    background-image: url('../public/images/img-1.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

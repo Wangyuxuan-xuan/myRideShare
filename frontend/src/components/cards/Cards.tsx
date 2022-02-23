@@ -13,31 +13,31 @@ function Cards() {
                         <ul className="cards__items">
                             <CardItems
                                 src = "../../../images/img-1.jpg"
-                                text = "this picture size is change by the length of text"
+                                text = "this picture size is changeable by the length of text"
                                 label = "Adventure"
-                                path = "/services"/>
+                                path = "/search"/>
                             <CardItems
                                 src = "../../../images/img-2.jpg"
-                                text = "this picture size is change by the length of text"
+                                text = "this picture size is changeable by the length of text"
                                 label = "Label 2"
-                                path = "/services"/>
+                                path = "/search"/>
                         </ul>
                         <ul className="cards__items">
                             <CardItems
                                 src = "../../../images/img-3.jpg"
-                                text = "this picture size is change by the length of text"
+                                text = "this picture size is changeable by the length of text"
                                 label = "Label 3"
-                                path = "/services"/>
+                                path = "/search"/>
                             <CardItems
                                 src = "../../../images/img-4.jpg"
-                                text = "this picture size is change by the length of text"
+                                text = "this picture size is changeable by the length of text"
                                 label = "Label 4"
-                                path = "/services"/>
+                                path = "/search"/>
                             <CardItems
                                 src = "../../../images/img-5.jpg"
-                                text = "this picture size is change by the length of text"
+                                text = "this picture size is changeable by the length of text"
                                 label = "Label 5"
-                                path = "/services"/>
+                                path = "/search"/>
                         </ul>
                     </div>
                 </div>
