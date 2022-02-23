@@ -66,7 +66,10 @@ const Navbar = () => {
                         </Link>
                     </li>
                 </ul>
-                {button && <CustomButton buttonStyle = "btn--outline">SIGN UP</CustomButton>}
+                <Link to="sign-up" >
+                    {button && <CustomButton buttonStyle = "btn--outline">SIGN UP</CustomButton>}
+                </Link>
+
             </nav>
         </>
 
