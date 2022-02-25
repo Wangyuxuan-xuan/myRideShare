@@ -13,6 +13,7 @@ import Footer from "./components/footer/Footer";
 // @ts-ignore
 import SignIn from "./components/Pages/SignIn";
 import {DatePickerComponent} from "./components/searchBar/DatePickerComponent";
+import Result from "./components/Pages/Result";
 
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -30,7 +31,7 @@ function App() {
                   <Route path = "/personal" element={<Personal/>}/>
                   <Route path = "/sign-up" element={<SignUp/>}/>
                   <Route path = "/sign-in" element={<SignIn/>}/>
-                  <Route path = "/date" element={<DatePickerComponent/>}/>
+                  <Route path = "/result" element={<Result/>}/>
               </Routes>
               <Footer/>
           </Router>

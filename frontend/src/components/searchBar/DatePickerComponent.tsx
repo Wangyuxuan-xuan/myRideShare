@@ -33,6 +33,7 @@ export const DatePickerComponent = () => {
                         variant = "inline"
                         format = "MM/dd/yyy"
                         margin = "normal"
+                        // margin-right = "20px"
                         id = "date-picker"
                         label = "Date Picker"
                         value = {selectedDate}
