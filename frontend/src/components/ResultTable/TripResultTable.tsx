@@ -15,44 +15,75 @@ import {
     TableFooter
 } from '@material-ui/core';
 import {ChangeEvent, useState} from "react";
+import {PublicAppService} from "../../service/PublicAppService";
+import {PublicAppStore} from "../../store/PublicAppStore";
+import {TripResultStore} from "../../store/TripResultStore";
+import {TripResultService} from "../../service/TripResultService";
+import {Configuration, TripControllerApi} from "../../generated/restclient";
+import {BACKEND_API_URL} from "../../utils/config";
 
 
-function ResultTable() {
+const useStyles = makeStyles((theme) => ({
+    table : {
+        minWidth : 650
+    },
+    tableContainer : {
+        borderRadius : 15,
+        margin : "10px 10px",
+        maxWidth : 950
+    },
+    tableHeaderCell : {
+        fontWeight : "bold",
+        backgroundColor : theme.palette.primary.dark,
+        color :  theme.palette.getContrastText(theme.palette.primary.dark)
+    },
+    avatar : {
+        backgroundColor : theme.palette.primary.light,
+        color :  theme.palette.getContrastText(theme.palette.primary.light)
+    },
+    name : {
+        fontWeight : "bold",
+        color : theme.palette.secondary.dark
+    },
 
-    const useStyles = makeStyles((theme) => ({
-        table : {
-            minWidth : 650
-        },
-        tableContainer : {
-            borderRadius : 15,
-            margin : "10px 10px",
-            maxWidth : 950
-        },
-        tableHeaderCell : {
-            fontWeight : "bold",
-            backgroundColor : theme.palette.primary.dark,
-            color :  theme.palette.getContrastText(theme.palette.primary.dark)
-        },
-        avatar : {
-            backgroundColor : theme.palette.primary.light,
-            color :  theme.palette.getContrastText(theme.palette.primary.light)
-        },
-        name : {
-            fontWeight : "bold",
-            color : theme.palette.secondary.dark
-        },
+    status : {
+        fontWeight: 'bold',
+        fontSize: '0.75rem',
+        color: 'white',
+        backgroundColor: 'grey',
+        borderRadius: 8,
+        padding: '3px 10px',
+        display: 'inline-block'
+    }
 
-        status : {
-            fontWeight: 'bold',
-            fontSize: '0.75rem',
-            color: 'white',
-            backgroundColor: 'grey',
-            borderRadius: 8,
-            padding: '3px 10px',
-            display: 'inline-block'
-        }
+}));
 
-    }));
+function TripResultTable() {
+
+    // const publicAppStore =  new PublicAppStore();
+    // const publicAppService = new PublicAppService(publicAppStore);
+    //
+    // const tripResultStore = publicAppStore.tripResultStore;
+    // const tripResultService =  publicAppService.tripResultService;
+    //
+    // tripResultService.getTripInfo();
+
+    // const apiConfig : Configuration = new Configuration({
+    //     basePath: BACKEND_API_URL,
+    // });
+
+    const apiConfig : Configuration = new Configuration();
+    const tripResultStore = new TripResultStore();
+    const tripResultService =  new TripResultService(new TripControllerApi(apiConfig),tripResultStore);
+
+
+    tripResultService.getTripInfo();
+
+    const trips = tripResultStore.trips;
+    console.log("getTripInfo ");
+    console.log(tripResultService.getTripInfo())
+    console.log(trips);
+
 
     let USERS = [];
     let STATUSES = ['Active', 'Pending', 'Blocked'];
@@ -156,4 +187,4 @@ function ResultTable() {
     );
 }
 
-export default ResultTable;
+export default TripResultTable;

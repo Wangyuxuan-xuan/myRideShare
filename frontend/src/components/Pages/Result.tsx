@@ -1,10 +1,10 @@
-import ResultTable from "../ResultTable/ResultTable";
+import TripResultTable from "../ResultTable/TripResultTable";
 
 function Result() {
 
     return(
         <>
-            <ResultTable/>
+            <TripResultTable/>
         </>
     )
 }
