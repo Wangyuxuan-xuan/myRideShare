@@ -23,6 +23,7 @@ public class CarController {
     private final CarMapper mapper;
 
     @GetMapping("/drivers")
+    @CrossOrigin(origins = "*")
     public List<CarDTO> getAllCars(){
         return mapper.entityToGetDTO(service.getAllCars());
     }
