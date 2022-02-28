@@ -6,7 +6,9 @@ export function generateApiPath(path: string) {
 }
 
 export function createApiConfig() {
-    return new Configuration({
-        basePath: BACKEND_API_URL,
-    });
+    return new Configuration();
 }
+
+// const apiConfig : Configuration = new Configuration({
+//     basePath: BACKEND_API_URL,
+// });
