@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  postgres:
+    container_name: rideShare-postgres-dev
+    image: postgres:latest
+    tty: true
+    #    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mypassword}
+    volumes:
+      - postgres-data-dev:/backend/data
+    ports:
+      - "5432:5432"
+
+  generate-openapi-client:
+    container_name: rideShare-generate-openapi-client
+    image: "myrideshare"
+    tty: true
+    depends_on:
+      - postgres
+    volumes:
+      - ../frontend/src/generated/restclient:/frontend/frontend-openapi-client
+      - .:/backend
+      - maven-repo:/root/.m2
+    working_dir: /backend
+    command: bash -c "mvn clean verify && cp -r /backend/target/ts/generated/restclient/* /frontend/frontend-openapi-client/"
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mypassword}
+volumes:
+  maven-repo:
+  postgres-data-dev:

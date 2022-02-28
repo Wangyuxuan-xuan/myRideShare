@@ -1,0 +1,82 @@
+version: "3.8"
+
+services:
+  postgres:
+    container_name: rideShare-postgres-dev
+    image: postgres:latest
+    tty: true
+#    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mypassword}
+    volumes:
+      - postgres-data-dev:/backend/data
+    ports:
+      - "5432:5432"
+#
+#  pgadmin:
+#    container_name: wherever-pgadmin-dev
+#    image: dpage/pgadmin4:6.4
+#    tty: true
+#    restart: always
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-wherever@company.com}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-Almafa1234}
+#      PGADMIN_CONFIG_SERVER_MODE: 'False'
+#    volumes:
+#      - pgadmin-data-dev:/var/lib/pgadmin
+#    ports:
+#      - "5050:80"
+
+  backend:
+    container_name: rideShare-backend
+    image: "myrideshare"
+    tty: true
+    volumes:
+      - .:/backend
+      - maven-repo:/root/.m2
+    working_dir: /backend
+    command: mvn clean spring-boot:run
+    depends_on:
+#      - pgadmin
+      - postgres
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mypassword}
+      TZ: Europe/Budapest
+    ports:
+      - "8080:8080"
+      - "35729:35729"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"   # number of files or file count
+        max-size: "10m" # file size
+
+  frontend:
+    container_name: rideShare-frontend
+    image: node:latest
+    stdin_open: true
+    tty: true
+    volumes:
+      - ../frontend:/frontend
+      - frontend-node-modules:/frontend/node_modules
+    working_dir: /frontend
+    command: bash -c "npm install && npm start"
+    depends_on:
+      - backend
+    environment:
+      DEV_BACKEND_PROXY_TARGET: ${DEV_BACKEND_PROXY_TARGET:-http://backend:8080}
+    ports:
+      - "3000:3000"
+
+
+volumes:
+  frontend-node-modules:
+  postgres-data-dev:
+#  pgadmin-data-dev:
+  maven-repo:

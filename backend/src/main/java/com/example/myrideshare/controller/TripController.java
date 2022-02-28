@@ -21,6 +21,7 @@ public class TripController {
     private final TripMapper mapper;
 
     @GetMapping("/trips")
+    @CrossOrigin(origins = "*")
     public List<TripDTO> getAllTrips(){
         return mapper.entityToGetDTO(service.getAllTrips());
     }
