@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     tableContainer : {
         borderRadius : 15,
         margin : "10px 10px",
-        maxWidth : 950
+        // maxWidth : 950
+        width : "-moz-fit-content"
     },
     tableHeaderCell : {
         fontWeight : "bold",
@@ -56,9 +57,8 @@ const useStyles = makeStyles((theme) => ({
     }
 
 }));
-let STATUSES = ['Active', 'Pending', 'Blocked'];
 
-interface USERS {
+interface tripTable {
     id : number ;
     driverName: string | undefined;
     startLocation: string| undefined;
@@ -81,13 +81,12 @@ function TripResultTable() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    // let USERS: any[] = [];
-    const [USERS , setUSERS] = useState<USERS[]>([])
+    const [tripTable , setTripTable] = useState<tripTable[]>([])
 
 
 
     let trips : TripDTO[] | null ;
-    // const [trips , setTrips] = useState<TripDTO[] | null>();
+
     const [loading , setLoading] = useState(false);
 
     useEffect(() => {
@@ -96,7 +95,7 @@ function TripResultTable() {
 
             const success = await tripResultService.getTripInfo();
             trips = await tripResultStore.trips;
-            console.log(trips);
+            // console.log(trips);
             return success;
         }
 
@@ -105,51 +104,29 @@ function TripResultTable() {
                 if (trips === undefined ||trips === null){
                     console.log("trips is null");
                 }else {
-                    console.log(trips.length);
+                    // console.log(trips.length);
 
-                    for (let i = 0; i < 14; i++) {
-                        USERS[i] = {
+                    for (let i = 0; i < trips.length; i++) {
+                        tripTable[i] = {
                             id : i,
-                            driverName: "driver name " + trips[0].driverId,
-                            startLocation: trips[0].startLocation,
-                            endLocation: trips[0].endLocation,
-                            startTime: trips[0].startTime,
-                            endTime: trips[0].endTime,
-                            driverRate: trips[0].driverRate,
-                            price: trips[0].price,
+                            driverName: "driver name " + trips[i].driverId,
+                            startLocation: trips[i].startLocation,
+                            endLocation: trips[i].endLocation,
+                            startTime: trips[i].startTime,
+                            endTime: trips[i].endTime,
+                            driverRate: trips[i].driverRate,
+                            price: trips[i].price,
                         }
                     }
                     setLoading(true);
-                    console.log(USERS);
+                    console.log(tripTable);
                 }
             }else {
                 console.log("no data")
             }
         })
-
-
-        console.log("use effect ran")
-
-
+        // console.log("use effect ran")
     })
-
-
-
-    //
-    // for (let i = 0; i < 14; i++) {
-    //     USERS[i] = {
-    //         id : i,
-    //         name: trip.startLocation,
-    //         email: "email@email.com",
-    //         phone: "702221134",
-    //         jobTitle: "job title here",
-    //         company: "company name",
-    //         joinDate: "2022-02-22",
-    //         status: STATUSES[Math.floor(Math.random() * STATUSES.length)]
-    //     }
-    // }
-
-
 
 
 
@@ -167,14 +144,14 @@ function TripResultTable() {
             <Table className = {styleClasses.table} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell className = {styleClasses.tableHeaderCell}>User Info</TableCell>
-                        <TableCell className = {styleClasses.tableHeaderCell}>Job Info</TableCell>
-                        <TableCell className = {styleClasses.tableHeaderCell}>Joining date</TableCell>
-                        <TableCell className = {styleClasses.tableHeaderCell}>Status</TableCell>
+                        <TableCell className = {styleClasses.tableHeaderCell}>Driver Info</TableCell>
+                        <TableCell className = {styleClasses.tableHeaderCell}>Duration</TableCell>
+                        <TableCell className = {styleClasses.tableHeaderCell}>Driver rate</TableCell>
+                        <TableCell className = {styleClasses.tableHeaderCell}>Price</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {USERS
+                    {tripTable
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row) => (
                         <TableRow
@@ -221,7 +198,7 @@ function TripResultTable() {
                     <TablePagination
                         rowsPerPageOptions={[5,10,15]}
                         component="div"
-                        count={USERS.length}
+                        count={tripTable.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}

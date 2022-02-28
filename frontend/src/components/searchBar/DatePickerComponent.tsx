@@ -9,20 +9,30 @@ import {
     KeyboardDatePicker
 } from "@material-ui/pickers";
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
+import {PublicAppStore} from "../../store/PublicAppStore";
 
-// import TextField from '@mui/material/TextField';
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
-// import LocalizationProvider from '@mui/lab/LocalizationProvider';
-// import DatePicker from '@mui/lab/DatePicker';
 
 export const DatePickerComponent = () => {
     // const [dateValue, setDateValue] = useState(null);
+    const publicAppStore =  new PublicAppStore();
+    const searchBarStore = publicAppStore.searchBarStore;
 
-    const [selectedDate,setSelectedDate] = useState(Date.now());
+    const [selectedDate,setSelectedDate] = useState(Date.now);
+    const [selectedTime,setSelectedTime] = useState(Date.now);
 
     const handleDateChange = (date : any) => {
         setSelectedDate(date)
+
+        searchBarStore.updateSelectedDate(date);
     }
+
+    const handleTimeChange = (time : any) => {
+        setSelectedTime(time)
+
+        searchBarStore.updateSelectedTime(time);
+    }
+
+    console.log(selectedDate + selectedTime);
     return(
 
         <div>
@@ -48,9 +58,10 @@ export const DatePickerComponent = () => {
                     <KeyboardTimePicker
                         margin = "normal"
                         id = "time-picker"
+                        ampm={false}
                         label = "Time Picker"
-                        value = {selectedDate}
-                        onChange={handleDateChange}
+                        value = {selectedTime}
+                        onChange={handleTimeChange}
                         KeyboardButtonProps = {
                             {
                                 "aria-label" : "change date"
@@ -61,16 +72,6 @@ export const DatePickerComponent = () => {
             </MuiPickersUtilsProvider>
         </div>
 
-        // <LocalizationProvider dateAdapter={AdapterDateFns}>
-        //     <DatePicker
-        //         label="Basic example"
-        //         value={dateValue}
-        //         onChange={(newValue) => {
-        //             setDateValue(newValue);
-        //         }}
-        //         renderInput={(params) => <TextField {...params} />}
-        //     />
-        //
-        // </LocalizationProvider>
     )
+
 }
