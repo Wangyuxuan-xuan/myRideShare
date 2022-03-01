@@ -3,7 +3,12 @@ package com.example.myrideshare.controller;
 import com.example.myrideshare.dto.request.TripPostDTO;
 import com.example.myrideshare.dto.response.TripDTO;
 import com.example.myrideshare.mapper.TripMapper;
+import com.example.myrideshare.model.Car;
+import com.example.myrideshare.model.Customer;
+import com.example.myrideshare.model.Driver;
 import com.example.myrideshare.model.Trip;
+import com.example.myrideshare.service.CarService;
+import com.example.myrideshare.service.DriverService;
 import com.example.myrideshare.service.TripService;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -17,18 +22,23 @@ import java.util.List;
 @Validated
 public class TripController {
 
-    private final TripService service;
+    private final TripService tripService;
     private final TripMapper mapper;
 
     @GetMapping("/trips")
     @CrossOrigin(origins = "*")
     public List<TripDTO> getAllTrips(){
-        return mapper.entityToGetDTO(service.getAllTrips());
+        return mapper.entityToGetDTO(tripService.getAllTrips());
     }
 
     @GetMapping("/{tripId}")
     public TripDTO getTripById(@PathVariable Long tripId){
-        return mapper.entityToGetDTO(service.getTripById(tripId));
+
+        Trip trip = tripService.getTripById(tripId);
+        Driver driver = trip.getDriver();
+        Car car = trip.getCar();
+        Customer customer = trip.getCustomer();
+        return mapper.entityToGetDTO(trip,driver,car,customer);
     }
 
     //need to add request body
@@ -36,22 +46,25 @@ public class TripController {
     public TripDTO createTrip(@RequestBody TripPostDTO tripPostDTO){
 
         Trip trip = mapper.tripPostDTOToEntity(tripPostDTO);
-        Trip created = service.createTrip(trip);
+        Trip created = tripService.createTrip(trip);
 
-        return mapper.entityToGetDTO(created);
+        Driver driver = created.getDriver();
+        Car car = created.getCar();
+        Customer customer = trip.getCustomer();
+        return mapper.entityToGetDTO(created,driver,car,customer);
     }
 
     @DeleteMapping("/{tripId}")
     public void deleteByTripId(@PathVariable Long tripId){
-        service.deleteTripById(tripId);
+        tripService.deleteTripById(tripId);
     }
 
     @PutMapping("/update/{tripId}")
     public void updateCar(@RequestBody TripPostDTO dto,@PathVariable Long tripId){
-        Trip trip = service.getTripById(tripId);
+        Trip trip = tripService.getTripById(tripId);
         mapper.updateEntityFromUpdateDTO(dto,trip);
 
-        service.updateTrip(trip);
+        tripService.updateTrip(trip);
     }
 
 }

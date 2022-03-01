@@ -50,7 +50,6 @@ public class CarController {
     @PutMapping("/update")
     public void updateCar(@RequestBody CarUpdateDTO dto){
 
-
         Car car = service.getCarById(dto.getCarId());
         mapper.updateEntityFromUpdateDTO(dto,car);
 
