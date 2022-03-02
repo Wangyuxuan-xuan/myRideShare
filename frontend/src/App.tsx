@@ -1,45 +1,39 @@
-import React from 'react';
+import PublicApp, {IPublicProps} from "./PublicApp";
+import {PublicAppService} from "./service/PublicAppService";
+import {useEffect, useState} from "react";
+import {Configuration} from "./generated/restclient";
+import {PublicAppStore} from "./store/PublicAppStore";
+import {InitDialog} from "./components/InitDialog/InitDialog";
+import {Observer} from "mobx-react-lite";
 
-import './App.css';
-import Navbar from "./components/navbar/Navbar";
-import { BrowserRouter as Router , Route , Routes } from "react-router-dom";
-import Home from "./components/Pages/Home";
-// @ts-ignore
-import Search from "./components/Pages/Search";
-// @ts-ignore
-import Personal from "./components/Pages/Personal";
-import SignUp from "./components/Pages/SignUp";
-import Footer from "./components/footer/Footer";
-// @ts-ignore
-import SignIn from "./components/Pages/SignIn";
-import {DatePickerComponent} from "./components/searchBar/DatePickerComponent";
-import Result from "./components/Pages/Result";
+export function App(){
+    const [apiConfig] = useState(
+        () =>
+            new Configuration()
+    );
 
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
-// import LocalizationProvider from '@mui/lab/LocalizationProvider';
+    const [publicAppStore] = useState(() => new PublicAppStore());
+    const [publicAppService, setPublicAppService] = useState<PublicAppService | null>(null);
 
-function App() {
-  return (
+    useEffect(() => {
+        setPublicAppService(new PublicAppService(apiConfig,publicAppStore))
+    },[apiConfig,publicAppStore])
 
-          <Router>
-              <div className="App">
-                  <Navbar/>
-              </div>
-              <Routes>
-                  <Route path = "/" element={<Home/>}/>
-                  <Route path = "/search" element={<Search/>}/>
-                  <Route path = "/personal" element={<Personal/>}/>
-                  <Route path = "/sign-up" element={<SignUp/>}/>
-                  <Route path = "/sign-in" element={<SignIn/>}/>
-                  <Route path = "/result" element={<Result/>}/>
-              </Routes>
-              <Footer/>
-          </Router>
+    if(!publicAppService){
+        return <InitDialog/>
+    }
+    const publicProps : IPublicProps = {
+        services : publicAppService
+    }
 
+    return (
+        <Observer>
+            {() => {
+                return <PublicApp {...publicProps}/>
+            }}
+        </Observer>
+
+    )
 
 
-
-  );
 }
-
-export default App;

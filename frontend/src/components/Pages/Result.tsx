@@ -1,11 +1,16 @@
 import TripResultTable from "../ResultTable/TripResultTable";
 import "./Result.css"
+import {TripResultService} from "../../service/TripResultService";
 
-function Result() {
+interface ResultPageProps{
+    tripResultService : TripResultService;
+}
+
+function Result(props : ResultPageProps) {
 
     return(
         <div className="result-table">
-            <TripResultTable/>
+            <TripResultTable tripResultService={props.tripResultService}/>
         </div>
     )
 }

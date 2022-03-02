@@ -30,6 +30,14 @@ public class TripController {
         return mapper.entityToGetDTO(tripService.getAllTrips());
     }
 
+    /**
+     * Annotation @RequestBody is only for put and post , for get we need @RequestParam
+     * @param departure
+     * @param destination
+     * @param dateTime   we need to use @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) to convert the string
+     *                   being sent from frontend to aa LocalDateTime object
+     * @return
+     */
     @GetMapping("/trips")
     @CrossOrigin(origins = "*")
     public List<TripDTO> searchTrips(@RequestParam String departure,
