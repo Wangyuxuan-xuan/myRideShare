@@ -12,7 +12,7 @@
  */
 
 import { Observable } from 'rxjs';
-import { BaseAPI, HttpHeaders, throwIfNullOrUndefined, encodeURI, OperationOpts, RawAjaxResponse } from '../runtime';
+import { BaseAPI, HttpHeaders, HttpQuery, throwIfNullOrUndefined, encodeURI, OperationOpts, RawAjaxResponse } from '../runtime';
 import {
     TripDTO,
     TripPostDTO,
@@ -28,6 +28,12 @@ export interface DeleteByTripIdRequest {
 
 export interface GetTripByIdRequest {
     tripId: number;
+}
+
+export interface SearchTripsRequest {
+    departure: string;
+    destination: string;
+    dateTime: string;
 }
 
 export interface UpdateCarRequest {
@@ -78,7 +84,7 @@ export class TripControllerApi extends BaseAPI {
     getAllTrips(opts?: OperationOpts): Observable<RawAjaxResponse<Array<TripDTO>>>
     getAllTrips(opts?: OperationOpts): Observable<Array<TripDTO> | RawAjaxResponse<Array<TripDTO>>> {
         return this.request<Array<TripDTO>>({
-            url: '/api/trips/trips',
+            url: '/api/trips/trips/all',
             method: 'GET',
         }, opts?.responseOpts);
     };
@@ -93,6 +99,29 @@ export class TripControllerApi extends BaseAPI {
         return this.request<TripDTO>({
             url: '/api/trips/{tripId}'.replace('{tripId}', encodeURI(tripId)),
             method: 'GET',
+        }, opts?.responseOpts);
+    };
+
+    /**
+     */
+    searchTrips({ departure, destination, dateTime }: SearchTripsRequest): Observable<Array<TripDTO>>
+    searchTrips({ departure, destination, dateTime }: SearchTripsRequest, opts?: OperationOpts): Observable<RawAjaxResponse<Array<TripDTO>>>
+    searchTrips({ departure, destination, dateTime }: SearchTripsRequest, opts?: OperationOpts): Observable<Array<TripDTO> | RawAjaxResponse<Array<TripDTO>>> {
+        throwIfNullOrUndefined(departure, 'departure', 'searchTrips');
+        throwIfNullOrUndefined(destination, 'destination', 'searchTrips');
+        throwIfNullOrUndefined(dateTime, 'dateTime', 'searchTrips');
+
+        const dateTimeDate = new Date(dateTime);
+        const query: HttpQuery = { // required parameters are used directly since they are already checked by throwIfNullOrUndefined
+            'departure': departure,
+            'destination': destination,
+            'dateTime': (dateTimeDate as any).toISOString(),
+        };
+
+        return this.request<Array<TripDTO>>({
+            url: '/api/trips/trips',
+            method: 'GET',
+            query,
         }, opts?.responseOpts);
     };
 

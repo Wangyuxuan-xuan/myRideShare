@@ -14,8 +14,15 @@ export class TripResultService {
         tripResultStore.isLoading = true;
 
         try {
+            // tripResultStore.tripDTOs = await this.tripApi
+            //     .getAllTrips()
+            //     .toPromise()
             tripResultStore.tripDTOs = await this.tripApi
-                .getAllTrips()
+                .searchTrips({
+                    departure : "Budapest",
+                    destination : "Debrecen",
+                    dateTime : "2022-03-02 09:26:19.927Z"
+                })
                 .toPromise()
 
             console.log(tripResultStore.tripDTOs);
@@ -23,6 +30,7 @@ export class TripResultService {
 
         }catch (e){
             console.log("fetch tripDTOs error");
+            console.log(e)
             return false;
         }finally {
             tripResultStore.isLoading = false;
