@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,41 +14,8 @@ public class TripService {
 
     private final TripRepository tripRepository;
 
-    public List<Trip> getAllTrips(String departure , String destination , LocalDateTime startTime){
-
-        List<Trip> trips ;
-        if (startTime == null ){
-            startTime = LocalDateTime.now();
-        }
-
-        if(departure == null){
-            departure = "";
-        }
-        if(destination == null){
-            destination = "";
-        }
-        if(departure.isBlank() && destination.isBlank()){
-            trips = tripRepository.findAllByStartTimeAfterOrderByStartTime(startTime);
-            System.out.println(trips);
-            return trips;
-        }else {
-
-            if (departure.isBlank()){
-                trips = tripRepository.findAllByEndLocationAndStartTimeAfterOrderByStartTime(destination,startTime);
-                System.out.println(trips);
-                return trips;
-            }
-            if (destination.isBlank()){
-                trips = tripRepository.findAllByStartLocationAndStartTimeAfterOrderByStartTime(departure,startTime);
-                System.out.println(trips);
-                return trips;
-            }
-        }
-
-
-        trips = tripRepository.findAllByStartLocationAndEndLocationAndStartTimeAfterOrderByStartTime(departure,destination,startTime);
-        System.out.println(trips);
-        return trips;
+    public List<Trip> getAllTrips(){
+        return tripRepository.findAll();
     }
 
     public Trip getTripById(Long id){

@@ -76,61 +76,6 @@ export interface TripDTO {
      * @memberof TripDTO
      */
     carId?: number;
-    /**
-     * @type {string}
-     * @memberof TripDTO
-     */
-    driverName?: string;
-    /**
-     * @type {string}
-     * @memberof TripDTO
-     */
-    driverPhone?: string;
-    /**
-     * @type {string}
-     * @memberof TripDTO
-     */
-    driverJoinedDate?: string;
-    /**
-     * @type {number}
-     * @memberof TripDTO
-     */
-    driverCurrentRate?: number;
-    /**
-     * @type {number}
-     * @memberof TripDTO
-     */
-    carNumOfPassenger?: number;
-    /**
-     * @type {string}
-     * @memberof TripDTO
-     */
-    carModel?: string;
-    /**
-     * @type {string}
-     * @memberof TripDTO
-     */
-    carLicensePlate?: string;
-    /**
-     * @type {string}
-     * @memberof TripDTO
-     */
-    carCarType?: TripDTOCarCarTypeEnum;
-    /**
-     * @type {string}
-     * @memberof TripDTO
-     */
-    customerName?: string;
-    /**
-     * @type {string}
-     * @memberof TripDTO
-     */
-    customerPhone?: string;
-    /**
-     * @type {string}
-     * @memberof TripDTO
-     */
-    customerJoinedDate?: string;
 }
 
 /**
@@ -150,12 +95,5 @@ export enum TripDTOTripStatusEnum {
     BOOKED = 'BOOKED',
     ON_GOING = 'ON_GOING',
     FINISHED = 'FINISHED'
-}
-/**
- * @export
- * @enum {string}
- */
-export enum TripDTOCarCarTypeEnum {
-    CAR_TYPE = 'CAR_TYPE'
 }
 

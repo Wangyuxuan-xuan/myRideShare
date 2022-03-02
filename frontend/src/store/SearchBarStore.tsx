@@ -3,16 +3,10 @@ import {action, makeObservable, observable} from "mobx";
 export class SearchBarStore{
 
     @observable
-    departure : string = "";
+    selectedDate : Date = new Date();
 
     @observable
-    destination : string = "";
-
-    @observable
-    selectedDate : string = String(Date.now());
-
-    @observable
-    selectedTime : string = String(Date.now());
+    selectedTime : Date = new Date();
 
     constructor() {
         makeObservable(this);
@@ -20,22 +14,13 @@ export class SearchBarStore{
 
 
     @action
-    updateSelectedDate = (selectedDate : string) => {
+    updateSelectedDate = (selectedDate : Date) => {
         this.selectedDate = selectedDate;
     }
 
     @action
-    updateSelectedTime = (selectedTime : string) => {
+    updateSelectedTime = (selectedTime : Date) => {
         this.selectedTime = selectedTime;
     }
 
-    @action
-    updateDeparture = (departure : string) => {
-        this.departure = departure;
-    }
-
-    @action
-    updateDestination = (destination : string) => {
-        this.destination = destination;
-    }
 }
