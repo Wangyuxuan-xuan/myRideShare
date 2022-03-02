@@ -11,9 +11,11 @@ import com.example.myrideshare.service.CarService;
 import com.example.myrideshare.service.DriverService;
 import com.example.myrideshare.service.TripService;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -27,8 +29,14 @@ public class TripController {
 
     @GetMapping("/trips")
     @CrossOrigin(origins = "*")
-    public List<TripDTO> getAllTrips(){
-        return mapper.entityToGetDTO(tripService.getAllTrips());
+    public List<TripDTO> getAllTrips(@RequestParam String departure,
+                                     @RequestParam String destination ,
+                                     @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime){
+
+        List<Trip> trips = tripService.getAllTrips(departure,
+                destination,
+                dateTime);
+        return mapper.entityToGetDTO(trips);
     }
 
     @GetMapping("/{tripId}")
