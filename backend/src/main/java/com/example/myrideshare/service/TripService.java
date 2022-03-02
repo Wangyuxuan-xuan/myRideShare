@@ -15,11 +15,11 @@ public class TripService {
 
     private final TripRepository tripRepository;
 
-//    public List<Trip> getAllTrips(){
-//        return tripRepository.findAll();
-//    }
+    public List<Trip> getAllTrips(){
+        return tripRepository.findAll();
+    }
 
-    public List<Trip> getAllTrips(String departure , String destination , LocalDateTime startTime){
+    public List<Trip> searchTrips(String departure , String destination , LocalDateTime startTime){
 
         List<Trip> trips ;
         if (startTime == null ){
