@@ -14,6 +14,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
@@ -28,15 +29,36 @@ public abstract class TripMapper {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Mapping(target = "customerPhone", source = "customer.phone")
+    @Mapping(target = "customerName", source = "customer.name")
+    @Mapping(target = "customerJoinedDate", source = "customer.joinedDate")
+    @Mapping(target = "driverPhone", source = "driver.phone")
+    @Mapping(target = "driverName", source = "driver.name")
+    @Mapping(target = "driverJoinedDate", source = "driver.joinedDate")
+    @Mapping(target = "driverCurrentRate", source = "driver.rate")
+    @Mapping(target = "carNumOfPassenger", source = "car.numOfPassenger")
+    @Mapping(target = "carModel", source = "car.model")
+    @Mapping(target = "carLicensePlate", source = "car.licensePlate")
+    @Mapping(target = "carCarType", source = "car.carType")
     @Mapping(target = "driverId", source = "driver.id")
     @Mapping(target = "customerId", source = "customer.id")
     @Mapping(target = "carId", source = "car.id")
-    public abstract TripDTO entityToGetDTO(Trip trip);
+    public abstract TripDTO entityToGetDTO(Trip trip,Driver driver, Car car,Customer customer);
 
-    @Mapping(target = "driverId", source = "driver.id")
-    @Mapping(target = "customerId", source = "customer.id")
-    @Mapping(target = "carId", source = "car.id")
-    public abstract List<TripDTO> entityToGetDTO(List<Trip> trip);
+    public List<TripDTO> entityToGetDTO(List<Trip> trips){
+
+        List<TripDTO> list = new ArrayList<TripDTO>( trips.size() );
+
+        for ( Trip trip : trips ) {
+            Driver driver = trip.getDriver();
+            Car car = trip.getCar();
+            Customer customer = trip.getCustomer();
+
+            list.add( entityToGetDTO(trip,driver,car,customer) );
+        }
+
+        return list;
+    }
 
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "id", ignore = true)

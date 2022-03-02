@@ -1,11 +1,16 @@
 import SearchBar from "../searchBar/sarchBar";
+import {TripResultService} from "../../service/TripResultService";
 
-function Search() {
+interface SearchProps{
+    services : TripResultService;
+}
+
+function Search({services} : SearchProps) {
 
     return(
         <>
             <h1 className="search">SEARCH</h1>
-            <SearchBar/>
+            <SearchBar tripResultService={services}/>
         </>
 
     )

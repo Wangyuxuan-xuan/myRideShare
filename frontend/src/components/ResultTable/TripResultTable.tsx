@@ -69,21 +69,19 @@ interface tripTable {
     price: any| undefined;
 }
 
-function TripResultTable() {
+interface TripTableProps{
+    tripResultService : TripResultService;
+}
 
-    const publicAppStore =  new PublicAppStore();
-    const publicAppService = new PublicAppService(publicAppStore);
+function TripResultTable({tripResultService} : TripTableProps) {
 
-    const tripResultStore = publicAppStore.tripResultStore;
-    const tripResultService =  publicAppService.tripResultService;
+    const {tripResultStore} = tripResultService;
 
     const styleClasses = useStyles();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const [tripTable , setTripTable] = useState<tripTable[]>([])
-
-
 
     let trips : TripDTO[] | null ;
 
