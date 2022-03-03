@@ -15,6 +15,7 @@ import SignIn from "./components/Pages/SignIn";
 import {DatePickerComponent} from "./components/searchBar/DatePickerComponent";
 import Result from "./components/Pages/Result";
 import {PublicAppService} from "./service/PublicAppService";
+import NewTripForm from "./components/NewTripForm/NewTripForm";
 
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -36,6 +37,7 @@ function PublicApp(props : IPublicProps) {
                   <Route path = "/sign-up" element={<SignUp/>}/>
                   <Route path = "/sign-in" element={<SignIn/>}/>
                   <Route path = "/result" element={<Result tripResultService={props.services.tripResultService}/>}/>
+                  <Route path = "/trip/new" element={<NewTripForm/>}/>
               </Routes>
               <Footer/>
           </Router>
