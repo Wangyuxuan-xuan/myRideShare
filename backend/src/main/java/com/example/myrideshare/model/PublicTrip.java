@@ -41,4 +41,7 @@ public class PublicTrip extends BaseEntity{
     @ManyToOne(targetEntity = Car.class , fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     private Car car;
+//
+//    @OneToOne(optional = true , fetch = FetchType.LAZY)
+//    private CustomerTrip customerTrip;
 }
