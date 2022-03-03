@@ -70,11 +70,6 @@ export interface TripPostDTO {
      * @type {number}
      * @memberof TripPostDTO
      */
-    customerId?: number;
-    /**
-     * @type {number}
-     * @memberof TripPostDTO
-     */
     carId?: number;
 }
 
