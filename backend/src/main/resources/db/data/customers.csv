@@ -1,0 +1,5 @@
+version;name;email;password;address;phone;joined_date;rate;active;avatar
+1;Alex;alex@email.com;123456;addr;705268989;2022-03-09;4.8;true;
+1;Justine;justine@email.com;123456;addr;705896366;2022-03-09;5.0;true;
+1;Arthur;arthur@email.com;123456;addr;705238568;2022-03-09;3.5;true;
+1;Judith;judith@email.com;123456;addr;704581214;2022-03-09;4.9;true;

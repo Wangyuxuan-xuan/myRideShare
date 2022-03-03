@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet author="postgres" id="load_test_data" context="dev, test">
+
+		<loadData file="/data/customers.csv" relativeToChangelogFile="true"
+				  separator=";" tableName="customer">
+			<column header="rate" name="rate" type="numeric"/>
+			<column header="avatar" name="avatar" type="OTHER"/>
+		</loadData>
+
+		<loadData file="/data/drivers.csv" relativeToChangelogFile="true"
+				  separator=";" tableName="driver">
+			<column header="rate" name="rate" type="numeric"/>
+			<column header="avatar" name="avatar" type="OTHER"/>
+		</loadData>
+
+		<loadData file="/data/cars.csv" relativeToChangelogFile="true"
+				  separator=";" tableName="car">
+			<column header="picture" name="picture" type="OTHER"/>
+		</loadData>
+
+		<loadData file="/data/trips.csv" relativeToChangelogFile="true"
+				  separator=";" tableName="trip">
+			<column header="customer_rate" name="customer_rate" type="numeric"/>
+			<column header="driver_rate" name="driver_rate" type="numeric"/>
+		</loadData>
+
+	</changeSet>
+
+</databaseChangeLog>

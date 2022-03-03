@@ -1,0 +1,11 @@
+version;model;license_plate;car_type;car_year;num_of_passenger;driver_id;picture
+1;Toyota Camry;QWE123;CAR_TYPE;5;3;1;
+1;BMW 3 series;RTY155;CAR_TYPE;3;4;1;
+1;Hyundai Sonata;RTS123;CAR_TYPE;8;2;1;
+1;Toyota Prius;RPG345;CAR_TYPE;5;4;2;
+1;Mazda3;SSD678;CAR_TYPE;6;4;2;
+1;Volkswagen Golf;ERT779;CAR_TYPE;5;4;3;
+1;Mercedes-Benz E-Class;FGT665;CAR_TYPE;1;4;4;
+1;Honda CR-V;FXW996;CAR_TYPE;4;2;4;
+1;Subaru Forester;SCD456;CAR_TYPE;7;5;5;
+1;Ford Explorer;DXS567;CAR_TYPE;2;6;5;
