@@ -1,6 +1,6 @@
 package com.example.myrideshare.service;
 
-import com.example.myrideshare.model.Trip;
+import com.example.myrideshare.model.PublicTrip;
 import com.example.myrideshare.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,13 +15,13 @@ public class TripService {
 
     private final TripRepository tripRepository;
 
-    public List<Trip> getAllTrips(){
+    public List<PublicTrip> getAllTrips(){
         return tripRepository.findAll();
     }
 
-    public List<Trip> searchTrips(String departure , String destination , LocalDateTime startTime){
+    public List<PublicTrip> searchTrips(String departure , String destination , LocalDateTime startTime){
 
-        List<Trip> trips ;
+        List<PublicTrip> publicTrips;
         if (startTime == null ){
             startTime = LocalDateTime.now();
         }
@@ -33,37 +33,37 @@ public class TripService {
             destination = "";
         }
         if(departure.isBlank() && destination.isBlank()){
-            trips = tripRepository.findAllByStartTimeAfterOrderByStartTime(startTime);
-            System.out.println(trips);
-            return trips;
+            publicTrips = tripRepository.findAllByStartTimeAfterOrderByStartTime(startTime);
+            System.out.println(publicTrips);
+            return publicTrips;
         }else {
 
             if (departure.isBlank()){
-                trips = tripRepository.findAllByEndLocationAndStartTimeAfterOrderByStartTime(destination,startTime);
-                System.out.println(trips);
-                return trips;
+                publicTrips = tripRepository.findAllByEndLocationAndStartTimeAfterOrderByStartTime(destination,startTime);
+                System.out.println(publicTrips);
+                return publicTrips;
             }
             if (destination.isBlank()){
-                trips = tripRepository.findAllByStartLocationAndStartTimeAfterOrderByStartTime(departure,startTime);
-                System.out.println(trips);
-                return trips;
+                publicTrips = tripRepository.findAllByStartLocationAndStartTimeAfterOrderByStartTime(departure,startTime);
+                System.out.println(publicTrips);
+                return publicTrips;
             }
         }
 
 
-        trips = tripRepository.findAllByStartLocationAndEndLocationAndStartTimeAfterOrderByStartTime(departure,destination,startTime);
-        System.out.println(trips);
-        return trips;
+        publicTrips = tripRepository.findAllByStartLocationAndEndLocationAndStartTimeAfterOrderByStartTime(departure,destination,startTime);
+        System.out.println(publicTrips);
+        return publicTrips;
     }
 
 
-    public Trip getTripById(Long id){
+    public PublicTrip getTripById(Long id){
         return tripRepository.getById(id);
     }
 
     @Transactional
-    public Trip createTrip(Trip trip){
-        return tripRepository.save(trip);
+    public PublicTrip createTrip(PublicTrip publicTrip){
+        return tripRepository.save(publicTrip);
     }
 
     @Transactional
@@ -72,7 +72,7 @@ public class TripService {
     }
 
     @Transactional
-    public Trip updateTrip(Trip trip){
-        return tripRepository.save(trip);
+    public PublicTrip updateTrip(PublicTrip publicTrip){
+        return tripRepository.save(publicTrip);
     }
 }

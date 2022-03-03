@@ -45,8 +45,8 @@ public abstract class DriverMapper {
     }
 
 
+    @Mapping(target = "publicTrips", ignore = true)
     @Mapping(target = "version", ignore = true)
-    @Mapping(target = "trips", ignore = true)
     @Mapping(target = "rate", ignore = true)
     @Mapping(target = "joinedDate", ignore = true)
     @Mapping(target = "id", source = "driverId")

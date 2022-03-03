@@ -9,6 +9,6 @@
 
 	<include file="/changes/init/create-car.xml" relativeToChangelogFile="true" />
 
-	<include file="/changes/init/create-trip.xml" relativeToChangelogFile="true" />
+	<include file="/changes/init/create-publicTrip.xml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>

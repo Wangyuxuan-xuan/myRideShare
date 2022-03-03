@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Trip extends BaseEntity{
+public class PublicTrip extends BaseEntity{
 
     private String startLocation;
 

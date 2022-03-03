@@ -5,7 +5,7 @@ import com.example.myrideshare.dto.response.TripDTO;
 import com.example.myrideshare.model.Car;
 import com.example.myrideshare.model.Customer;
 import com.example.myrideshare.model.Driver;
-import com.example.myrideshare.model.Trip;
+import com.example.myrideshare.model.PublicTrip;
 import com.example.myrideshare.repository.CarRepository;
 import com.example.myrideshare.repository.CustomerRepository;
 import com.example.myrideshare.repository.DriverRepository;
@@ -43,18 +43,18 @@ public abstract class TripMapper {
     @Mapping(target = "driverId", source = "driver.id")
     @Mapping(target = "customerId", source = "customer.id")
     @Mapping(target = "carId", source = "car.id")
-    public abstract TripDTO entityToGetDTO(Trip trip,Driver driver, Car car,Customer customer);
+    public abstract TripDTO entityToGetDTO(PublicTrip publicTrip, Driver driver, Car car, Customer customer);
 
-    public List<TripDTO> entityToGetDTO(List<Trip> trips){
+    public List<TripDTO> entityToGetDTO(List<PublicTrip> publicTrips){
 
-        List<TripDTO> list = new ArrayList<TripDTO>( trips.size() );
+        List<TripDTO> list = new ArrayList<TripDTO>( publicTrips.size() );
 
-        for ( Trip trip : trips ) {
-            Driver driver = trip.getDriver();
-            Car car = trip.getCar();
-            Customer customer = trip.getCustomer();
+        for ( PublicTrip publicTrip : publicTrips) {
+            Driver driver = publicTrip.getDriver();
+            Car car = publicTrip.getCar();
+            Customer customer = publicTrip.getCustomer();
 
-            list.add( entityToGetDTO(trip,driver,car,customer) );
+            list.add( entityToGetDTO(publicTrip,driver,car,customer) );
         }
 
         return list;
@@ -65,7 +65,7 @@ public abstract class TripMapper {
     @Mapping(target = "driver", source = "driverId")
     @Mapping(target = "customer", source = "customerId")
     @Mapping(target = "car", source = "carId")
-    public abstract Trip tripPostDTOToEntity(TripPostDTO tripPostDTO);
+    public abstract PublicTrip tripPostDTOToEntity(TripPostDTO tripPostDTO);
 
     public Driver idToDriver(Long id){
         return driverRepository.getById(id);
@@ -84,5 +84,5 @@ public abstract class TripMapper {
     @Mapping(target = "driver", source = "driverId")
     @Mapping(target = "customer", source = "customerId")
     @Mapping(target = "car", source = "carId")
-    public abstract void updateEntityFromUpdateDTO(TripPostDTO tripPostDTO, @MappingTarget Trip trip);
+    public abstract void updateEntityFromUpdateDTO(TripPostDTO tripPostDTO, @MappingTarget PublicTrip publicTrip);
 }

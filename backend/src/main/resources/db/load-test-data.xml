@@ -22,8 +22,8 @@
 			<column header="picture" name="picture" type="OTHER"/>
 		</loadData>
 
-		<loadData file="/data/trips.csv" relativeToChangelogFile="true"
-				  separator=";" tableName="trip">
+		<loadData file="data/public-trips.csv" relativeToChangelogFile="true"
+				  separator=";" tableName="public_trip">
 			<column header="customer_rate" name="customer_rate" type="numeric"/>
 			<column header="driver_rate" name="driver_rate" type="numeric"/>
 		</loadData>

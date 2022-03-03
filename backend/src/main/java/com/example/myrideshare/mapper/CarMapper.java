@@ -26,7 +26,7 @@ public abstract class CarMapper {
     public abstract List<CarDTO> entityToGetDTO(List<Car> car);
 
     @Mapping(target = "version", ignore = true)
-    @Mapping(target = "trips",ignore = true)
+    @Mapping(target = "publicTrips", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "driver", source = "driverId")
     public abstract Car postDTOtoEntity(CarPostDTO carPostDTO);
@@ -36,7 +36,7 @@ public abstract class CarMapper {
     }
 
     @Mapping(target = "version", ignore = true)
-    @Mapping(target = "trips", ignore = true)
+    @Mapping(target = "publicTrips", ignore = true)
     @Mapping(target = "id", source = "carId")
     @Mapping(target = "driver", source = "driverId")
     public abstract void updateEntityFromUpdateDTO(CarUpdateDTO carUpdateDTO, @MappingTarget Car car);

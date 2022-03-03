@@ -3,19 +3,19 @@
 	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-	<changeSet author="postgres" id="create_trip_table">
+	<changeSet author="postgres" id="create_publicTrip_table">
 
 		<preConditions onFail="MARK_RAN">
 			<not>
-				<tableExists tableName="trip" />
+				<tableExists tableName="public_trip" />
 			</not>
 		</preConditions>
 
-		<createTable tableName="trip">
+		<createTable tableName="public_trip">
 
 			<column autoIncrement="true" name="id" type="BIGINT">
 				<constraints nullable="false" primaryKey="true"
-							 primaryKeyName="trip_pk" />
+							 primaryKeyName="publicTrip_pk" />
 			</column>
 
 			<column name="version" type="BIGINT">
@@ -60,17 +60,17 @@
 
 			<column name="customer_id" type="BIGINT">
 				<constraints nullable="false"
-							 foreignKeyName="fk_customer_trip" references="customer(id)" />
+							 foreignKeyName="fk_customer_publicTrip" references="customer(id)" />
 			</column>
 
 			<column name="driver_id" type="BIGINT">
 				<constraints nullable="false"
-							 foreignKeyName="fk_driver_trip" references="driver(id)" />
+							 foreignKeyName="fk_driver_publicTrip" references="driver(id)" />
 			</column>
 
 			<column name="car_id" type="BIGINT">
 				<constraints nullable="false"
-							 foreignKeyName="fk_car_trip" references="car(id)" />
+							 foreignKeyName="fk_car_publicTrip" references="car(id)" />
 			</column>
 
 		</createTable>
