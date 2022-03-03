@@ -29,8 +29,6 @@ public class TripDTO {
 
     private int price;
 
-    private Long customerId;
-
     private Long driverId;
 
     private Long carId;
@@ -51,9 +49,4 @@ public class TripDTO {
 
     private CarType carCarType;
 
-    private String customerName;
-
-    private String customerPhone;
-
-    private LocalDate customerJoinedDate;
 }

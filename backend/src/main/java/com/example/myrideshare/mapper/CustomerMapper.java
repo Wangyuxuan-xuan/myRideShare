@@ -25,7 +25,6 @@ public abstract class CustomerMapper {
 
     public abstract List<CustomerDTO> EntityToGetDTO(List<Customer> customer);
 
-    @Mapping(target = "publicTrips", ignore = true)
     @Mapping(target = "avatar", ignore = true)
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "id", source = "customerId")
@@ -52,7 +51,6 @@ public abstract class CustomerMapper {
     }
 
 
-    @Mapping(target = "publicTrips", ignore = true)
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "rate", ignore = true)
     @Mapping(target = "joinedDate", ignore = true)

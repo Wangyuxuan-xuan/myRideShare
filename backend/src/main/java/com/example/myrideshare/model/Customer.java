@@ -36,11 +36,4 @@ public class Customer extends BaseEntity{
     @Type(type = "org.hibernate.type.BinaryType")
     private byte[] avatar;
 
-    @OneToMany(
-            mappedBy = "customer",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<PublicTrip> publicTrips = new ArrayList<>();
-
 }

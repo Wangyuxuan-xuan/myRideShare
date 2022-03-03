@@ -29,9 +29,6 @@ public abstract class TripMapper {
     @Autowired
     CustomerRepository customerRepository;
 
-    @Mapping(target = "customerPhone", source = "customer.phone")
-    @Mapping(target = "customerName", source = "customer.name")
-    @Mapping(target = "customerJoinedDate", source = "customer.joinedDate")
     @Mapping(target = "driverPhone", source = "driver.phone")
     @Mapping(target = "driverName", source = "driver.name")
     @Mapping(target = "driverJoinedDate", source = "driver.joinedDate")
@@ -41,9 +38,8 @@ public abstract class TripMapper {
     @Mapping(target = "carLicensePlate", source = "car.licensePlate")
     @Mapping(target = "carCarType", source = "car.carType")
     @Mapping(target = "driverId", source = "driver.id")
-    @Mapping(target = "customerId", source = "customer.id")
     @Mapping(target = "carId", source = "car.id")
-    public abstract TripDTO entityToGetDTO(PublicTrip publicTrip, Driver driver, Car car, Customer customer);
+    public abstract TripDTO entityToGetDTO(PublicTrip publicTrip, Driver driver, Car car);
 
     public List<TripDTO> entityToGetDTO(List<PublicTrip> publicTrips){
 
@@ -52,9 +48,8 @@ public abstract class TripMapper {
         for ( PublicTrip publicTrip : publicTrips) {
             Driver driver = publicTrip.getDriver();
             Car car = publicTrip.getCar();
-            Customer customer = publicTrip.getCustomer();
 
-            list.add( entityToGetDTO(publicTrip,driver,car,customer) );
+            list.add( entityToGetDTO(publicTrip,driver,car) );
         }
 
         return list;
@@ -63,7 +58,6 @@ public abstract class TripMapper {
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "driver", source = "driverId")
-    @Mapping(target = "customer", source = "customerId")
     @Mapping(target = "car", source = "carId")
     public abstract PublicTrip tripPostDTOToEntity(TripPostDTO tripPostDTO);
 
@@ -82,7 +76,6 @@ public abstract class TripMapper {
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "driver", source = "driverId")
-    @Mapping(target = "customer", source = "customerId")
     @Mapping(target = "car", source = "carId")
     public abstract void updateEntityFromUpdateDTO(TripPostDTO tripPostDTO, @MappingTarget PublicTrip publicTrip);
 }

@@ -29,7 +29,5 @@ public class TripPostDTO {
 
     private Long driverId;
 
-    private Long customerId;
-
     private Long carId;
 }

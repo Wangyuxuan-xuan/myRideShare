@@ -56,8 +56,7 @@ public class TripController {
         PublicTrip publicTrip = tripService.getTripById(tripId);
         Driver driver = publicTrip.getDriver();
         Car car = publicTrip.getCar();
-        Customer customer = publicTrip.getCustomer();
-        return mapper.entityToGetDTO(publicTrip,driver,car,customer);
+        return mapper.entityToGetDTO(publicTrip,driver,car);
     }
 
     //need to add request body
@@ -69,8 +68,7 @@ public class TripController {
 
         Driver driver = created.getDriver();
         Car car = created.getCar();
-        Customer customer = publicTrip.getCustomer();
-        return mapper.entityToGetDTO(created,driver,car,customer);
+        return mapper.entityToGetDTO(created,driver,car);
     }
 
     @DeleteMapping("/{tripId}")
