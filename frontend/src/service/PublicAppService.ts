@@ -8,10 +8,12 @@ import {
     TripControllerApi
 } from "../generated/restclient";
 import {createApiConfig} from "../utils/api-utils";
+import {TripPostService} from "./TripPostService";
 
 export class PublicAppService{
 
     public readonly tripResultService : TripResultService;
+    public readonly tripPostService : TripPostService;
 
     constructor(apiConfig: Configuration ,public readonly publicAppStore : PublicAppStore) {
 
@@ -23,5 +25,8 @@ export class PublicAppService{
         this.tripResultService = new TripResultService(tripApi ,
             publicAppStore.tripResultStore,
             publicAppStore.searchBarStore);
+
+        this.tripPostService = new TripPostService(tripApi,
+            publicAppStore.newTripFormStore)
     }
 }

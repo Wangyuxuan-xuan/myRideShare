@@ -8,6 +8,6 @@
 }
 
 .input-columns{
-    column-count : 3;
-    column-gap: 10px;
+    column-count : 4;
+    column-gap: 20px;
 }

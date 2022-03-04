@@ -5,35 +5,68 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles';
 import {ChangeEvent, useState} from "react";
+import {DatePickerComponent} from "./DatePickerComponent";
+import {TripPostService} from "../../service/TripPostService";
 
 const useStyles = makeStyles({
     field : {
         marginTop : 10,
         marginBottom : 10,
 
-
-
     }
 })
 
-function NewTripForm() {
+interface NewTripFormProps {
+    tripPostService : TripPostService
+}
 
+function NewTripForm({tripPostService} : NewTripFormProps) {
+
+    const {newTripFormStore} = tripPostService;
     const classes = useStyles();
-    const [string1Error,setString1Error] = useState(false)
-
-    let string1 = "";
+    const [departureError,setDepartureError] = useState(false);
+    const [destinationError,setDestinationError] = useState(false);
+    const [maxNumOfPassengerError,setMaxNumOfPassengerError] = useState(false);
+    const [carIdError,setCarIdError] = useState(false);
+    const [driverIdError,setDriverIdError] = useState(false);
+    const [priceError,setPriceError] = useState(false)
 
     const handleSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault();
 
-        if(string1 === ""){
-            setString1Error(true);
-        }else {
-            setString1Error(false);
-        }
+        if(newTripFormStore.departure === ""){
+            setDepartureError(true);
+        }else setDepartureError(false);
 
-        if(string1){
-            console.log(string1);
+        if(newTripFormStore.destination === ""){
+            setDestinationError(true);
+        }else setDestinationError(false);
+
+        if(newTripFormStore.maxNumOfPassenger === 0){
+            setMaxNumOfPassengerError(true);
+        }else setMaxNumOfPassengerError(false);
+
+        if(newTripFormStore.carId === 0){
+            setCarIdError(true);
+        }else setCarIdError(false);
+
+        if(newTripFormStore.driverId === 0){
+            setDriverIdError(true);
+        }else setDriverIdError(false);
+
+        if(newTripFormStore.price === 0){
+            setPriceError(true);
+        }else setPriceError(false);
+
+        if(newTripFormStore.departure && newTripFormStore.destination
+            && newTripFormStore.maxNumOfPassenger && newTripFormStore.carId
+            && newTripFormStore.driverId && newTripFormStore.price){
+            console.log("departure :" +newTripFormStore.departure + " destination: "
+                + newTripFormStore.destination + " maxNumOfPassenger: "
+                + newTripFormStore.maxNumOfPassenger + " carId: "
+                + newTripFormStore.carId + " driverId: "
+                + newTripFormStore.driverId + " price: "
+                + newTripFormStore.price);
         }
     }
 
@@ -45,145 +78,101 @@ function NewTripForm() {
                     <ul>
                         <TextField
                             onChange={(e) => {
-                                string1 = e.target.value;
+                                newTripFormStore.departure = e.target.value;
                             }}
                             className={classes.field}
-                            label= "note title"
+                            label= "Departure"
                             variant="outlined"
                             color="primary"
-                            // fullWidth="80%"
                             required
-                            error={string1Error}
+                            error={departureError}
 
                         />
                         <TextField
                             onChange={(e) => {
-                                string1 = e.target.value;
+                                newTripFormStore.destination = e.target.value;
                             }}
                             className={classes.field}
-                            label= "note title"
+                            label= "Destination"
                             variant="outlined"
                             color="primary"
-                            // fullWidth="80%"
                             required
-                            error={string1Error}
+                            error={destinationError}
                         />
 
-                        <TextField
-                            className={classes.field}
-                            label= "note title"
-                            variant="outlined"
-                            color="primary"
-                            // fullWidth="80%"
-                            required
-                            error={string1Error}
-                        />
-                        <TextField
-                            className={classes.field}
-                            label= "description"
-                            variant="outlined"
-                            color="primary"
-                            // fullWidth="80%"
-                            // multiline
-                            // rows={4}
-                            error={string1Error}
-                        />
+
                     </ul>
                     <ul>
                         <TextField
                             onChange={(e) => {
-                                string1 = e.target.value;
+                                newTripFormStore.maxNumOfPassenger = Number(e.target.value);
                             }}
                             className={classes.field}
-                            label= "note title"
+                            label= "max number of passenger"
                             variant="outlined"
+                            type="number"
                             color="primary"
-                            // fullWidth="80%"
                             required
-                            error={string1Error}
+                            error={maxNumOfPassengerError}
 
                         />
+
                         <TextField
                             onChange={(e) => {
-                                string1 = e.target.value;
+                                newTripFormStore.carId = Number(e.target.value);
                             }}
                             className={classes.field}
-                            label= "note title"
+                            label= "car id"
                             variant="outlined"
                             color="primary"
                             // fullWidth="80%"
                             required
-                            error={string1Error}
+                            error={carIdError}
                         />
 
-                        <TextField
-                            className={classes.field}
-                            label= "note title"
-                            variant="outlined"
-                            color="primary"
-                            // fullWidth="80%"
-                            required
-                            error={string1Error}
-                        />
-                        <TextField
-                            className={classes.field}
-                            label= "description"
-                            variant="outlined"
-                            color="primary"
-                            // fullWidth="80%"
-                            // multiline
-                            // rows={4}
-                            error={string1Error}
-                        />
                     </ul>
                     <ul>
-                        <TextField
-                            onChange={(e) => {
-                                string1 = e.target.value;
-                            }}
-                            className={classes.field}
-                            label= "note title"
-                            variant="outlined"
-                            color="primary"
-                            // fullWidth="80%"
-                            required
-                            error={string1Error}
-
-                        />
-                        <TextField
-                            onChange={(e) => {
-                                string1 = e.target.value;
-                            }}
-                            className={classes.field}
-                            label= "note title"
-                            variant="outlined"
-                            color="primary"
-                            // fullWidth="80%"
-                            required
-                            error={string1Error}
-                        />
-
-                        <TextField
-                            className={classes.field}
-                            label= "note title"
-                            variant="outlined"
-                            color="primary"
-                            // fullWidth="80%"
-                            required
-                            error={string1Error}
-                        />
-                        <TextField
-                            className={classes.field}
-                            label= "description"
-                            variant="outlined"
-                            color="primary"
-                            // fullWidth="80%"
-                            // multiline
-                            // rows={4}
-                            error={string1Error}
-                        />
+                        <DatePickerComponent/>
                     </ul>
+                    <ul>
+                        <DatePickerComponent/>
+                    </ul>
+
                 </div>
+
+                <TextField
+                    onChange={(e) => {
+                        newTripFormStore.driverId = Number(e.target.value);
+                    }}
+                    className={classes.field}
+                    label= "driver id"
+                    variant="outlined"
+                    color="primary"
+                    required
+                    error={driverIdError}
+                />
+
+                <TextField
+                    onChange={(e) => {
+                        newTripFormStore.price = Number(e.target.value);
+                    }}
+                    className={classes.field}
+                    label= "price"
+                    variant="outlined"
+                    color="primary"
+                    required
+                    error={priceError}
+                />
+
+                <TextField
+                    className={classes.field}
+                    label= "description"
+                    variant="outlined"
+                    color="primary"
+                    fullWidth
+                    multiline
+                    rows={4}
+                />
 
                 {/*Submit Button should be inside the form*/}
                 <Button
@@ -192,6 +181,7 @@ function NewTripForm() {
                     variant="contained">
                     Submit
                 </Button>
+
 
             </form>
 

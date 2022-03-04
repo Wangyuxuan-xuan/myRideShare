@@ -37,7 +37,7 @@ function PublicApp(props : IPublicProps) {
                   <Route path = "/sign-up" element={<SignUp/>}/>
                   <Route path = "/sign-in" element={<SignIn/>}/>
                   <Route path = "/result" element={<Result tripResultService={props.services.tripResultService}/>}/>
-                  <Route path = "/trip/new" element={<NewTripForm/>}/>
+                  <Route path = "/trip/new" element={<NewTripForm tripPostService={props.services.tripPostService}/>}/>
               </Routes>
               <Footer/>
           </Router>
