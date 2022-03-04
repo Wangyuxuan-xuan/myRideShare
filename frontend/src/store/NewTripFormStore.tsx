@@ -31,6 +31,9 @@ export class NewTripFormStore {
     @observable
     endTimeTime : Date = new Date();
 
+    @observable
+    isLoading : boolean = false;
+
     constructor() {
         makeObservable(this);
     }

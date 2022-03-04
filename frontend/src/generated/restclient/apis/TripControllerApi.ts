@@ -112,10 +112,11 @@ export class TripControllerApi extends BaseAPI {
         throwIfNullOrUndefined(destination, 'destination', 'searchTrips');
         throwIfNullOrUndefined(dateTime, 'dateTime', 'searchTrips');
 
+        const dateTimeDate = new Date(dateTime);
         const query: HttpQuery = { // required parameters are used directly since they are already checked by throwIfNullOrUndefined
             'departure': departure,
             'destination': destination,
-            'dateTime': (dateTime as any).toISOString(),
+            'dateTime': (dateTimeDate as any).toISOString(),
         };
 
         return this.request<Array<TripDTO>>({

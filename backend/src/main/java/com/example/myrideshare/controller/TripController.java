@@ -62,6 +62,7 @@ public class TripController {
 
     //need to add request body
     @PostMapping(value = "/create")
+    @CrossOrigin(origins = "*")
     public TripDTO createTrip(@RequestBody TripPostDTO tripPostDTO){
 
         PublicTrip publicTrip = mapper.tripPostDTOToEntity(tripPostDTO);

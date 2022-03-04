@@ -67,6 +67,8 @@ function NewTripForm({tripPostService} : NewTripFormProps) {
                 + newTripFormStore.carId + " driverId: "
                 + newTripFormStore.driverId + " price: "
                 + newTripFormStore.price);
+
+            tripPostService.saveTrip()
         }
     }
 
