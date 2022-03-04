@@ -7,7 +7,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class TripPostDTO {
+public class TripUpdateDTO {
 
     private String startLocation;
 
@@ -16,6 +16,14 @@ public class TripPostDTO {
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
+
+    private float customerRate;
+
+    private float driverRate;
+
+    private PaymentStatus paymentStatus;
+
+    private TripStatus tripStatus;
 
     private int price;
 

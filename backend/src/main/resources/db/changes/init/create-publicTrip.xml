@@ -47,11 +47,11 @@
 			</column>
 
 			<column name="payment_status" type="VARCHAR(32)">
-				<constraints nullable="false" />
+				<constraints nullable="true" />
 			</column>
 
 			<column name="trip_status" type="VARCHAR(32)">
-				<constraints nullable="false" />
+				<constraints nullable="true" />
 			</column>
 
 			<column name="price" type="INT">

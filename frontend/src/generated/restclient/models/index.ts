@@ -6,3 +6,4 @@ export * from './DriverDTO';
 export * from './DriverUpdateDTO';
 export * from './TripDTO';
 export * from './TripPostDTO';
+export * from './TripUpdateDTO';

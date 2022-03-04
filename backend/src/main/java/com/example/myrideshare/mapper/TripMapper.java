@@ -1,6 +1,7 @@
 package com.example.myrideshare.mapper;
 
 import com.example.myrideshare.dto.request.TripPostDTO;
+import com.example.myrideshare.dto.request.TripUpdateDTO;
 import com.example.myrideshare.dto.response.TripDTO;
 import com.example.myrideshare.model.Car;
 import com.example.myrideshare.model.Customer;
@@ -55,6 +56,10 @@ public abstract class TripMapper {
         return list;
     }
 
+    @Mapping(target = "tripStatus", ignore = true)
+    @Mapping(target = "paymentStatus", ignore = true)
+    @Mapping(target = "driverRate", ignore = true)
+    @Mapping(target = "customerRate", ignore = true)
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "driver", source = "driverId")
@@ -77,5 +82,5 @@ public abstract class TripMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "driver", source = "driverId")
     @Mapping(target = "car", source = "carId")
-    public abstract void updateEntityFromUpdateDTO(TripPostDTO tripPostDTO, @MappingTarget PublicTrip publicTrip);
+    public abstract void updateEntityFromUpdateDTO(TripUpdateDTO tripUpdateDTO, @MappingTarget PublicTrip publicTrip);
 }

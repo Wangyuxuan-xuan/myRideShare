@@ -1,6 +1,7 @@
 package com.example.myrideshare.controller;
 
 import com.example.myrideshare.dto.request.TripPostDTO;
+import com.example.myrideshare.dto.request.TripUpdateDTO;
 import com.example.myrideshare.dto.response.TripDTO;
 import com.example.myrideshare.mapper.TripMapper;
 import com.example.myrideshare.model.Car;
@@ -77,7 +78,7 @@ public class TripController {
     }
 
     @PutMapping("/update/{tripId}")
-    public void updateCar(@RequestBody TripPostDTO dto,@PathVariable Long tripId){
+    public void updateTrip(@RequestBody TripUpdateDTO dto, @PathVariable Long tripId){
         PublicTrip publicTrip = tripService.getTripById(tripId);
         mapper.updateEntityFromUpdateDTO(dto, publicTrip);
 
