@@ -65,6 +65,16 @@ export interface TripUpdateDTO {
      * @type {number}
      * @memberof TripUpdateDTO
      */
+    maxNumOfPassengers?: number;
+    /**
+     * @type {string}
+     * @memberof TripUpdateDTO
+     */
+    description?: string;
+    /**
+     * @type {number}
+     * @memberof TripUpdateDTO
+     */
     driverId?: number;
     /**
      * @type {number}

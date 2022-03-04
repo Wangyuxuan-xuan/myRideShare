@@ -12,10 +12,10 @@ export class TripPostService {
         newTripFormStore.isLoading = true;
 
         const {departure,destination,maxNumOfPassenger,carId,driverId,price
-            ,startTimeDate,startTimeTime,endTimeDate,endTimeTime} = newTripFormStore;
+            ,startTimeDate,startTimeTime,endTimeDate,endTimeTime,description} = newTripFormStore;
 
         console.log(departure,destination,maxNumOfPassenger,carId,driverId,price
-            ,startTimeDate,startTimeTime,endTimeDate,endTimeTime)
+            ,startTimeDate,startTimeTime,endTimeDate,endTimeTime,description)
 
         try {
 
@@ -26,6 +26,8 @@ export class TripPostService {
                     startTime : "2022-03-05T09:26:19.927Z",
                     endTime : "2022-03-06T09:26:19.927Z",
                     price : price,
+                    maxNumOfPassengers : maxNumOfPassenger,
+                    description : description,
                     driverId : driverId,
                     carId : carId
                 }

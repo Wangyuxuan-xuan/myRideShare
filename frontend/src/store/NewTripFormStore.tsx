@@ -20,6 +20,9 @@ export class NewTripFormStore {
     price : number = 0;
 
     @observable
+    description : string = "";
+
+    @observable
     startTimeDate : Date = new Date();
 
     @observable

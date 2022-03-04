@@ -72,6 +72,16 @@ export interface TripDTO {
      */
     carId?: number;
     /**
+     * @type {number}
+     * @memberof TripDTO
+     */
+    maxNumOfPassengers?: number;
+    /**
+     * @type {string}
+     * @memberof TripDTO
+     */
+    description?: string;
+    /**
      * @type {string}
      * @memberof TripDTO
      */

@@ -33,6 +33,10 @@ public class TripDTO {
 
     private Long carId;
 
+    private int maxNumOfPassengers;
+
+    private String description;
+
     private String driverName;
 
     private String driverPhone;

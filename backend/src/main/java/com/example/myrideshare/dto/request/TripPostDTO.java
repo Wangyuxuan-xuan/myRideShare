@@ -22,6 +22,10 @@ public class TripPostDTO {
 
     private int price;
 
+    private int maxNumOfPassengers;
+
+    private String description;
+
     private Long driverId;
 
     private Long carId;

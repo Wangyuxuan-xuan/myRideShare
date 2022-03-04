@@ -34,6 +34,10 @@ public class PublicTrip extends BaseEntity{
 
     private int price;
 
+    private int maxNumOfPassengers;
+
+    private String description;
+
     @ManyToOne(targetEntity = Driver.class , fetch = FetchType.LAZY)
     @JoinColumn(name = "driver_id")
     private Driver driver;

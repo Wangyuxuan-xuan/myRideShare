@@ -45,6 +45,16 @@ export interface TripPostDTO {
      * @type {number}
      * @memberof TripPostDTO
      */
+    maxNumOfPassengers?: number;
+    /**
+     * @type {string}
+     * @memberof TripPostDTO
+     */
+    description?: string;
+    /**
+     * @type {number}
+     * @memberof TripPostDTO
+     */
     driverId?: number;
     /**
      * @type {number}

@@ -167,8 +167,11 @@ function NewTripForm({tripPostService} : NewTripFormProps) {
                 />
 
                 <TextField
+                    onChange={(e) => {
+                        newTripFormStore.description = e.target.value;
+                    }}
                     className={classes.field}
-                    label= "description"
+                    label= "description(optional)"
                     variant="outlined"
                     color="primary"
                     fullWidth

@@ -58,6 +58,14 @@
 				<constraints nullable="false" />
 			</column>
 
+			<column name="max_num_of_passengers" type="INT">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="description" type="VARCHAR">
+				<constraints nullable="true" />
+			</column>
+
 			<column name="driver_id" type="BIGINT">
 				<constraints nullable="false"
 							 foreignKeyName="fk_driver_publicTrip" references="driver(id)" />
