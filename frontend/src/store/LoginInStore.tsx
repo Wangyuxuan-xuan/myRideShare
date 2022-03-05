@@ -13,10 +13,10 @@ export class LoginInStore {
     isLoading : boolean = false;
 
     @observable
-    driverDTO : DriverDTO | null = null;
+    currentDriverDTO : DriverDTO | null = null;
 
     @observable
-    customerDTO : CustomerDTO | null = null;
+    currentCustomerDTO : CustomerDTO | null = null;
 
     constructor() {
         makeObservable(this);

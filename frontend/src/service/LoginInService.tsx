@@ -12,7 +12,7 @@ export class LoginInService {
 
         loginStore.isLoading = true;
         try {
-            loginStore.customerDTO = await this.authApi
+            loginStore.currentCustomerDTO = await this.authApi
                 .loginAsCustomer({
                     authRequestDTO : {
                         email : email,
@@ -35,7 +35,7 @@ export class LoginInService {
 
         loginStore.isLoading = true;
         try {
-            loginStore.driverDTO = await this.authApi
+            loginStore.currentDriverDTO = await this.authApi
                 .loginAsDriver({
                     authRequestDTO : {
                         email : email,
