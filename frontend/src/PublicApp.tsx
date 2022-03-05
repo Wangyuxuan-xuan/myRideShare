@@ -11,7 +11,7 @@ import Personal from "./components/Pages/Personal";
 import SignUp from "./components/Pages/SignUp";
 import Footer from "./components/footer/Footer";
 // @ts-ignore
-import SignIn from "./components/Pages/SignIn";
+import SignInPage from "./components/Pages/SignInPage";
 import {DatePickerComponent} from "./components/searchBar/DatePickerComponent";
 import Result from "./components/Pages/Result";
 import {PublicAppService} from "./service/PublicAppService";
@@ -35,7 +35,7 @@ function PublicApp(props : IPublicProps) {
                   <Route path = "/search" element={<Search services={props.services.tripResultService}/>}/>
                   <Route path = "/personal" element={<Personal/>}/>
                   <Route path = "/sign-up" element={<SignUp/>}/>
-                  <Route path = "/sign-in" element={<SignIn/>}/>
+                  <Route path = "/sign-in" element={<SignInPage/>}/>
                   <Route path = "/result" element={<Result tripResultService={props.services.tripResultService}/>}/>
                   <Route path = "/trip/new" element={<NewTripForm tripPostService={props.services.tripPostService}/>}/>
               </Routes>
