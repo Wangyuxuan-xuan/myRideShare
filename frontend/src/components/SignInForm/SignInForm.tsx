@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./SignInForm.css"
 import {LoginInService} from "../../service/LoginInService";
+import {Link as ReactLink} from "react-router-dom";
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -26,12 +27,14 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 interface SignInFormProps{
-    loginService : LoginInService;
+    loginService : LoginInService,
+    changeLogInState : any
 }
 
-function SignInForm({loginService} : SignInFormProps){
+function SignInForm({loginService ,changeLogInState} : SignInFormProps){
 
     const {loginStore} = loginService;
+    console.log("store : "+loginStore.isDriverLoggedIn);
 
     return (
         <ThemeProvider theme={theme}>
@@ -87,10 +90,15 @@ function SignInForm({loginService} : SignInFormProps){
                             type="submit"
                             color="secondary"
                             variant="outlined"
-                            onClick={(e) => {
+                            onClick={async (e) => {
                                 e.preventDefault();
                                 console.log("email :" + loginStore.email + "password : " + loginStore.password);
-                                loginService.loginAsCustomer()
+                                const res = await loginService.loginAsCustomer();
+                                if (res){
+                                    changeLogInState(true);
+                                }else {
+                                    changeLogInState(false);
+                                }
                             }}
                         >
                             Customer Sign in
@@ -99,14 +107,29 @@ function SignInForm({loginService} : SignInFormProps){
                             type="submit"
                             color="primary"
                             variant="outlined"
-                            onClick={(e) => {
+                            onClick={async (e) => {
                                 e.preventDefault();
                                 console.log("email :" + loginStore.email + "password : " + loginStore.password);
-                                loginService.loginAsDriver();
+                                const res = await loginService.loginAsDriver();
+                                if (res){
+                                    changeLogInState(true);
+                                }else {
+                                    changeLogInState(false);
+                                }
                             }}
                         >
                             Driver Sign in
                         </Button>
+                        <ReactLink to="/trip/new">
+                            <Button
+                                type="submit"
+                                color="secondary"
+                                variant="outlined"
+                            >
+                                To new trip
+                            </Button>
+                        </ReactLink>
+
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">

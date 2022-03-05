@@ -18,6 +18,12 @@ export class LoginInStore {
     @observable
     currentCustomerDTO : CustomerDTO | null = null;
 
+    @observable
+    isDriverLoggedIn : boolean = false;
+
+    @observable
+    isCustomerLoggedIn : boolean = false;
+
     constructor() {
         makeObservable(this);
     }

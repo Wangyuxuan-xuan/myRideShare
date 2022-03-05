@@ -20,6 +20,7 @@ export class LoginInService {
                     }
                 })
                 .toPromise();
+            loginStore.isCustomerLoggedIn = true;
             return true;
         }catch (e) {
             console.log(e);
@@ -43,6 +44,9 @@ export class LoginInService {
                     }
                 })
                 .toPromise();
+            loginStore.isDriverLoggedIn = true;
+            console.log(loginStore.currentDriverDTO);
+            console.log(loginStore.isDriverLoggedIn);
             return true;
         }catch (e) {
             console.log(e);

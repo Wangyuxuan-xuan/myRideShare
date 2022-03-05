@@ -3,14 +3,15 @@ import "./SignInPage.css"
 import {LoginInService} from "../../service/LoginInService";
 
 interface SignInPageProps {
-    loginService : LoginInService;
+    loginService : LoginInService,
+    changeLogInState : any
 }
-function SignInPage({loginService} : SignInPageProps){
+function SignInPage({loginService,changeLogInState} : SignInPageProps){
 
     return (
 
         <div className="sign-in">
-                <SignInForm loginService={loginService}/>
+                <SignInForm loginService={loginService} changeLogInState={changeLogInState}/>
         </div>
 
 
