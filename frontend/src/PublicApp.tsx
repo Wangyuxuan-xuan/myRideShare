@@ -35,7 +35,7 @@ function PublicApp(props : IPublicProps) {
                   <Route path = "/search" element={<Search services={props.services.tripResultService}/>}/>
                   <Route path = "/personal" element={<Personal/>}/>
                   <Route path = "/sign-up" element={<SignUp/>}/>
-                  <Route path = "/sign-in" element={<SignInPage/>}/>
+                  <Route path = "/sign-in" element={<SignInPage loginService={props.services.loginService}/>}/>
                   <Route path = "/result" element={<Result tripResultService={props.services.tripResultService}/>}/>
                   <Route path = "/trip/new" element={<NewTripForm tripPostService={props.services.tripPostService}/>}/>
               </Routes>

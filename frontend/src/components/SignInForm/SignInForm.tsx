@@ -1,10 +1,7 @@
 import * as React from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -12,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./SignInForm.css"
+import {LoginInService} from "../../service/LoginInService";
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -27,18 +25,13 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
+interface SignInFormProps{
+    loginService : LoginInService;
+}
 
-function SignInForm(){
+function SignInForm({loginService} : SignInFormProps){
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+    const {loginStore} = loginService;
 
     return (
         <ThemeProvider theme={theme}>
@@ -55,8 +48,11 @@ function SignInForm(){
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                    <Box component="form" sx={{ mt: 1 }}>
                         <TextField
+                            onChange={(e) => {
+                                loginStore.email = e.target.value;
+                            }}
                             margin="normal"
                             variant="outlined"
                             color="primary"
@@ -69,6 +65,9 @@ function SignInForm(){
                             autoFocus
                         />
                         <TextField
+                            onChange={(e) => {
+                                loginStore.password = e.target.value;
+                            }}
                             margin="normal"
                             variant="outlined"
                             color="primary"
@@ -87,13 +86,25 @@ function SignInForm(){
                         <Button
                             type="submit"
                             color="secondary"
-                            variant="outlined">
+                            variant="outlined"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                console.log("email :" + loginStore.email + "password : " + loginStore.password);
+                                loginService.loginAsCustomer()
+                            }}
+                        >
                             Customer Sign in
                         </Button>
                         <Button
                             type="submit"
                             color="primary"
-                            variant="outlined">
+                            variant="outlined"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                console.log("email :" + loginStore.email + "password : " + loginStore.password);
+                                loginService.loginAsDriver();
+                            }}
+                        >
                             Driver Sign in
                         </Button>
                         <Grid container>

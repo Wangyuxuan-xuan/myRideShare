@@ -10,10 +10,7 @@ import com.example.myrideshare.model.Driver;
 import com.example.myrideshare.service.CustomerService;
 import com.example.myrideshare.service.DriverService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/auth")
@@ -27,6 +24,7 @@ public class AuthenticationController {
     private final CustomerMapper customerMapper;
 
     @PostMapping("login/driver")
+    @CrossOrigin(origins = "*")
     public DriverDTO loginAsDriver(@RequestBody AuthRequestDTO request){
         Driver driver = driverService.authenticateForDriver(request.getEmail(), request.getPassword());
 
@@ -34,6 +32,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("login/customer")
+    @CrossOrigin(origins = "*")
     public CustomerDTO loginAsCustomer(@RequestBody AuthRequestDTO request){
         Customer customer = customerService.authenticateForCustomer(request.getEmail(), request.getPassword());
 

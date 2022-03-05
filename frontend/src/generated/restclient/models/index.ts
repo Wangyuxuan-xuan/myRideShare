@@ -1,3 +1,4 @@
+export * from './AuthRequestDTO';
 export * from './CarDTO';
 export * from './CarUpdateDTO';
 export * from './CustomerDTO';
