@@ -5,6 +5,7 @@ import com.example.myrideshare.repository.DriverRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -35,5 +36,20 @@ public class DriverService {
     @Transactional
     public Driver updateDriver(Driver driver){
         return driverRepository.save(driver);
+    }
+
+    public Driver authenticateForDriver(String email , String password){
+        Driver driver = driverRepository.findDriverByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("Driver not exist!"));
+
+        if (!driver.isActive()){
+            throw new IllegalStateException("driver is not active");
+        }
+
+        if (!driver.getPassword().equals(password)){
+            throw new IllegalArgumentException("wrong email or password");
+        }
+
+        return driver;
     }
 }
