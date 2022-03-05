@@ -1,12 +1,12 @@
 import SignInForm from "../SignInForm/SignInForm";
+import "./SignInPage.css"
 
 function SignInPage(){
 
     return (
 
-        <div>
-            <h1 className="sign-in">SIGN IN</h1>
-            <SignInForm/>
+        <div className="sign-in">
+                <SignInForm/>
         </div>
 
 

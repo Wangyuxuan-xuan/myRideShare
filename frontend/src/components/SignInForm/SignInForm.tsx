@@ -42,7 +42,7 @@ function SignInForm(){
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs" className="sign-in-form">
                 <CssBaseline />
                 <Box
                     sx={{
@@ -87,13 +87,13 @@ function SignInForm(){
                         <Button
                             type="submit"
                             color="secondary"
-                            variant="contained">
+                            variant="outlined">
                             Customer Sign in
                         </Button>
                         <Button
                             type="submit"
-                            color="secondary"
-                            variant="contained">
+                            color="primary"
+                            variant="outlined">
                             Driver Sign in
                         </Button>
                         <Grid container>
