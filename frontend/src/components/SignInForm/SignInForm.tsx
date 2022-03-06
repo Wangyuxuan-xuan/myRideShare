@@ -29,9 +29,11 @@ const theme = createTheme();
 interface SignInFormProps{
     loginService : LoginInService,
     changeLogInState : any
+    setCurrentCustomer : any
+    setCurrentDriver : any
 }
 
-function SignInForm({loginService ,changeLogInState} : SignInFormProps){
+function SignInForm({loginService ,changeLogInState , setCurrentCustomer , setCurrentDriver} : SignInFormProps){
 
     const {loginStore} = loginService;
     console.log("store : "+loginStore.isDriverLoggedIn);
@@ -99,6 +101,7 @@ function SignInForm({loginService ,changeLogInState} : SignInFormProps){
                                         const res = await loginService.loginAsCustomer();
                                         if (res){
                                             changeLogInState(true);
+                                            setCurrentCustomer(loginStore.currentCustomerDTO);
                                         }else {
                                             changeLogInState(false);
                                         }
@@ -119,6 +122,7 @@ function SignInForm({loginService ,changeLogInState} : SignInFormProps){
                                         const res = await loginService.loginAsDriver();
                                         if (res){
                                             changeLogInState(true);
+                                            setCurrentDriver(loginStore.currentDriverDTO);
                                         }else {
                                             changeLogInState(false);
                                         }

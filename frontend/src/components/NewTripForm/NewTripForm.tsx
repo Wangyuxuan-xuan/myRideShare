@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {ChangeEvent, useState} from "react";
 import {DatePickerComponent} from "./DatePickerComponent";
 import {TripPostService} from "../../service/TripPostService";
+import {DriverDTO} from "../../generated/restclient";
 
 const useStyles = makeStyles({
     field : {
@@ -18,9 +19,10 @@ const useStyles = makeStyles({
 
 interface NewTripFormProps {
     tripPostService : TripPostService
+    currentDriverDTO : DriverDTO | undefined
 }
 
-function NewTripForm({tripPostService} : NewTripFormProps) {
+function NewTripForm({tripPostService , currentDriverDTO} : NewTripFormProps) {
 
     const {newTripFormStore} = tripPostService;
     const classes = useStyles();
@@ -28,7 +30,6 @@ function NewTripForm({tripPostService} : NewTripFormProps) {
     const [destinationError,setDestinationError] = useState(false);
     const [maxNumOfPassengerError,setMaxNumOfPassengerError] = useState(false);
     const [carIdError,setCarIdError] = useState(false);
-    const [driverIdError,setDriverIdError] = useState(false);
     const [priceError,setPriceError] = useState(false)
 
     const handleSubmit = (e: React.SyntheticEvent) => {
@@ -50,13 +51,12 @@ function NewTripForm({tripPostService} : NewTripFormProps) {
             setCarIdError(true);
         }else setCarIdError(false);
 
-        if(newTripFormStore.driverId === 0){
-            setDriverIdError(true);
-        }else setDriverIdError(false);
-
         if(newTripFormStore.price === 0){
             setPriceError(true);
         }else setPriceError(false);
+
+        if(currentDriverDTO?.driverId)
+        newTripFormStore.driverId = currentDriverDTO?.driverId;
 
         if(newTripFormStore.departure && newTripFormStore.destination
             && newTripFormStore.maxNumOfPassenger && newTripFormStore.carId
@@ -141,18 +141,6 @@ function NewTripForm({tripPostService} : NewTripFormProps) {
                     </ul>
 
                 </div>
-
-                <TextField
-                    onChange={(e) => {
-                        newTripFormStore.driverId = Number(e.target.value);
-                    }}
-                    className={classes.field}
-                    label= "driver id"
-                    variant="outlined"
-                    color="primary"
-                    required
-                    error={driverIdError}
-                />
 
                 <TextField
                     onChange={(e) => {

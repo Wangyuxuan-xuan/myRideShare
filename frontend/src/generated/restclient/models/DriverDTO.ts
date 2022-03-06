@@ -17,6 +17,11 @@
  */
 export interface DriverDTO {
     /**
+     * @type {number}
+     * @memberof DriverDTO
+     */
+    driverId?: number;
+    /**
      * @type {string}
      * @memberof DriverDTO
      */

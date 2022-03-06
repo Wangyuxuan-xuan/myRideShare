@@ -20,6 +20,7 @@ public abstract class DriverMapper {
 
     private final LocalDate joinedDate = LocalDate.now();
 
+    @Mapping(target = "driverId", source = "driver.id")
     public abstract DriverDTO entityToGetDTO(Driver driver);
 
     public abstract List<DriverDTO> entityToGetDTO(List<Driver> driver);

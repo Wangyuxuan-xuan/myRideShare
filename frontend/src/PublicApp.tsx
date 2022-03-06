@@ -18,6 +18,7 @@ import {PublicAppService} from "./service/PublicAppService";
 import NewTripForm from "./components/NewTripForm/NewTripForm";
 import PrivateRoute from "./PrivateRoute";
 import {Observer} from "mobx-react-lite";
+import {CustomerDTO, DriverDTO} from "./generated/restclient";
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
@@ -27,10 +28,13 @@ export interface IPublicProps{
 function PublicApp(props : IPublicProps) {
 
     const [isDriverLoggedIn ,setIsDriverLoggedIn] = useState(false);
+    const [currentDriverDTO , setCurrentDriverDTO] = useState<DriverDTO>();
+    const [currentCustomerDTO , setcurrentCustomerDTO] = useState<CustomerDTO>();
 
     console.log("public app ran")
     console.log("isDriverLoggedIn " + isDriverLoggedIn);
-
+    console.log(currentDriverDTO);
+    console.log(currentCustomerDTO);
   return (
 
           <Router>
@@ -47,11 +51,17 @@ function PublicApp(props : IPublicProps) {
                               <Route path = "/sign-up" element={<SignUpPage signUpService={props.services.signUpService}/>}/>
                               <Route path = "/sign-in" element={<SignInPage loginService={props.services.loginService}
                                                                             changeLogInState={(isLoggedIn : boolean) => {
-                                                                                setIsDriverLoggedIn(isLoggedIn)
-                                                                            }}/>}/>
+                                                                                setIsDriverLoggedIn(isLoggedIn)}}
+                                                                            setCurrentDriver={(currentDriverDTO : DriverDTO) => {
+                                                                                setCurrentDriverDTO(currentDriverDTO);}}
+                                                                            setCurrentCustomer={(currentCustomerDTO : CustomerDTO) => {
+                                                                                setcurrentCustomerDTO(currentCustomerDTO);
+                                                                            }}
+
+                              />}/>
                               <Route path = "/result" element={<Result tripResultService={props.services.tripResultService}/>}/>
                               <Route path = "/" element={<PrivateRoute isDriverLoggedIn={isDriverLoggedIn} user="driver"/>} >
-                                  <Route path = "/trip/new" element={<NewTripForm tripPostService={props.services.tripPostService}/>}/>
+                                  <Route path = "/trip/new" element={<NewTripForm tripPostService={props.services.tripPostService} currentDriverDTO={currentDriverDTO}/>}/>
                               </Route>
                           </Routes>
                           )
