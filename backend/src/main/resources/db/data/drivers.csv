@@ -1,0 +1,6 @@
+version;name;email;password;address;phone;joined_date;rate;active;driver_license_no;avatar
+1;Rubi;rubi@email.com;123456;addr;705689853;2022-03-01;5.0;true;no1023456;
+1;Nancy;nancy@email.com;123456;addr;705683896;2022-01-02;4.6;true;no1072711;
+1;Sandra;sandra@email.com;123456;addr;705862456;2021-05-15;3.5;true;no1056745;
+1;Jessie;jessie@email.com;123456;addr;708564584;2021-12-24;5.0;true;no1045771;
+1;Anya;anya@email.com;123456;addr;708341458;2022-03-01;5.0;true;no1045742;

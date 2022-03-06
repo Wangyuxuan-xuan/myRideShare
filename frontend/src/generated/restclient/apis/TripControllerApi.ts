@@ -16,6 +16,7 @@ import { BaseAPI, HttpHeaders, HttpQuery, throwIfNullOrUndefined, encodeURI, Ope
 import {
     TripDTO,
     TripPostDTO,
+    TripUpdateDTO,
 } from '../models';
 
 export interface CreateTripRequest {
@@ -36,9 +37,9 @@ export interface SearchTripsRequest {
     dateTime: string;
 }
 
-export interface UpdateCarRequest {
+export interface UpdateTripRequest {
     tripId: number;
-    tripPostDTO: TripPostDTO;
+    tripUpdateDTO: TripUpdateDTO;
 }
 
 /**
@@ -127,11 +128,11 @@ export class TripControllerApi extends BaseAPI {
 
     /**
      */
-    updateCar({ tripId, tripPostDTO }: UpdateCarRequest): Observable<void>
-    updateCar({ tripId, tripPostDTO }: UpdateCarRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
-    updateCar({ tripId, tripPostDTO }: UpdateCarRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
-        throwIfNullOrUndefined(tripId, 'tripId', 'updateCar');
-        throwIfNullOrUndefined(tripPostDTO, 'tripPostDTO', 'updateCar');
+    updateTrip({ tripId, tripUpdateDTO }: UpdateTripRequest): Observable<void>
+    updateTrip({ tripId, tripUpdateDTO }: UpdateTripRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
+    updateTrip({ tripId, tripUpdateDTO }: UpdateTripRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
+        throwIfNullOrUndefined(tripId, 'tripId', 'updateTrip');
+        throwIfNullOrUndefined(tripUpdateDTO, 'tripUpdateDTO', 'updateTrip');
 
         const headers: HttpHeaders = {
             'Content-Type': 'application/json',
@@ -141,7 +142,7 @@ export class TripControllerApi extends BaseAPI {
             url: '/api/trips/update/{tripId}'.replace('{tripId}', encodeURI(tripId)),
             method: 'PUT',
             headers,
-            body: tripPostDTO,
+            body: tripUpdateDTO,
         }, opts?.responseOpts);
     };
 

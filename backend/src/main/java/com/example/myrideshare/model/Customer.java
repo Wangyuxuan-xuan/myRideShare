@@ -41,6 +41,6 @@ public class Customer extends BaseEntity{
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Trip> trips = new ArrayList<>();
+    private List<CustomerTrip> customerTrips = new ArrayList<>();
 
 }

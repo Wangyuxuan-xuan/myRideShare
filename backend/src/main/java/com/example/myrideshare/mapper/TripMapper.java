@@ -1,11 +1,12 @@
 package com.example.myrideshare.mapper;
 
 import com.example.myrideshare.dto.request.TripPostDTO;
+import com.example.myrideshare.dto.request.TripUpdateDTO;
 import com.example.myrideshare.dto.response.TripDTO;
 import com.example.myrideshare.model.Car;
 import com.example.myrideshare.model.Customer;
 import com.example.myrideshare.model.Driver;
-import com.example.myrideshare.model.Trip;
+import com.example.myrideshare.model.PublicTrip;
 import com.example.myrideshare.repository.CarRepository;
 import com.example.myrideshare.repository.CustomerRepository;
 import com.example.myrideshare.repository.DriverRepository;
@@ -29,9 +30,6 @@ public abstract class TripMapper {
     @Autowired
     CustomerRepository customerRepository;
 
-    @Mapping(target = "customerPhone", source = "customer.phone")
-    @Mapping(target = "customerName", source = "customer.name")
-    @Mapping(target = "customerJoinedDate", source = "customer.joinedDate")
     @Mapping(target = "driverPhone", source = "driver.phone")
     @Mapping(target = "driverName", source = "driver.name")
     @Mapping(target = "driverJoinedDate", source = "driver.joinedDate")
@@ -41,31 +39,32 @@ public abstract class TripMapper {
     @Mapping(target = "carLicensePlate", source = "car.licensePlate")
     @Mapping(target = "carCarType", source = "car.carType")
     @Mapping(target = "driverId", source = "driver.id")
-    @Mapping(target = "customerId", source = "customer.id")
     @Mapping(target = "carId", source = "car.id")
-    public abstract TripDTO entityToGetDTO(Trip trip,Driver driver, Car car,Customer customer);
+    public abstract TripDTO entityToGetDTO(PublicTrip publicTrip, Driver driver, Car car);
 
-    public List<TripDTO> entityToGetDTO(List<Trip> trips){
+    public List<TripDTO> entityToGetDTO(List<PublicTrip> publicTrips){
 
-        List<TripDTO> list = new ArrayList<TripDTO>( trips.size() );
+        List<TripDTO> list = new ArrayList<TripDTO>( publicTrips.size() );
 
-        for ( Trip trip : trips ) {
-            Driver driver = trip.getDriver();
-            Car car = trip.getCar();
-            Customer customer = trip.getCustomer();
+        for ( PublicTrip publicTrip : publicTrips) {
+            Driver driver = publicTrip.getDriver();
+            Car car = publicTrip.getCar();
 
-            list.add( entityToGetDTO(trip,driver,car,customer) );
+            list.add( entityToGetDTO(publicTrip,driver,car) );
         }
 
         return list;
     }
 
+    @Mapping(target = "tripStatus", ignore = true)
+    @Mapping(target = "paymentStatus", ignore = true)
+    @Mapping(target = "driverRate", ignore = true)
+    @Mapping(target = "customerRate", ignore = true)
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "driver", source = "driverId")
-    @Mapping(target = "customer", source = "customerId")
     @Mapping(target = "car", source = "carId")
-    public abstract Trip tripPostDTOToEntity(TripPostDTO tripPostDTO);
+    public abstract PublicTrip tripPostDTOToEntity(TripPostDTO tripPostDTO);
 
     public Driver idToDriver(Long id){
         return driverRepository.getById(id);
@@ -82,7 +81,6 @@ public abstract class TripMapper {
     @Mapping(target = "version", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "driver", source = "driverId")
-    @Mapping(target = "customer", source = "customerId")
     @Mapping(target = "car", source = "carId")
-    public abstract void updateEntityFromUpdateDTO(TripPostDTO tripPostDTO, @MappingTarget Trip trip);
+    public abstract void updateEntityFromUpdateDTO(TripUpdateDTO tripUpdateDTO, @MappingTarget PublicTrip publicTrip);
 }

@@ -1,15 +1,13 @@
-package com.example.myrideshare.dto.response;
+package com.example.myrideshare.dto.request;
 
-import com.example.myrideshare.model.CarType;
 import com.example.myrideshare.model.PaymentStatus;
 import com.example.myrideshare.model.TripStatus;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-public class TripDTO {
+public class TripUpdateDTO {
 
     private String startLocation;
 
@@ -29,28 +27,11 @@ public class TripDTO {
 
     private int price;
 
-    private Long driverId;
-
-    private Long carId;
-
     private int maxNumOfPassengers;
 
     private String description;
 
-    private String driverName;
+    private Long driverId;
 
-    private String driverPhone;
-
-    private LocalDate driverJoinedDate;
-
-    private float driverCurrentRate;
-
-    private int carNumOfPassenger;
-
-    private String carModel;
-
-    private String carLicensePlate;
-
-    private CarType carCarType;
-
+    private Long carId;
 }

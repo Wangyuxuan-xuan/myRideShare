@@ -65,17 +65,22 @@ export interface TripDTO {
      * @type {number}
      * @memberof TripDTO
      */
-    customerId?: number;
-    /**
-     * @type {number}
-     * @memberof TripDTO
-     */
     driverId?: number;
     /**
      * @type {number}
      * @memberof TripDTO
      */
     carId?: number;
+    /**
+     * @type {number}
+     * @memberof TripDTO
+     */
+    maxNumOfPassengers?: number;
+    /**
+     * @type {string}
+     * @memberof TripDTO
+     */
+    description?: string;
     /**
      * @type {string}
      * @memberof TripDTO
@@ -116,21 +121,6 @@ export interface TripDTO {
      * @memberof TripDTO
      */
     carCarType?: TripDTOCarCarTypeEnum;
-    /**
-     * @type {string}
-     * @memberof TripDTO
-     */
-    customerName?: string;
-    /**
-     * @type {string}
-     * @memberof TripDTO
-     */
-    customerPhone?: string;
-    /**
-     * @type {string}
-     * @memberof TripDTO
-     */
-    customerJoinedDate?: string;
 }
 
 /**

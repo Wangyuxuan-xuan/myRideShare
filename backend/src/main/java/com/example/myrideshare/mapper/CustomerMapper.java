@@ -25,8 +25,8 @@ public abstract class CustomerMapper {
 
     public abstract List<CustomerDTO> EntityToGetDTO(List<Customer> customer);
 
+    @Mapping(target = "avatar", ignore = true)
     @Mapping(target = "version", ignore = true)
-    @Mapping(target = "trips", ignore = true)
     @Mapping(target = "id", source = "customerId")
     public abstract Customer GetDTOToEntity(CustomerDTO customerDTO);
 
@@ -52,7 +52,6 @@ public abstract class CustomerMapper {
 
 
     @Mapping(target = "version", ignore = true)
-    @Mapping(target = "trips", ignore = true)
     @Mapping(target = "rate", ignore = true)
     @Mapping(target = "joinedDate", ignore = true)
     @Mapping(target = "id", source = "customerId")

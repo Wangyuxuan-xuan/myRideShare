@@ -55,6 +55,6 @@ public class Driver extends BaseEntity{
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Trip> trips = new ArrayList<>();
+    private List<PublicTrip> publicTrips = new ArrayList<>();
 
 }

@@ -1,3 +1,4 @@
+export * from './AuthenticationControllerApi';
 export * from './CarControllerApi';
 export * from './CustomerControllerApi';
 export * from './DriverControllerApi';

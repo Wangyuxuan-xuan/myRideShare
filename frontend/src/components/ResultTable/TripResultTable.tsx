@@ -107,12 +107,12 @@ function TripResultTable({tripResultService} : TripTableProps) {
                     for (let i = 0; i < trips.length; i++) {
                         tripTable[i] = {
                             id : i,
-                            driverName: "driver name " + trips[i].driverId,
+                            driverName: trips[i].driverName,
                             startLocation: trips[i].startLocation,
                             endLocation: trips[i].endLocation,
                             startTime: trips[i].startTime,
                             endTime: trips[i].endTime,
-                            driverRate: trips[i].driverRate,
+                            driverRate: trips[i].driverCurrentRate,
                             price: trips[i].price,
                         }
                     }

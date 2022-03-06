@@ -36,7 +36,7 @@ export interface GetCarByIdRequest {
     carId: number;
 }
 
-export interface UpdateCar1Request {
+export interface UpdateCarRequest {
     carUpdateDTO: CarUpdateDTO;
 }
 
@@ -106,10 +106,10 @@ export class CarControllerApi extends BaseAPI {
 
     /**
      */
-    updateCar1({ carUpdateDTO }: UpdateCar1Request): Observable<void>
-    updateCar1({ carUpdateDTO }: UpdateCar1Request, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
-    updateCar1({ carUpdateDTO }: UpdateCar1Request, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
-        throwIfNullOrUndefined(carUpdateDTO, 'carUpdateDTO', 'updateCar1');
+    updateCar({ carUpdateDTO }: UpdateCarRequest): Observable<void>
+    updateCar({ carUpdateDTO }: UpdateCarRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
+    updateCar({ carUpdateDTO }: UpdateCarRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
+        throwIfNullOrUndefined(carUpdateDTO, 'carUpdateDTO', 'updateCar');
 
         const headers: HttpHeaders = {
             'Content-Type': 'application/json',

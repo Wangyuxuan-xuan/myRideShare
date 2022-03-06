@@ -40,27 +40,17 @@ export interface TripPostDTO {
      * @type {number}
      * @memberof TripPostDTO
      */
-    customerRate?: number;
-    /**
-     * @type {number}
-     * @memberof TripPostDTO
-     */
-    driverRate?: number;
-    /**
-     * @type {string}
-     * @memberof TripPostDTO
-     */
-    paymentStatus?: TripPostDTOPaymentStatusEnum;
-    /**
-     * @type {string}
-     * @memberof TripPostDTO
-     */
-    tripStatus?: TripPostDTOTripStatusEnum;
-    /**
-     * @type {number}
-     * @memberof TripPostDTO
-     */
     price?: number;
+    /**
+     * @type {number}
+     * @memberof TripPostDTO
+     */
+    maxNumOfPassengers?: number;
+    /**
+     * @type {string}
+     * @memberof TripPostDTO
+     */
+    description?: string;
     /**
      * @type {number}
      * @memberof TripPostDTO
@@ -70,30 +60,5 @@ export interface TripPostDTO {
      * @type {number}
      * @memberof TripPostDTO
      */
-    customerId?: number;
-    /**
-     * @type {number}
-     * @memberof TripPostDTO
-     */
     carId?: number;
 }
-
-/**
- * @export
- * @enum {string}
- */
-export enum TripPostDTOPaymentStatusEnum {
-    UNPAID = 'UNPAID',
-    ONGOING = 'ONGOING',
-    PAID = 'PAID'
-}
-/**
- * @export
- * @enum {string}
- */
-export enum TripPostDTOTripStatusEnum {
-    BOOKED = 'BOOKED',
-    ON_GOING = 'ON_GOING',
-    FINISHED = 'FINISHED'
-}
-

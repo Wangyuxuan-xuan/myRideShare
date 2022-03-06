@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Trip extends BaseEntity{
+public class PublicTrip extends BaseEntity{
 
     private String startLocation;
 
@@ -34,9 +34,9 @@ public class Trip extends BaseEntity{
 
     private int price;
 
-    @ManyToOne(targetEntity = Customer.class , fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private int maxNumOfPassengers;
+
+    private String description;
 
     @ManyToOne(targetEntity = Driver.class , fetch = FetchType.LAZY)
     @JoinColumn(name = "driver_id")
@@ -45,4 +45,7 @@ public class Trip extends BaseEntity{
     @ManyToOne(targetEntity = Car.class , fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     private Car car;
+//
+//    @OneToOne(optional = true , fetch = FetchType.LAZY)
+//    private CustomerTrip customerTrip;
 }
