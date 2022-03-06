@@ -23,17 +23,20 @@ public class CustomerController {
     private final CustomerMapper mapper;
 
     @GetMapping("/customers")
+    @CrossOrigin(origins = "*")
     public List<CustomerDTO> getAllCustomers(){
         return mapper.EntityToGetDTO(service.getAllCustomers());
     }
 
     @GetMapping("/{customerId}")
+    @CrossOrigin(origins = "*")
     public CustomerDTO getCustomerById(@PathVariable Long customerId){
         Customer customer = service.getCustomerById(customerId);
         return mapper.entityToGetDTO(customer);
     }
 
     @PostMapping(value = "/create" , consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @CrossOrigin(origins = "*")
     public CustomerDTO createCustomer(CustomerPostDTO customerPostDTO){
         Customer customer = mapper.PostDTOToEntity(customerPostDTO);
         Customer created = service.createCustomer(customer);
@@ -42,11 +45,13 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{customerId}")
+    @CrossOrigin(origins = "*")
     public void deleteCustomerById(@PathVariable Long customerId){
         service.deleteCustomerById(customerId);
     }
 
     @PutMapping("/update")
+    @CrossOrigin(origins = "*")
     public void updateCustomer(@RequestBody CustomerUpdateDTO dto){
         Customer customer = service.getCustomerById(dto.getCustomerId());
         mapper.updateEntityFromUpdateDTO(dto,customer);

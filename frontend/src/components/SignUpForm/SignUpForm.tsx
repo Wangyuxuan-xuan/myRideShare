@@ -13,7 +13,12 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {Link as ReactLink} from "react-router-dom";
+import {SignUpService} from "../../service/SignUpService";
+import {useState} from "react";
 
+interface SignUpFormProps {
+    signUpService : SignUpService
+}
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -29,16 +34,44 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function SignUpForm() {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-    };
+export default function SignUpForm({signUpService} : SignUpFormProps) {
+
+    const {signUpStore} = signUpService;
+
+    const [nameError , setNameError] = useState(false);
+    const [emailError , setEmailError] = useState(false);
+    const [phoneError , setPhoneError] = useState(false);
+    const [passwordError , setPasswordError] = useState(false);
+    const [rePasswordError , setRePasswordError] = useState(false);
+
+    const isSyntaxOk = () => {
+        if(signUpStore.name === ""){
+            setNameError(true);
+        }else setNameError(false);
+
+        if(signUpStore.email === ""){
+            setEmailError(true);
+        }else setEmailError(false);
+
+        if(signUpStore.phoneNumber === ""){
+            setPhoneError(true);
+        }else setPhoneError(false);
+
+        if(signUpStore.password === ""){
+            setPasswordError(true);
+        }else setPasswordError(false);
+
+        if(signUpStore.rePassword === ""){
+            setRePasswordError(true);
+        }else setRePasswordError(false);
+
+        if(signUpStore.password !== signUpStore.rePassword){
+            setRePasswordError(true);
+        }else setRePasswordError(false);
+
+
+        return !(nameError || emailError || phoneError || passwordError || rePasswordError);
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -55,10 +88,13 @@ export default function SignUpForm() {
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
-                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                    <Box component="form" sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
+                                    onChange={(e) => {
+                                        signUpStore.name = e.target.value;
+                                    }}
                                     variant="outlined"
                                     color="primary"
                                     autoComplete="given-name"
@@ -68,10 +104,14 @@ export default function SignUpForm() {
                                     id="firstName"
                                     label="Name"
                                     autoFocus
+                                    error={nameError}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    onChange={(e) => {
+                                        signUpStore.email = e.target.value;
+                                    }}
                                     variant="outlined"
                                     color="primary"
                                     required
@@ -80,10 +120,14 @@ export default function SignUpForm() {
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
+                                    error={emailError}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    onChange={(e) => {
+                                        signUpStore.phoneNumber = e.target.value;
+                                    }}
                                     variant="outlined"
                                     color="primary"
                                     required
@@ -92,10 +136,14 @@ export default function SignUpForm() {
                                     label="Phone Number"
                                     name="lastName"
                                     autoComplete="phone-number"
+                                    error={phoneError}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    onChange={(e) => {
+                                        signUpStore.password = e.target.value;
+                                    }}
                                     variant="outlined"
                                     color="primary"
                                     required
@@ -105,10 +153,14 @@ export default function SignUpForm() {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
+                                    error={passwordError}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    onChange={(e) => {
+                                        signUpStore.rePassword = e.target.value;
+                                    }}
                                     variant="outlined"
                                     color="primary"
                                     required
@@ -118,6 +170,7 @@ export default function SignUpForm() {
                                     type="password"
                                     id="re-password"
                                     autoComplete="new-password"
+                                    error={rePasswordError}
                                 />
                             </Grid>
 
@@ -129,7 +182,9 @@ export default function SignUpForm() {
                                     variant="outlined"
                                     onClick={async (e) => {
                                         e.preventDefault();
-
+                                        if (isSyntaxOk()){
+                                            signUpService.signUpAsCustomer();
+                                        }
                                     }}
                                 >
                                     Customer Sign up
@@ -143,7 +198,9 @@ export default function SignUpForm() {
                                     variant="outlined"
                                     onClick={async (e) => {
                                         e.preventDefault();
-
+                                        if (isSyntaxOk()){
+                                            signUpService.signUpAsDriver();
+                                        }
                                     }}
                                 >
                                     Driver Sign up

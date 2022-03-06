@@ -8,7 +8,7 @@ import Home from "./components/Pages/Home";
 import Search from "./components/Pages/Search";
 // @ts-ignore
 import Personal from "./components/Pages/Personal";
-import SignUp from "./components/Pages/SignUp";
+import SignUpPage from "./components/Pages/SignUpPage";
 import Footer from "./components/footer/Footer";
 // @ts-ignore
 import SignInPage from "./components/Pages/SignInPage";
@@ -44,7 +44,7 @@ function PublicApp(props : IPublicProps) {
                               <Route path = "/" element={<Home/>}/>
                               <Route path = "/search" element={<Search services={props.services.tripResultService}/>}/>
                               <Route path = "/personal" element={<Personal/>}/>
-                              <Route path = "/sign-up" element={<SignUp/>}/>
+                              <Route path = "/sign-up" element={<SignUpPage signUpService={props.services.signUpService}/>}/>
                               <Route path = "/sign-in" element={<SignInPage loginService={props.services.loginService}
                                                                             changeLogInState={(isLoggedIn : boolean) => {
                                                                                 setIsDriverLoggedIn(isLoggedIn)

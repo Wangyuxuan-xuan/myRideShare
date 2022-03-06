@@ -23,16 +23,19 @@ public class DriverController {
     private final DriverMapper mapper;
 
     @GetMapping("/drivers")
+    @CrossOrigin(origins = "*")
     public List<DriverDTO> getAllDrivers(){
         return mapper.entityToGetDTO(service.getAllDrivers());
     }
 
     @GetMapping("/{driverId}")
+    @CrossOrigin(origins = "*")
     public DriverDTO getDriverById(@PathVariable Long driverId){
         return mapper.entityToGetDTO(service.getDriverById(driverId));
     }
 
     @PostMapping(value = "/create" ,consumes = { MediaType.MULTIPART_FORM_DATA_VALUE } )
+    @CrossOrigin(origins = "*")
     public DriverDTO createDriver(DriverPostDTO driverPostDTO){
         Driver driver = mapper.postDTOToEntity(driverPostDTO);
         Driver created = service.createDriver(driver);
@@ -41,11 +44,13 @@ public class DriverController {
     }
 
     @DeleteMapping("/{driverId}")
+    @CrossOrigin(origins = "*")
     public void deleteByDriverId(@PathVariable Long driverId){
         service.deleteDriverById(driverId);
     }
 
     @PutMapping("/update")
+    @CrossOrigin(origins = "*")
     public void updateDriver(@RequestBody DriverUpdateDTO dto){
         Driver driver = service.getDriverById(dto.getDriverId());
         mapper.updateEntityFromUpdateDTO(dto,driver);

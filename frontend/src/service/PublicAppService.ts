@@ -11,12 +11,14 @@ import {
 import {createApiConfig} from "../utils/api-utils";
 import {TripPostService} from "./TripPostService";
 import {LoginInService} from "./LoginInService";
+import {SignUpService} from "./SignUpService";
 
 export class PublicAppService{
 
     public readonly tripResultService : TripResultService;
     public readonly tripPostService : TripPostService;
     public readonly loginService : LoginInService
+    public readonly signUpService : SignUpService;
 
     constructor(apiConfig: Configuration ,public readonly publicAppStore : PublicAppStore) {
 
@@ -31,9 +33,12 @@ export class PublicAppService{
             publicAppStore.searchBarStore);
 
         this.tripPostService = new TripPostService(tripApi,
-            publicAppStore.newTripFormStore)
+            publicAppStore.newTripFormStore);
 
         this.loginService = new LoginInService(authApi,
-            publicAppStore.loginStore)
+            publicAppStore.loginStore);
+
+        this.signUpService = new SignUpService(customerApi ,driverApi ,
+            publicAppStore.signUpStore);
     }
 }
