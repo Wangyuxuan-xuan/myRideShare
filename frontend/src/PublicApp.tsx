@@ -19,8 +19,6 @@ import NewTripForm from "./components/NewTripForm/NewTripForm";
 import PrivateRoute from "./PrivateRoute";
 import {Observer} from "mobx-react-lite";
 import {CustomerDTO, DriverDTO} from "./generated/restclient";
-// import AdapterDateFns from '@mui/lab/AdapterDateFns';
-// import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 export interface IPublicProps{
     services : PublicAppService
@@ -28,11 +26,13 @@ export interface IPublicProps{
 function PublicApp(props : IPublicProps) {
 
     const [isDriverLoggedIn ,setIsDriverLoggedIn] = useState(false);
+    const [isCustomerLoggedIn ,setIsCustomerLoggedIn] = useState(false);
     const [currentDriverDTO , setCurrentDriverDTO] = useState<DriverDTO>();
     const [currentCustomerDTO , setcurrentCustomerDTO] = useState<CustomerDTO>();
 
-    console.log("public app ran")
-    console.log("isDriverLoggedIn " + isDriverLoggedIn);
+    // console.log("public app ran")
+    // console.log("isDriverLoggedIn " + isDriverLoggedIn);
+    // console.log("isCustomerLoggedIn " + isCustomerLoggedIn);
     console.log(currentDriverDTO);
     console.log(currentCustomerDTO);
   return (
@@ -50,8 +50,10 @@ function PublicApp(props : IPublicProps) {
                               <Route path = "/personal" element={<Personal/>}/>
                               <Route path = "/sign-up" element={<SignUpPage signUpService={props.services.signUpService}/>}/>
                               <Route path = "/sign-in" element={<SignInPage loginService={props.services.loginService}
-                                                                            changeLogInState={(isLoggedIn : boolean) => {
+                                                                            changeDriverLogInState={(isLoggedIn : boolean) => {
                                                                                 setIsDriverLoggedIn(isLoggedIn)}}
+                                                                            changeCustomerLogInState={(isLoggedIn : boolean) => {
+                                                                                setIsCustomerLoggedIn(isLoggedIn)}}
                                                                             setCurrentDriver={(currentDriverDTO : DriverDTO) => {
                                                                                 setCurrentDriverDTO(currentDriverDTO);}}
                                                                             setCurrentCustomer={(currentCustomerDTO : CustomerDTO) => {
@@ -60,7 +62,7 @@ function PublicApp(props : IPublicProps) {
 
                               />}/>
                               <Route path = "/result" element={<Result tripResultService={props.services.tripResultService}/>}/>
-                              <Route path = "/" element={<PrivateRoute isDriverLoggedIn={isDriverLoggedIn} user="driver"/>} >
+                              <Route path = "/" element={<PrivateRoute isDriverLoggedIn={isDriverLoggedIn} isCustomerLoggedIn={isCustomerLoggedIn} user="driver"/>} >
                                   <Route path = "/trip/new" element={<NewTripForm tripPostService={props.services.tripPostService} currentDriverDTO={currentDriverDTO}/>}/>
                               </Route>
                           </Routes>

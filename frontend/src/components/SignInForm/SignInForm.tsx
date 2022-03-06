@@ -28,12 +28,13 @@ const theme = createTheme();
 
 interface SignInFormProps{
     loginService : LoginInService,
-    changeLogInState : any
+    changeDriverLogInState : any
+    changeCustomerLogInState : any,
     setCurrentCustomer : any
     setCurrentDriver : any
 }
 
-function SignInForm({loginService ,changeLogInState , setCurrentCustomer , setCurrentDriver} : SignInFormProps){
+function SignInForm({loginService ,changeDriverLogInState ,changeCustomerLogInState, setCurrentCustomer , setCurrentDriver} : SignInFormProps){
 
     const {loginStore} = loginService;
     console.log("store : "+loginStore.isDriverLoggedIn);
@@ -100,10 +101,10 @@ function SignInForm({loginService ,changeLogInState , setCurrentCustomer , setCu
                                         console.log("email :" + loginStore.email + "password : " + loginStore.password);
                                         const res = await loginService.loginAsCustomer();
                                         if (res){
-                                            changeLogInState(true);
+                                            changeCustomerLogInState(true);
                                             setCurrentCustomer(loginStore.currentCustomerDTO);
                                         }else {
-                                            changeLogInState(false);
+                                            changeCustomerLogInState(false);
                                         }
                                     }}
                                 >
@@ -121,10 +122,10 @@ function SignInForm({loginService ,changeLogInState , setCurrentCustomer , setCu
                                         console.log("email :" + loginStore.email + "password : " + loginStore.password);
                                         const res = await loginService.loginAsDriver();
                                         if (res){
-                                            changeLogInState(true);
+                                            changeDriverLogInState(true);
                                             setCurrentDriver(loginStore.currentDriverDTO);
                                         }else {
-                                            changeLogInState(false);
+                                            changeDriverLogInState(false);
                                         }
                                     }}
                                 >
