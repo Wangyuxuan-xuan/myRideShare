@@ -12,6 +12,7 @@ import {createApiConfig} from "../utils/api-utils";
 import {TripPostService} from "./TripPostService";
 import {LoginInService} from "./LoginInService";
 import {SignUpService} from "./SignUpService";
+import {UserProfileService} from "./UserProfileService";
 
 export class PublicAppService{
 
@@ -19,6 +20,7 @@ export class PublicAppService{
     public readonly tripPostService : TripPostService;
     public readonly loginService : LoginInService
     public readonly signUpService : SignUpService;
+    public readonly userProfileService : UserProfileService;
 
     constructor(apiConfig: Configuration ,public readonly publicAppStore : PublicAppStore) {
 
@@ -40,5 +42,8 @@ export class PublicAppService{
 
         this.signUpService = new SignUpService(customerApi ,driverApi ,
             publicAppStore.signUpStore);
+
+        this.userProfileService = new UserProfileService(customerApi,driverApi,
+            publicAppStore.userProfileStore);
     }
 }
