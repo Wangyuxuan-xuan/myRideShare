@@ -39,7 +39,12 @@ function PublicApp(props : IPublicProps) {
 
           <Router>
               <div className="App">
-                  <Navbar/>
+                  <Navbar isCustomerLoggedIn={isCustomerLoggedIn} isDriverLoggedIn={isDriverLoggedIn}
+                          changeDriverLogInState={(isLoggedIn : boolean) => {
+                              setIsDriverLoggedIn(isLoggedIn)}}
+                          changeCustomerLogInState={(isLoggedIn : boolean) => {
+                              setIsCustomerLoggedIn(isLoggedIn)}}
+                  />
               </div>
 
                   <Observer>{() => {
