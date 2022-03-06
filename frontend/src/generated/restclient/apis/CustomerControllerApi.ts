@@ -22,9 +22,7 @@ export interface CreateCustomerRequest {
     name?: string;
     email?: string;
     password?: string;
-    address?: string;
     phone?: string;
-    avatar?: Blob;
 }
 
 export interface DeleteCustomerByIdRequest {
@@ -46,17 +44,15 @@ export class CustomerControllerApi extends BaseAPI {
 
     /**
      */
-    createCustomer({ name, email, password, address, phone, avatar }: CreateCustomerRequest): Observable<CustomerDTO>
-    createCustomer({ name, email, password, address, phone, avatar }: CreateCustomerRequest, opts?: OperationOpts): Observable<RawAjaxResponse<CustomerDTO>>
-    createCustomer({ name, email, password, address, phone, avatar }: CreateCustomerRequest, opts?: OperationOpts): Observable<CustomerDTO | RawAjaxResponse<CustomerDTO>> {
+    createCustomer({ name, email, password, phone }: CreateCustomerRequest): Observable<CustomerDTO>
+    createCustomer({ name, email, password, phone }: CreateCustomerRequest, opts?: OperationOpts): Observable<RawAjaxResponse<CustomerDTO>>
+    createCustomer({ name, email, password, phone }: CreateCustomerRequest, opts?: OperationOpts): Observable<CustomerDTO | RawAjaxResponse<CustomerDTO>> {
 
         const formData = new FormData();
         if (name !== undefined) { formData.append('name', name as any); }
         if (email !== undefined) { formData.append('email', email as any); }
         if (password !== undefined) { formData.append('password', password as any); }
-        if (address !== undefined) { formData.append('address', address as any); }
         if (phone !== undefined) { formData.append('phone', phone as any); }
-        if (avatar !== undefined) { formData.append('avatar', avatar as any); }
 
         return this.request<CustomerDTO>({
             url: '/api/customers/create',

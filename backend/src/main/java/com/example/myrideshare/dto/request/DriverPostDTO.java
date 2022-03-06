@@ -15,11 +15,11 @@ public class DriverPostDTO {
 
     private String password;
 
-    private String address;
+//    private String address;
 
     private String phone;
 
-    private String driverLicenseNo;
+//    private String driverLicenseNo;
 
-    private MultipartFile avatar;
+//    private MultipartFile avatar;
 }

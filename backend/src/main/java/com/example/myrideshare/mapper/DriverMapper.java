@@ -33,11 +33,11 @@ public abstract class DriverMapper {
         driver.setName(driverPostDTO.getName());
         driver.setEmail(driverPostDTO.getEmail());
         driver.setPassword(driverPostDTO.getPassword());
-        driver.setAddress(driverPostDTO.getAddress());
+        driver.setAddress("addr");
         driver.setPhone(driverPostDTO.getPhone());
-        driver.setDriverLicenseNo(driverPostDTO.getDriverLicenseNo());
-        driver.setAvatar(multipartFileMapper.fileToByteArray(driverPostDTO.getAvatar()));
-
+        driver.setDriverLicenseNo("license no");
+//        driver.setAvatar(multipartFileMapper.fileToByteArray(driverPostDTO.getAvatar()));
+        driver.setAvatar(null);
         driver.setActive(false);
         driver.setJoinedDate(joinedDate);
 

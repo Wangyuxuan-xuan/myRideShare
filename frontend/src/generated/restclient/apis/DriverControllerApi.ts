@@ -22,10 +22,7 @@ export interface CreateDriverRequest {
     name?: string;
     email?: string;
     password?: string;
-    address?: string;
     phone?: string;
-    driverLicenseNo?: string;
-    avatar?: Blob;
 }
 
 export interface DeleteByDriverIdRequest {
@@ -47,18 +44,15 @@ export class DriverControllerApi extends BaseAPI {
 
     /**
      */
-    createDriver({ name, email, password, address, phone, driverLicenseNo, avatar }: CreateDriverRequest): Observable<DriverDTO>
-    createDriver({ name, email, password, address, phone, driverLicenseNo, avatar }: CreateDriverRequest, opts?: OperationOpts): Observable<RawAjaxResponse<DriverDTO>>
-    createDriver({ name, email, password, address, phone, driverLicenseNo, avatar }: CreateDriverRequest, opts?: OperationOpts): Observable<DriverDTO | RawAjaxResponse<DriverDTO>> {
+    createDriver({ name, email, password, phone }: CreateDriverRequest): Observable<DriverDTO>
+    createDriver({ name, email, password, phone }: CreateDriverRequest, opts?: OperationOpts): Observable<RawAjaxResponse<DriverDTO>>
+    createDriver({ name, email, password, phone }: CreateDriverRequest, opts?: OperationOpts): Observable<DriverDTO | RawAjaxResponse<DriverDTO>> {
 
         const formData = new FormData();
         if (name !== undefined) { formData.append('name', name as any); }
         if (email !== undefined) { formData.append('email', email as any); }
         if (password !== undefined) { formData.append('password', password as any); }
-        if (address !== undefined) { formData.append('address', address as any); }
         if (phone !== undefined) { formData.append('phone', phone as any); }
-        if (driverLicenseNo !== undefined) { formData.append('driverLicenseNo', driverLicenseNo as any); }
-        if (avatar !== undefined) { formData.append('avatar', avatar as any); }
 
         return this.request<DriverDTO>({
             url: '/api/drivers/create',
