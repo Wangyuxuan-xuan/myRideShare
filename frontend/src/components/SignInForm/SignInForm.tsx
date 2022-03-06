@@ -10,7 +10,8 @@ import Container from '@material-ui/core/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./SignInForm.css"
 import {LoginInService} from "../../service/LoginInService";
-import {Link as ReactLink} from "react-router-dom";
+import {Link as ReactLink,Navigate,useNavigate  } from "react-router-dom";
+import {from} from "rxjs";
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -38,6 +39,7 @@ function SignInForm({loginService ,changeDriverLogInState ,changeCustomerLogInSt
 
     const {loginStore} = loginService;
     console.log("store : "+loginStore.isDriverLoggedIn);
+    const navigate = useNavigate();
 
     return (
         <ThemeProvider theme={theme}>
@@ -103,6 +105,7 @@ function SignInForm({loginService ,changeDriverLogInState ,changeCustomerLogInSt
                                         if (res){
                                             changeCustomerLogInState(true);
                                             setCurrentCustomer(loginStore.currentCustomerDTO);
+                                            navigate("/");
                                         }else {
                                             changeCustomerLogInState(false);
                                         }
@@ -112,25 +115,26 @@ function SignInForm({loginService ,changeDriverLogInState ,changeCustomerLogInSt
                                 </Button>
                             </Grid>
                             <Grid item xs = {12} sm = {6}>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    color="primary"
-                                    variant="outlined"
-                                    onClick={async (e) => {
-                                        e.preventDefault();
-                                        console.log("email :" + loginStore.email + "password : " + loginStore.password);
-                                        const res = await loginService.loginAsDriver();
-                                        if (res){
-                                            changeDriverLogInState(true);
-                                            setCurrentDriver(loginStore.currentDriverDTO);
-                                        }else {
-                                            changeDriverLogInState(false);
-                                        }
-                                    }}
-                                >
-                                    Driver Sign in
-                                </Button>
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        color="primary"
+                                        variant="outlined"
+                                        onClick={async (e) => {
+                                            e.preventDefault();
+                                            console.log("email :" + loginStore.email + "password : " + loginStore.password);
+                                            const res = await loginService.loginAsDriver();
+                                            if (res){
+                                                changeDriverLogInState(true);
+                                                setCurrentDriver(loginStore.currentDriverDTO);
+                                                navigate("/");
+                                            }else {
+                                                changeDriverLogInState(false);
+                                            }
+                                        }}
+                                    >
+                                        Driver Sign in
+                                    </Button>
                             </Grid>
                         </Grid>
 
