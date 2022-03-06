@@ -10,7 +10,8 @@ function SignInPage({loginService,changeLogInState} : SignInPageProps){
 
     return (
 
-        <div className="sign-in">
+        <div>
+            <h1 className="sign-in">SIGNUP</h1>
                 <SignInForm loginService={loginService} changeLogInState={changeLogInState}/>
         </div>
 

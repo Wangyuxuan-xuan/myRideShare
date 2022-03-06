@@ -86,40 +86,51 @@ function SignInForm({loginService ,changeLogInState} : SignInFormProps){
                         {/*    control={<Checkbox value="remember" color="primary" />}*/}
                         {/*    label="Remember me"*/}
                         {/*/>*/}
-                        <Button
-                            type="submit"
-                            color="secondary"
-                            variant="outlined"
-                            onClick={async (e) => {
-                                e.preventDefault();
-                                console.log("email :" + loginStore.email + "password : " + loginStore.password);
-                                const res = await loginService.loginAsCustomer();
-                                if (res){
-                                    changeLogInState(true);
-                                }else {
-                                    changeLogInState(false);
-                                }
-                            }}
-                        >
-                            Customer Sign in
-                        </Button>
-                        <Button
-                            type="submit"
-                            color="primary"
-                            variant="outlined"
-                            onClick={async (e) => {
-                                e.preventDefault();
-                                console.log("email :" + loginStore.email + "password : " + loginStore.password);
-                                const res = await loginService.loginAsDriver();
-                                if (res){
-                                    changeLogInState(true);
-                                }else {
-                                    changeLogInState(false);
-                                }
-                            }}
-                        >
-                            Driver Sign in
-                        </Button>
+                        <Grid container spacing={2}>
+                            <Grid item xs = {12} sm = {6}>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    color="secondary"
+                                    variant="outlined"
+                                    onClick={async (e) => {
+                                        e.preventDefault();
+                                        console.log("email :" + loginStore.email + "password : " + loginStore.password);
+                                        const res = await loginService.loginAsCustomer();
+                                        if (res){
+                                            changeLogInState(true);
+                                        }else {
+                                            changeLogInState(false);
+                                        }
+                                    }}
+                                >
+                                    Customer Sign in
+                                </Button>
+                            </Grid>
+                            <Grid item xs = {12} sm = {6}>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    color="primary"
+                                    variant="outlined"
+                                    onClick={async (e) => {
+                                        e.preventDefault();
+                                        console.log("email :" + loginStore.email + "password : " + loginStore.password);
+                                        const res = await loginService.loginAsDriver();
+                                        if (res){
+                                            changeLogInState(true);
+                                        }else {
+                                            changeLogInState(false);
+                                        }
+                                    }}
+                                >
+                                    Driver Sign in
+                                </Button>
+                            </Grid>
+                        </Grid>
+
+
+
                         <ReactLink to="/trip/new">
                             <Button
                                 type="submit"
