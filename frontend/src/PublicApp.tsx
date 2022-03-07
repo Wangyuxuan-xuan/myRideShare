@@ -19,6 +19,7 @@ import NewTripForm from "./components/NewTripForm/NewTripForm";
 import PrivateRoute from "./PrivateRoute";
 import {Observer} from "mobx-react-lite";
 import {CustomerDTO, DriverDTO} from "./generated/restclient";
+import TripDetails from "./components/TripDetails/TripDetails";
 
 export interface IPublicProps{
     services : PublicAppService
@@ -75,6 +76,7 @@ function PublicApp(props : IPublicProps) {
                               <Route path = "/" element={<PrivateRoute isDriverLoggedIn={isDriverLoggedIn} isCustomerLoggedIn={isCustomerLoggedIn} user="driver"/>} >
                                   <Route path = "/trip/new" element={<NewTripForm tripPostService={props.services.tripPostService} currentDriverDTO={currentDriverDTO}/>}/>
                               </Route>
+                              <Route path = "/trip/:id" element={<TripDetails/>}/>
                           </Routes>
                           )
                   }}

@@ -52,6 +52,7 @@ public class TripController {
     }
 
     @GetMapping("/{tripId}")
+    @CrossOrigin(origins = "*")
     public TripDTO getTripById(@PathVariable Long tripId){
 
         PublicTrip publicTrip = tripService.getTripById(tripId);

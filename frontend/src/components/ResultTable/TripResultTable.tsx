@@ -21,6 +21,7 @@ import {TripResultStore} from "../../store/TripResultStore";
 import {TripResultService} from "../../service/TripResultService";
 import {Configuration, TripControllerApi, TripDTO} from "../../generated/restclient";
 import {BACKEND_API_URL} from "../../utils/config";
+import {useNavigate} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     table : {
@@ -74,6 +75,8 @@ interface TripTableProps{
 }
 
 function TripResultTable({tripResultService} : TripTableProps) {
+
+    const navigate = useNavigate();
 
     const {tripResultStore} = tripResultService;
 
@@ -153,7 +156,13 @@ function TripResultTable({tripResultService} : TripTableProps) {
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row) => (
                         <TableRow
-                            key={row.driverName}
+                            key={row.id}
+                            hover = {true}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                navigate(`/trip/${row.id}`);
+
+                            }}
                         >
                             <TableCell component="th" scope="row">
                                 <Grid container>
