@@ -4,6 +4,8 @@ import com.example.myrideshare.dto.request.DriverPostDTO;
 import com.example.myrideshare.dto.request.DriverUpdateDTO;
 import com.example.myrideshare.dto.response.DriverDTO;
 import com.example.myrideshare.model.Driver;
+import com.example.myrideshare.model.DriverTrip;
+import com.example.myrideshare.model.PublicTrip;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -54,4 +56,14 @@ public abstract class DriverMapper {
     @Mapping(target = "cars", ignore = true)
     @Mapping(target = "active", ignore = true)
     public abstract void updateEntityFromUpdateDTO(DriverUpdateDTO driverUpdateDTO , @MappingTarget Driver driver);
+
+    public DriverTrip DriverTripPostDTOToEntity(PublicTrip publicTrip,Driver driver){
+
+        DriverTrip driverTrip = new DriverTrip();
+
+        driverTrip.setDriver(driver);
+        driverTrip.setPublicTrip(publicTrip);
+
+        return driverTrip;
+    }
 }

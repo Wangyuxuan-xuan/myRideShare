@@ -1,9 +1,10 @@
 package com.example.myrideshare.mapper;
 
 import com.example.myrideshare.dto.request.CustomerPostDTO;
+import com.example.myrideshare.dto.request.CustomerTripPostDTO;
 import com.example.myrideshare.dto.request.CustomerUpdateDTO;
 import com.example.myrideshare.dto.response.CustomerDTO;
-import com.example.myrideshare.model.Customer;
+import com.example.myrideshare.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -26,7 +27,7 @@ public abstract class CustomerMapper {
     public abstract List<CustomerDTO> EntityToGetDTO(List<Customer> customer);
 
 
-    public Customer PostDTOToEntity(CustomerPostDTO customerPostDTO){
+    public Customer postDTOToEntity(CustomerPostDTO customerPostDTO){
         if (customerPostDTO == null){
             return null;
         }
@@ -55,7 +56,17 @@ public abstract class CustomerMapper {
     @Mapping(target = "active", ignore = true)
     public abstract void updateEntityFromUpdateDTO(CustomerUpdateDTO customerUpdateDTO, @MappingTarget Customer customer);
 
-    public void std(){
+    public CustomerTrip customerTripPostDTOToEntity(CustomerTripPostDTO customerTripPostDTO , Customer customer ,PublicTrip trip , DriverTrip driverTrip){
 
+        if (customerTripPostDTO == null){
+            return null;
+        }
+        CustomerTrip customerTrip = new CustomerTrip();
+
+        customerTrip.setCustomer(customer);
+        customerTrip.setPublicTrip(trip);
+        customerTrip.setDriverTrip(driverTrip);
+
+        return customerTrip;
     }
 }

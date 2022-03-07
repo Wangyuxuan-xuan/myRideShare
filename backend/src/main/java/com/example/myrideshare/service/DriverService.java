@@ -1,7 +1,10 @@
 package com.example.myrideshare.service;
 
 import com.example.myrideshare.model.Driver;
+import com.example.myrideshare.model.DriverTrip;
+import com.example.myrideshare.model.PublicTrip;
 import com.example.myrideshare.repository.DriverRepository;
+import com.example.myrideshare.repository.DriverTripRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,7 @@ import java.util.List;
 public class DriverService {
 
     private final DriverRepository driverRepository;
+    private final DriverTripRepository driverTripRepository;
 
     public List<Driver> getAllDrivers(){
         return driverRepository.findAll();
@@ -51,5 +55,14 @@ public class DriverService {
         }
 
         return driver;
+    }
+
+    public DriverTrip getDriverTripByDriverId(Driver driver){
+
+        return driverTripRepository.getByDriver(driver);
+    }
+
+    public DriverTrip createDriverTrip(DriverTrip driverTrip){
+        return driverTripRepository.save(driverTrip);
     }
 }

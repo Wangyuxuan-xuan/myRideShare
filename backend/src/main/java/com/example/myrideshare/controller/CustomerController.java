@@ -1,11 +1,17 @@
 package com.example.myrideshare.controller;
 
 import com.example.myrideshare.dto.request.CustomerPostDTO;
+import com.example.myrideshare.dto.request.CustomerTripPostDTO;
 import com.example.myrideshare.dto.request.CustomerUpdateDTO;
 import com.example.myrideshare.dto.response.CustomerDTO;
 import com.example.myrideshare.mapper.CustomerMapper;
 import com.example.myrideshare.model.Customer;
+import com.example.myrideshare.model.CustomerTrip;
+import com.example.myrideshare.model.DriverTrip;
+import com.example.myrideshare.model.PublicTrip;
 import com.example.myrideshare.service.CustomerService;
+import com.example.myrideshare.service.DriverService;
+import com.example.myrideshare.service.TripService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -19,27 +25,30 @@ import java.util.List;
 @Validated
 public class CustomerController {
 
-    private final CustomerService service;
+    private final CustomerService customerService;
     private final CustomerMapper mapper;
+
+    private final DriverService driverService;
+    private final TripService tripService;
 
     @GetMapping("/customers")
     @CrossOrigin(origins = "*")
     public List<CustomerDTO> getAllCustomers(){
-        return mapper.EntityToGetDTO(service.getAllCustomers());
+        return mapper.EntityToGetDTO(customerService.getAllCustomers());
     }
 
     @GetMapping("/{customerId}")
     @CrossOrigin(origins = "*")
     public CustomerDTO getCustomerById(@PathVariable Long customerId){
-        Customer customer = service.getCustomerById(customerId);
+        Customer customer = customerService.getCustomerById(customerId);
         return mapper.entityToGetDTO(customer);
     }
 
     @PostMapping(value = "/create" , consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     @CrossOrigin(origins = "*")
     public CustomerDTO createCustomer(CustomerPostDTO customerPostDTO){
-        Customer customer = mapper.PostDTOToEntity(customerPostDTO);
-        Customer created = service.createCustomer(customer);
+        Customer customer = mapper.postDTOToEntity(customerPostDTO);
+        Customer created = customerService.createCustomer(customer);
 
         return mapper.entityToGetDTO(created);
     }
@@ -47,16 +56,30 @@ public class CustomerController {
     @DeleteMapping("/{customerId}")
     @CrossOrigin(origins = "*")
     public void deleteCustomerById(@PathVariable Long customerId){
-        service.deleteCustomerById(customerId);
+        customerService.deleteCustomerById(customerId);
     }
 
     @PutMapping("/update")
     @CrossOrigin(origins = "*")
     public void updateCustomer(@RequestBody CustomerUpdateDTO dto){
-        Customer customer = service.getCustomerById(dto.getCustomerId());
+        Customer customer = customerService.getCustomerById(dto.getCustomerId());
         mapper.updateEntityFromUpdateDTO(dto,customer);
 
-        service.updateCustomer(customer);
+        customerService.updateCustomer(customer);
+    }
+
+    @PostMapping("/new/customerTrip")
+    @CrossOrigin(origins = "*")
+    public void createCustomerTrip(@RequestBody CustomerTripPostDTO customerTripPostDTO){
+
+        Customer customer = customerService.getCustomerById(customerTripPostDTO.getCustomerId());
+
+        PublicTrip trip = tripService.getTripById(customerTripPostDTO.getTripId());
+        DriverTrip driverTrip = driverService.getDriverTripByDriverId(trip.getDriver());
+
+        CustomerTrip customerTrip = mapper.customerTripPostDTOToEntity(customerTripPostDTO,customer,trip,driverTrip);
+
+        customerService.createCustomerTrip(customerTrip);
     }
 
 //    @GetMapping(value = "/{userId}/avatar", produces = MediaType.IMAGE_JPEG_VALUE)
