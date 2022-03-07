@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface tripTable {
-    id : number ;
+    id : number | undefined;
     driverName: string | undefined;
     startLocation: string| undefined;
     endLocation: string| undefined;
@@ -109,7 +109,7 @@ function TripResultTable({tripResultService} : TripTableProps) {
 
                     for (let i = 0; i < trips.length; i++) {
                         tripTable[i] = {
-                            id : i,
+                            id : trips[i].tripId,
                             driverName: trips[i].driverName,
                             startLocation: trips[i].startLocation,
                             endLocation: trips[i].endLocation,

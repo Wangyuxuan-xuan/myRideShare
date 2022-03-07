@@ -30,6 +30,7 @@ public abstract class TripMapper {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Mapping(target = "tripId", source = "publicTrip.id")
     @Mapping(target = "driverPhone", source = "driver.phone")
     @Mapping(target = "driverName", source = "driver.name")
     @Mapping(target = "driverJoinedDate", source = "driver.joinedDate")

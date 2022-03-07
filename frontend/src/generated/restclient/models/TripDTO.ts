@@ -17,6 +17,11 @@
  */
 export interface TripDTO {
     /**
+     * @type {number}
+     * @memberof TripDTO
+     */
+    tripId?: number;
+    /**
      * @type {string}
      * @memberof TripDTO
      */

@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @Data
 public class TripDTO {
 
+    private Long tripId;
+
     private String startLocation;
 
     private String endLocation;
