@@ -1,5 +1,6 @@
 package com.example.myrideshare.service;
 
+import com.example.myrideshare.mapper.DriverMapper;
 import com.example.myrideshare.model.Driver;
 import com.example.myrideshare.model.DriverTrip;
 import com.example.myrideshare.model.PublicTrip;
@@ -19,6 +20,7 @@ public class DriverService {
 
     private final DriverRepository driverRepository;
     private final DriverTripRepository driverTripRepository;
+    private final DriverMapper mapper;
 
     public List<Driver> getAllDrivers(){
         return driverRepository.findAll();
@@ -68,7 +70,9 @@ public class DriverService {
         return driverTripRepository.getByPublicTrip(publicTrip);
     }
 
-    public DriverTrip createDriverTrip(DriverTrip driverTrip){
+    public DriverTrip createDriverTrip(PublicTrip trip){
+
+        DriverTrip driverTrip = mapper.DriverTripPostDTOToEntity(trip,trip.getDriver());
         return driverTripRepository.save(driverTrip);
     }
 }

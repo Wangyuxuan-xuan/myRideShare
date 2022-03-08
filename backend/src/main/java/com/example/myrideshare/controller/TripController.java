@@ -8,6 +8,7 @@ import com.example.myrideshare.model.Car;
 import com.example.myrideshare.model.Customer;
 import com.example.myrideshare.model.Driver;
 import com.example.myrideshare.model.PublicTrip;
+import com.example.myrideshare.service.DriverService;
 import com.example.myrideshare.service.TripService;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,6 +25,8 @@ import java.util.List;
 public class TripController {
 
     private final TripService tripService;
+    private final DriverService driverService;
+
     private final TripMapper mapper;
     @GetMapping("/trips/all")
     @CrossOrigin(origins = "*")
@@ -68,6 +71,8 @@ public class TripController {
 
         PublicTrip publicTrip = mapper.tripPostDTOToEntity(tripPostDTO);
         PublicTrip created = tripService.createTrip(publicTrip);
+
+        driverService.createDriverTrip(created);
 
         Driver driver = created.getDriver();
         Car car = created.getCar();

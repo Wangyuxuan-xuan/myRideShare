@@ -139,17 +139,6 @@ function SignInForm({loginService ,changeDriverLogInState ,changeCustomerLogInSt
                         </Grid>
 
 
-
-                        <ReactLink to="/trip/new">
-                            <Button
-                                type="submit"
-                                color="secondary"
-                                variant="outlined"
-                            >
-                                To new trip
-                            </Button>
-                        </ReactLink>
-
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">

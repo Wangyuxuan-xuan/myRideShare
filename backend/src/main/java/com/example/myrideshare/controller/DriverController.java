@@ -27,8 +27,6 @@ public class DriverController {
     private final DriverService driverService;
     private final DriverMapper mapper;
 
-    private final TripService tripService;
-
     @GetMapping("/drivers")
     @CrossOrigin(origins = "*")
     public List<DriverDTO> getAllDrivers(){
@@ -63,16 +61,6 @@ public class DriverController {
         mapper.updateEntityFromUpdateDTO(dto,driver);
 
         driverService.updateDriver(driver);
-    }
-
-    @PostMapping(value = "/create/driverTrip")
-    @CrossOrigin(origins = "*")
-    public void createDriverTrip(@RequestBody DriverTripPostDTO driverTripPostDTO){
-
-        PublicTrip trip = tripService.getTripById(driverTripPostDTO.getTripId());
-        DriverTrip driverTrip = mapper.DriverTripPostDTOToEntity(trip,trip.getDriver());
-
-        driverService.createDriverTrip(driverTrip);
     }
 
     @GetMapping("/driverTrip/{driverId}")

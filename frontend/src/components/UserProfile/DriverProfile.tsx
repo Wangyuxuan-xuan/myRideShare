@@ -169,6 +169,15 @@ function DriverProfile({userProfileService,currentDriverDTO} : CustomerProfilePr
                                     defaultValue={userProfileStore.description}
                                 />
                             </Grid>
+                            <ReactLink to="/trip/new">
+                                <Button
+                                    type="submit"
+                                    color="secondary"
+                                    variant="outlined"
+                                >
+                                    To new trip
+                                </Button>
+                            </ReactLink>
 
                         </Grid>
 

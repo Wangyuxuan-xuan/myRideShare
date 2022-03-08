@@ -16,7 +16,6 @@ import { BaseAPI, HttpHeaders, throwIfNullOrUndefined, encodeURI, OperationOpts,
 import {
     DriverDTO,
     DriverTripDTO,
-    DriverTripPostDTO,
     DriverUpdateDTO,
 } from '../models';
 
@@ -25,10 +24,6 @@ export interface CreateDriverRequest {
     email?: string;
     password?: string;
     phone?: string;
-}
-
-export interface CreateDriverTripRequest {
-    driverTripPostDTO: DriverTripPostDTO;
 }
 
 export interface DeleteByDriverIdRequest {
@@ -68,25 +63,6 @@ export class DriverControllerApi extends BaseAPI {
             url: '/api/drivers/create',
             method: 'POST',
             body: formData,
-        }, opts?.responseOpts);
-    };
-
-    /**
-     */
-    createDriverTrip({ driverTripPostDTO }: CreateDriverTripRequest): Observable<void>
-    createDriverTrip({ driverTripPostDTO }: CreateDriverTripRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
-    createDriverTrip({ driverTripPostDTO }: CreateDriverTripRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
-        throwIfNullOrUndefined(driverTripPostDTO, 'driverTripPostDTO', 'createDriverTrip');
-
-        const headers: HttpHeaders = {
-            'Content-Type': 'application/json',
-        };
-
-        return this.request<void>({
-            url: '/api/drivers/create/driverTrip',
-            method: 'POST',
-            headers,
-            body: driverTripPostDTO,
         }, opts?.responseOpts);
     };
 
