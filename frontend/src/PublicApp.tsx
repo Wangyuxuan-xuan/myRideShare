@@ -77,7 +77,7 @@ function PublicApp(props : IPublicProps) {
                                   <Route path = "/trip/new" element={<NewTripForm tripPostService={props.services.tripPostService} currentDriverDTO={currentDriverDTO}/>}/>
                               </Route>
                               <Route path = "/" element={<PrivateRoute isDriverLoggedIn={isDriverLoggedIn} isCustomerLoggedIn={isCustomerLoggedIn} user="customer"/>} >
-                                <Route path = "/trip/:id" element={<TripDetails/>}/>
+                                <Route path = "/trip/:id" element={<TripDetails bookTripService={props.services.bookTripService} currentCustomerId={currentCustomerDTO?.customerId}/>}/>
                               </Route>
                           </Routes>
                           )

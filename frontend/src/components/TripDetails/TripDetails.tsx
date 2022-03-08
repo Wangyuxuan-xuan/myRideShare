@@ -1,28 +1,30 @@
 import {useParams} from "react-router-dom";
 import useFetch from "../../Hooks/useFetch";
 import * as React from 'react';
-// import Avatar from '@mui/material/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {Link as ReactLink} from "react-router-dom";
+import {Link as ReactLink,useNavigate} from "react-router-dom";
 import {UserProfileService} from "../../service/UserProfileService";
 import {CustomerDTO, DriverDTO} from "../../generated/restclient";
-
+import {BookTripService} from "../../service/BookTripService";
+interface TripDetailsProps {
+    currentCustomerId : number | undefined,
+    bookTripService : BookTripService
+}
 const theme = createTheme();
 
-function TripDetails() {
+function TripDetails({currentCustomerId,bookTripService}:TripDetailsProps) {
 
     const {id} = useParams();
+    const {bookTripStore} = bookTripService;
+    const navigate = useNavigate();
 
     const {data : trip, isPending , error} = useFetch("http://localhost:8080/api/trips/"+ id) ;
 
@@ -241,6 +243,18 @@ function TripDetails() {
                                         size="large"
                                         onClick={async (e) => {
                                             e.preventDefault();
+                                            if (id && currentCustomerId){
+                                                bookTripStore.tripId = Number(id);
+                                                bookTripStore.customerId = currentCustomerId;
+
+                                                if (bookTripStore.tripId && bookTripStore.customerId){
+                                                    const res = await bookTripService.bookTrip();
+                                                    if (res){
+                                                        alert("book success !")
+                                                        navigate("/personal")
+                                                    }
+                                                }
+                                            }
 
                                         }}
                                     >

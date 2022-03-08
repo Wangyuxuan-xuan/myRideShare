@@ -4,6 +4,7 @@ import {NewTripFormStore} from "./NewTripFormStore";
 import {LoginInStore} from "./LoginInStore";
 import {SignUpStore} from "./SignUpStore";
 import {UserProfileStore} from "./UserProfileStore";
+import {BookTripStore} from "./BookTripStore";
 
 export class PublicAppStore{
 
@@ -13,6 +14,7 @@ export class PublicAppStore{
     readonly loginStore : LoginInStore;
     readonly signUpStore : SignUpStore;
     readonly userProfileStore : UserProfileStore;
+    readonly bookTripStore : BookTripStore;
 
     constructor() {
         this.tripResultStore =  new TripResultStore();
@@ -21,5 +23,6 @@ export class PublicAppStore{
         this.loginStore = new LoginInStore();
         this.signUpStore = new SignUpStore();
         this.userProfileStore = new UserProfileStore();
+        this.bookTripStore = new BookTripStore();
     }
 }
