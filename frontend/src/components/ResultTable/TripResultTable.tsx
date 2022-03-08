@@ -71,7 +71,7 @@ interface tripTable {
 }
 
 interface TripTableProps{
-    tripResultService : TripResultService;
+    tripResultService : TripResultService,
 }
 
 function TripResultTable({tripResultService} : TripTableProps) {
@@ -86,9 +86,7 @@ function TripResultTable({tripResultService} : TripTableProps) {
 
     const [tripTable , setTripTable] = useState<tripTable[]>([])
 
-    let trips : TripDTO[] | null ;
-
-    const [loading , setLoading] = useState(false);
+    let trips : TripDTO[] | null = null;
 
     useEffect(() => {
 
@@ -119,15 +117,15 @@ function TripResultTable({tripResultService} : TripTableProps) {
                             price: trips[i].price,
                         }
                     }
-                    setLoading(true);
-                    console.log(tripTable);
+                    // setLoading(true);
+                    // console.log(tripTable);
                 }
             }else {
-                console.log("no data")
+                console.log("no data");
             }
         })
-        // console.log("use effect ran")
-    })
+        console.log("use effect ran");
+    },[trips,tripTable])
 
 
 

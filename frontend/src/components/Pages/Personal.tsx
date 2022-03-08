@@ -1,7 +1,9 @@
 import CustomerProfile from "../UserProfile/CustomerProfile";
 import {UserProfileService} from "../../service/UserProfileService";
-import {CustomerDTO, DriverDTO} from "../../generated/restclient";
+import {CustomerDTO, DriverDTO, TripDTO} from "../../generated/restclient";
 import DriverProfile from "../UserProfile/DriverProfile";
+import CustomerTrips from "../PersonalTrips/CustomerTrips";
+import DriverTrips from "../PersonalTrips/DriverTrips";
 
 interface PersonalPageProps {
     userProfileService : UserProfileService,
@@ -9,17 +11,29 @@ interface PersonalPageProps {
     currentDriverDTO : DriverDTO |undefined,
     isCustomerLoggedIn : boolean,
     isDriverLoggedIn : boolean
+    tripDTOs : TripDTO[] | undefined,
 }
 
-function Personal({userProfileService,currentCustomerDTO,currentDriverDTO,isCustomerLoggedIn,isDriverLoggedIn} : PersonalPageProps) {
+function Personal({userProfileService,currentCustomerDTO,currentDriverDTO,isCustomerLoggedIn,isDriverLoggedIn,tripDTOs} : PersonalPageProps) {
 
-    console.log("currentCustomerDTO");
-    console.log(currentCustomerDTO);
     const whoLoggedIn = (currentCustomerDTO : CustomerDTO | undefined, currentDriverDTO: DriverDTO |undefined) => {
       if (isCustomerLoggedIn && currentCustomerDTO !== undefined)
-          return (<CustomerProfile userProfileService={userProfileService} currentCustomerDTO={currentCustomerDTO}/>);
+          return (
+              <div>
+                  <CustomerProfile userProfileService={userProfileService} currentCustomerDTO={currentCustomerDTO}/>
+                  <h2>Trips</h2>
+                  <CustomerTrips userProfileService={userProfileService} currentCustomerDTO={currentCustomerDTO} tripDTOs={tripDTOs}/>
+              </div>
+
+          );
       if (isDriverLoggedIn && currentDriverDTO !== undefined){
-          return (<DriverProfile userProfileService={userProfileService} currentDriverDTO={currentDriverDTO}/>)
+          return (
+              <div>
+                  <DriverProfile userProfileService={userProfileService} currentDriverDTO={currentDriverDTO}/>
+                  <DriverTrips userProfileService={userProfileService} currentDriverDTO={currentDriverDTO} tripDTOs={tripDTOs}/>
+              </div>
+
+          )
       }
     }
 

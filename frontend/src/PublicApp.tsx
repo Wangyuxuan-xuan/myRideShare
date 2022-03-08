@@ -18,8 +18,10 @@ import {PublicAppService} from "./service/PublicAppService";
 import NewTripForm from "./components/NewTripForm/NewTripForm";
 import PrivateRoute from "./PrivateRoute";
 import {Observer} from "mobx-react-lite";
-import {CustomerDTO, DriverDTO} from "./generated/restclient";
+import {CustomerDTO, DriverDTO, TripDTO} from "./generated/restclient";
 import TripDetails from "./components/TripDetails/TripDetails";
+import useFetch from "./Hooks/useFetch";
+import useFetchAllTrips from "./Hooks/useFetchAllTrips";
 
 export interface IPublicProps{
     services : PublicAppService
@@ -30,12 +32,19 @@ function PublicApp(props : IPublicProps) {
     const [isCustomerLoggedIn ,setIsCustomerLoggedIn] = useState(false);
     const [currentDriverDTO , setCurrentDriverDTO] = useState<DriverDTO>();
     const [currentCustomerDTO , setcurrentCustomerDTO] = useState<CustomerDTO>();
+    // const [tripDTOs , setTripDTOs] = useState<TripDTO[]>();
+
 
     // console.log("public app ran")
     // console.log("isDriverLoggedIn " + isDriverLoggedIn);
     // console.log("isCustomerLoggedIn " + isCustomerLoggedIn);
-    console.log(currentDriverDTO);
-    console.log(currentCustomerDTO);
+    // console.log(currentDriverDTO);
+    // console.log(currentCustomerDTO);
+
+
+    const {data : trips, isPending , error} = useFetchAllTrips("http://localhost:8080/api/trips/trips/all");
+    const tripDTOs : TripDTO[] | undefined = trips;
+    console.log(tripDTOs);
   return (
 
           <Router>
@@ -58,6 +67,7 @@ function PublicApp(props : IPublicProps) {
                                                                            currentCustomerDTO={currentCustomerDTO}
                                                                            isCustomerLoggedIn={isCustomerLoggedIn}
                                                                            isDriverLoggedIn={isDriverLoggedIn}
+                                                                           tripDTOs={tripDTOs}
                               />}/>
                               <Route path = "/sign-up" element={<SignUpPage signUpService={props.services.signUpService}/>}/>
                               <Route path = "/sign-in" element={<SignInPage loginService={props.services.loginService}

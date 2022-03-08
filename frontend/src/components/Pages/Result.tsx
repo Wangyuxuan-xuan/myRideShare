@@ -10,7 +10,7 @@ function Result(props : ResultPageProps) {
 
     return(
         <div className="result-table">
-            <TripResultTable tripResultService={props.tripResultService}/>
+            <TripResultTable tripResultService={props.tripResultService} />
         </div>
     )
 }
