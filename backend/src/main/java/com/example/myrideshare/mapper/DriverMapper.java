@@ -3,15 +3,15 @@ package com.example.myrideshare.mapper;
 import com.example.myrideshare.dto.request.DriverPostDTO;
 import com.example.myrideshare.dto.request.DriverUpdateDTO;
 import com.example.myrideshare.dto.response.DriverDTO;
-import com.example.myrideshare.model.Driver;
-import com.example.myrideshare.model.DriverTrip;
-import com.example.myrideshare.model.PublicTrip;
+import com.example.myrideshare.dto.response.DriverTripDTO;
+import com.example.myrideshare.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = MultipartFileMapper.class)
@@ -65,5 +65,38 @@ public abstract class DriverMapper {
         driverTrip.setPublicTrip(publicTrip);
 
         return driverTrip;
+    }
+
+    public DriverTripDTO entityToDriverTripDTO(DriverTrip driverTrip){
+
+        DriverTripDTO driverTripDTO = new DriverTripDTO();
+
+        driverTripDTO.setTripId(driverTrip.getPublicTrip().getId());
+
+        List<Long> customerIds = new ArrayList<>();
+
+        if (driverTrip.getCustomerTrips().isEmpty()){
+            driverTripDTO.setCustomerIds(customerIds);
+            return driverTripDTO;
+        }
+
+        for (CustomerTrip customerTrip : driverTrip.getCustomerTrips()){
+            customerIds.add(customerTrip.getCustomer().getId());
+        }
+
+        driverTripDTO.setCustomerIds(customerIds);
+
+        return driverTripDTO;
+    }
+
+    public List<DriverTripDTO> entityToDriverTripDTO(List<DriverTrip> driverTrips){
+
+        List<DriverTripDTO> driverTripDTOS = new ArrayList<>();
+
+        for (DriverTrip driverTrip : driverTrips){
+            driverTripDTOS.add(entityToDriverTripDTO(driverTrip));
+        }
+
+        return driverTripDTOS;
     }
 }

@@ -28,6 +28,10 @@
 			<column header="driver_rate" name="driver_rate" type="numeric"/>
 		</loadData>
 
+		<loadData file="/data/driver-trips.csv" relativeToChangelogFile="true"
+				  separator=";" tableName="driver_trip">
+		</loadData>
+
 	</changeSet>
 
 </databaseChangeLog>

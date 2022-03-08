@@ -4,6 +4,7 @@ import com.example.myrideshare.dto.request.CustomerPostDTO;
 import com.example.myrideshare.dto.request.CustomerTripPostDTO;
 import com.example.myrideshare.dto.request.CustomerUpdateDTO;
 import com.example.myrideshare.dto.response.CustomerDTO;
+import com.example.myrideshare.dto.response.CustomerTripDTO;
 import com.example.myrideshare.mapper.CustomerMapper;
 import com.example.myrideshare.model.Customer;
 import com.example.myrideshare.model.CustomerTrip;
@@ -75,11 +76,19 @@ public class CustomerController {
         Customer customer = customerService.getCustomerById(customerTripPostDTO.getCustomerId());
 
         PublicTrip trip = tripService.getTripById(customerTripPostDTO.getTripId());
-        DriverTrip driverTrip = driverService.getDriverTripByDriverId(trip.getDriver());
+        DriverTrip driverTrip = driverService.getDriverTripByTrip(trip);
 
         CustomerTrip customerTrip = mapper.customerTripPostDTOToEntity(customerTripPostDTO,customer,trip,driverTrip);
 
         customerService.createCustomerTrip(customerTrip);
+    }
+
+    @GetMapping("/customerTrip/{customerId}")
+    @CrossOrigin(origins = "*")
+    public List<CustomerTripDTO> getAllCustomerTripsByCustomerId(@PathVariable Long customerId){
+
+        List<CustomerTrip> customerTrips = customerService.getCustomerTripByCustomerId(customerId);
+        return mapper.entityToCustomerTripDTO(customerTrips);
     }
 
 //    @GetMapping(value = "/{userId}/avatar", produces = MediaType.IMAGE_JPEG_VALUE)

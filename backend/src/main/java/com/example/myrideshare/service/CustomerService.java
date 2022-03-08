@@ -59,4 +59,11 @@ public class CustomerService {
     public CustomerTrip createCustomerTrip(CustomerTrip customerTrip){
         return customerTripRepository.save(customerTrip);
     }
+
+    public List<CustomerTrip> getCustomerTripByCustomerId(Long customerId){
+
+        Customer customer = customerRepository.getById(customerId);
+
+        return customerTripRepository.getAllByCustomer(customer);
+    }
 }

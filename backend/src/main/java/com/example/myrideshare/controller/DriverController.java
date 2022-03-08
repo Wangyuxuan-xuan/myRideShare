@@ -4,6 +4,7 @@ import com.example.myrideshare.dto.request.DriverPostDTO;
 import com.example.myrideshare.dto.request.DriverTripPostDTO;
 import com.example.myrideshare.dto.request.DriverUpdateDTO;
 import com.example.myrideshare.dto.response.DriverDTO;
+import com.example.myrideshare.dto.response.DriverTripDTO;
 import com.example.myrideshare.mapper.DriverMapper;
 import com.example.myrideshare.model.Driver;
 import com.example.myrideshare.model.DriverTrip;
@@ -72,5 +73,14 @@ public class DriverController {
         DriverTrip driverTrip = mapper.DriverTripPostDTOToEntity(trip,trip.getDriver());
 
         driverService.createDriverTrip(driverTrip);
+    }
+
+    @GetMapping("/driverTrip/{driverId}")
+    @CrossOrigin(origins = "*")
+    public List<DriverTripDTO> getDriverTripByDriverId(@PathVariable Long driverId){
+
+        List<DriverTrip> driverTrips = driverService.getDriverTripByDriverId(driverId);
+
+        return mapper.entityToDriverTripDTO(driverTrips);
     }
 }

@@ -4,6 +4,7 @@ import com.example.myrideshare.dto.request.CustomerPostDTO;
 import com.example.myrideshare.dto.request.CustomerTripPostDTO;
 import com.example.myrideshare.dto.request.CustomerUpdateDTO;
 import com.example.myrideshare.dto.response.CustomerDTO;
+import com.example.myrideshare.dto.response.CustomerTripDTO;
 import com.example.myrideshare.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,6 +12,7 @@ import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = MultipartFileMapper.class)
@@ -68,5 +70,26 @@ public abstract class CustomerMapper {
         customerTrip.setDriverTrip(driverTrip);
 
         return customerTrip;
+    }
+
+    public CustomerTripDTO entityToCustomerTripDTO(CustomerTrip customerTrip){
+        CustomerTripDTO customerTripDTO = new CustomerTripDTO();
+
+        if (customerTrip == null){
+            return customerTripDTO;
+        }
+
+        customerTripDTO.setTripId(customerTrip.getPublicTrip().getId());
+
+        return customerTripDTO;
+    }
+
+    public List<CustomerTripDTO> entityToCustomerTripDTO(List<CustomerTrip> customerTrips){
+        List<CustomerTripDTO> customerTripDTOS = new ArrayList<>();
+        for (CustomerTrip customerTrip : customerTrips){
+            customerTripDTOS.add(entityToCustomerTripDTO(customerTrip));
+        }
+
+        return customerTripDTOS;
     }
 }

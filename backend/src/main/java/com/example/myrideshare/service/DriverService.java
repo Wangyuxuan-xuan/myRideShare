@@ -5,6 +5,7 @@ import com.example.myrideshare.model.DriverTrip;
 import com.example.myrideshare.model.PublicTrip;
 import com.example.myrideshare.repository.DriverRepository;
 import com.example.myrideshare.repository.DriverTripRepository;
+import com.example.myrideshare.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -57,9 +58,14 @@ public class DriverService {
         return driver;
     }
 
-    public DriverTrip getDriverTripByDriverId(Driver driver){
+    public List<DriverTrip> getDriverTripByDriverId(Long driverId){
 
-        return driverTripRepository.getByDriver(driver);
+        return driverTripRepository.getAllByDriver(driverRepository.getById(driverId));
+    }
+
+    public DriverTrip getDriverTripByTrip(PublicTrip publicTrip){
+
+        return driverTripRepository.getByPublicTrip(publicTrip);
     }
 
     public DriverTrip createDriverTrip(DriverTrip driverTrip){
