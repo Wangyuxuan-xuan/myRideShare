@@ -15,6 +15,8 @@ import { Observable } from 'rxjs';
 import { BaseAPI, HttpHeaders, throwIfNullOrUndefined, encodeURI, OperationOpts, RawAjaxResponse } from '../runtime';
 import {
     DriverDTO,
+    DriverTripDTO,
+    DriverTripPostDTO,
     DriverUpdateDTO,
 } from '../models';
 
@@ -25,11 +27,19 @@ export interface CreateDriverRequest {
     phone?: string;
 }
 
+export interface CreateDriverTripRequest {
+    driverTripPostDTO: DriverTripPostDTO;
+}
+
 export interface DeleteByDriverIdRequest {
     driverId: number;
 }
 
 export interface GetDriverByIdRequest {
+    driverId: number;
+}
+
+export interface GetDriverTripByDriverIdRequest {
     driverId: number;
 }
 
@@ -58,6 +68,25 @@ export class DriverControllerApi extends BaseAPI {
             url: '/api/drivers/create',
             method: 'POST',
             body: formData,
+        }, opts?.responseOpts);
+    };
+
+    /**
+     */
+    createDriverTrip({ driverTripPostDTO }: CreateDriverTripRequest): Observable<void>
+    createDriverTrip({ driverTripPostDTO }: CreateDriverTripRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
+    createDriverTrip({ driverTripPostDTO }: CreateDriverTripRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
+        throwIfNullOrUndefined(driverTripPostDTO, 'driverTripPostDTO', 'createDriverTrip');
+
+        const headers: HttpHeaders = {
+            'Content-Type': 'application/json',
+        };
+
+        return this.request<void>({
+            url: '/api/drivers/create/driverTrip',
+            method: 'POST',
+            headers,
+            body: driverTripPostDTO,
         }, opts?.responseOpts);
     };
 
@@ -94,6 +123,19 @@ export class DriverControllerApi extends BaseAPI {
 
         return this.request<DriverDTO>({
             url: '/api/drivers/{driverId}'.replace('{driverId}', encodeURI(driverId)),
+            method: 'GET',
+        }, opts?.responseOpts);
+    };
+
+    /**
+     */
+    getDriverTripByDriverId({ driverId }: GetDriverTripByDriverIdRequest): Observable<Array<DriverTripDTO>>
+    getDriverTripByDriverId({ driverId }: GetDriverTripByDriverIdRequest, opts?: OperationOpts): Observable<RawAjaxResponse<Array<DriverTripDTO>>>
+    getDriverTripByDriverId({ driverId }: GetDriverTripByDriverIdRequest, opts?: OperationOpts): Observable<Array<DriverTripDTO> | RawAjaxResponse<Array<DriverTripDTO>>> {
+        throwIfNullOrUndefined(driverId, 'driverId', 'getDriverTripByDriverId');
+
+        return this.request<Array<DriverTripDTO>>({
+            url: '/api/drivers/driverTrip/{driverId}'.replace('{driverId}', encodeURI(driverId)),
             method: 'GET',
         }, opts?.responseOpts);
     };

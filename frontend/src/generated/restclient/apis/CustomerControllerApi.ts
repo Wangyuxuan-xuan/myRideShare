@@ -15,6 +15,8 @@ import { Observable } from 'rxjs';
 import { BaseAPI, HttpHeaders, throwIfNullOrUndefined, encodeURI, OperationOpts, RawAjaxResponse } from '../runtime';
 import {
     CustomerDTO,
+    CustomerTripDTO,
+    CustomerTripPostDTO,
     CustomerUpdateDTO,
 } from '../models';
 
@@ -25,7 +27,15 @@ export interface CreateCustomerRequest {
     phone?: string;
 }
 
+export interface CreateCustomerTripRequest {
+    customerTripPostDTO: CustomerTripPostDTO;
+}
+
 export interface DeleteCustomerByIdRequest {
+    customerId: number;
+}
+
+export interface GetAllCustomerTripsByCustomerIdRequest {
     customerId: number;
 }
 
@@ -63,6 +73,25 @@ export class CustomerControllerApi extends BaseAPI {
 
     /**
      */
+    createCustomerTrip({ customerTripPostDTO }: CreateCustomerTripRequest): Observable<void>
+    createCustomerTrip({ customerTripPostDTO }: CreateCustomerTripRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
+    createCustomerTrip({ customerTripPostDTO }: CreateCustomerTripRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
+        throwIfNullOrUndefined(customerTripPostDTO, 'customerTripPostDTO', 'createCustomerTrip');
+
+        const headers: HttpHeaders = {
+            'Content-Type': 'application/json',
+        };
+
+        return this.request<void>({
+            url: '/api/customers/new/customerTrip',
+            method: 'POST',
+            headers,
+            body: customerTripPostDTO,
+        }, opts?.responseOpts);
+    };
+
+    /**
+     */
     deleteCustomerById({ customerId }: DeleteCustomerByIdRequest): Observable<void>
     deleteCustomerById({ customerId }: DeleteCustomerByIdRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
     deleteCustomerById({ customerId }: DeleteCustomerByIdRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
@@ -71,6 +100,19 @@ export class CustomerControllerApi extends BaseAPI {
         return this.request<void>({
             url: '/api/customers/{customerId}'.replace('{customerId}', encodeURI(customerId)),
             method: 'DELETE',
+        }, opts?.responseOpts);
+    };
+
+    /**
+     */
+    getAllCustomerTripsByCustomerId({ customerId }: GetAllCustomerTripsByCustomerIdRequest): Observable<Array<CustomerTripDTO>>
+    getAllCustomerTripsByCustomerId({ customerId }: GetAllCustomerTripsByCustomerIdRequest, opts?: OperationOpts): Observable<RawAjaxResponse<Array<CustomerTripDTO>>>
+    getAllCustomerTripsByCustomerId({ customerId }: GetAllCustomerTripsByCustomerIdRequest, opts?: OperationOpts): Observable<Array<CustomerTripDTO> | RawAjaxResponse<Array<CustomerTripDTO>>> {
+        throwIfNullOrUndefined(customerId, 'customerId', 'getAllCustomerTripsByCustomerId');
+
+        return this.request<Array<CustomerTripDTO>>({
+            url: '/api/customers/customerTrip/{customerId}'.replace('{customerId}', encodeURI(customerId)),
+            method: 'GET',
         }, opts?.responseOpts);
     };
 
