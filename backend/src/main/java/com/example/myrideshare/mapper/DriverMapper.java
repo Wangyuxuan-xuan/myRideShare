@@ -2,6 +2,7 @@ package com.example.myrideshare.mapper;
 
 import com.example.myrideshare.dto.request.DriverPostDTO;
 import com.example.myrideshare.dto.request.DriverUpdateDTO;
+import com.example.myrideshare.dto.response.CustomerDTO;
 import com.example.myrideshare.dto.response.DriverDTO;
 import com.example.myrideshare.dto.response.DriverTripDTO;
 import com.example.myrideshare.model.*;
@@ -19,6 +20,9 @@ public abstract class DriverMapper {
 
     @Autowired
     private MultipartFileMapper multipartFileMapper;
+
+    @Autowired
+    private CustomerMapper customerMapper;
 
     private final LocalDate joinedDate = LocalDate.now();
 
@@ -73,18 +77,18 @@ public abstract class DriverMapper {
 
         driverTripDTO.setTripId(driverTrip.getPublicTrip().getId());
 
-        List<Long> customerIds = new ArrayList<>();
+        List<CustomerDTO> customerDTOS = new ArrayList<>();
 
         if (driverTrip.getCustomerTrips().isEmpty()){
-            driverTripDTO.setCustomerIds(customerIds);
+            driverTripDTO.setCustomerDTOS(customerDTOS);
             return driverTripDTO;
         }
 
         for (CustomerTrip customerTrip : driverTrip.getCustomerTrips()){
-            customerIds.add(customerTrip.getCustomer().getId());
+            customerDTOS.add(customerMapper.entityToGetDTO(customerTrip.getCustomer()));
         }
 
-        driverTripDTO.setCustomerIds(customerIds);
+        driverTripDTO.setCustomerDTOS(customerDTOS);
 
         return driverTripDTO;
     }

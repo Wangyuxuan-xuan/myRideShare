@@ -10,6 +10,6 @@ public class DriverTripDTO {
 
     private Long tripId;
 
-    private List<Long> customerIds = new ArrayList<>();
+    private List<CustomerDTO> customerDTOS = new ArrayList<>();
 
 }
