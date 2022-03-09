@@ -12,14 +12,21 @@ import {
     Grid,
     Typography,
     TablePagination,
-    TableFooter
+    TableFooter,
+    IconButton,
+
+
 } from '@material-ui/core';
+import Collapse from "@material-ui/core/Collapse"
+// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+// import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Box from '@material-ui/core/Box';
 import {ChangeEvent, useEffect, useState} from "react";
 import {PublicAppService} from "../../service/PublicAppService";
 import {PublicAppStore} from "../../store/PublicAppStore";
 import {TripResultStore} from "../../store/TripResultStore";
 import {TripResultService} from "../../service/TripResultService";
-import {Configuration, DriverDTO, TripControllerApi, TripDTO} from "../../generated/restclient";
+import {Configuration, CustomerDTO, DriverDTO, TripControllerApi, TripDTO} from "../../generated/restclient";
 import {BACKEND_API_URL} from "../../utils/config";
 import {useNavigate} from "react-router-dom";
 import {UserProfileService} from "../../service/UserProfileService";
@@ -77,6 +84,10 @@ interface DriverTripProps {
     tripDTOs : TripDTO[] | undefined
 }
 
+interface MyHashMap {
+
+}
+
 function DriverTrips({tripDTOs : trips,userProfileService,currentDriverDTO} : DriverTripProps) {
 
     const {userProfileStore} = userProfileService;
@@ -89,6 +100,9 @@ function DriverTrips({tripDTOs : trips,userProfileService,currentDriverDTO} : Dr
 
     const [tripTable , setTripTable] = useState<tripTable[]>([])
     const [isLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    let customers = userProfileStore.customers;
 
     useEffect(() => {
 
@@ -101,9 +115,9 @@ function DriverTrips({tripDTOs : trips,userProfileService,currentDriverDTO} : Dr
             getData().then((res) => {
                 if (res){
                     const driverTrips = userProfileStore.driverTrips;
-
-                    console.log("driverTrips");
-                    console.log(driverTrips);
+                    //
+                    // console.log("driverTrips");
+                    // console.log(driverTrips);
 
                     if(driverTrips){
                         driverTrips.map((driverTrip) => {
@@ -111,29 +125,33 @@ function DriverTrips({tripDTOs : trips,userProfileService,currentDriverDTO} : Dr
                             if(tripId){
                                 tripIds.push(tripId);
                                 //TODO add customer Id here
+                                if(driverTrip.customerDTOS){
+                                    customers.set(tripId,driverTrip.customerDTOS);
+                                }
                             }
                         })
                     }
-
-                    console.log("customer tripIds")
-                    console.log(tripIds);
+                    //
+                    // console.log("driver tripIds")
+                    // console.log(tripIds);
+                    // console.log(customers);
 
                     if(trips){
                         trips = trips.filter((tripDTO) => {
                             const tripId = tripDTO.tripId;
                             if (tripId){
-                                console.log(tripId + " " +tripIds.includes(tripId));
+                                // console.log(tripId + " " +tripIds.includes(tripId));
                                 return tripIds.includes(tripId);
                             }
-                            console.log(tripId + " false");
+                            // console.log(tripId + " false");
                             return false;
                         })
                     }else {
                         console.log("did not filter");
                     }
 
-                    console.log("tripDTOs after filter")
-                    console.log(trips);
+                    // console.log("tripDTOs after filter")
+                    // console.log(trips);
                     if (trips !== undefined){
                         for (let i = 0; i < trips.length; i++) {
                             tripTable[i] = {
@@ -165,6 +183,8 @@ function DriverTrips({tripDTOs : trips,userProfileService,currentDriverDTO} : Dr
         setPage(0);
     };
 
+    console.log(customers);
+    // @ts-ignore
     return(
         <TableContainer component={Paper} className = {styleClasses.tableContainer}>
             <Table className = {styleClasses.table} aria-label="simple table">
@@ -180,50 +200,104 @@ function DriverTrips({tripDTOs : trips,userProfileService,currentDriverDTO} : Dr
                     {tripTable
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row) => (
-                            <TableRow
-                                key={row.id}
-                                hover = {true}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    // navigate(`/trip/${row.id}`);
+                            <>
+                                <TableRow
+                                    key={row.id}
+                                    hover = {true}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        // navigate(`/trip/${row.id}`);
 
-                                }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    <Grid container>
-                                        <Grid item lg = {2}>
-                                            <Avatar alt = {row.driverName} src = "." className = {styleClasses.avatar}/>
+                                    }}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        <Grid container>
+                                            <Grid item lg = {2}>
+                                                <IconButton
+                                                    aria-label="expand row"
+                                                    size="small"
+                                                    onClick={() => setOpen(!open)}
+                                                >
+
+                                                    {open ? <i className="fa-solid fa-arrow-up"/> : <i className="fa-solid fa-arrow-down"/>}
+                                                </IconButton>
+                                                <Avatar alt = {row.driverName} src = "." className = {styleClasses.avatar}/>
+                                            </Grid>
+                                            <Grid item lg = {10}>
+                                                <Typography className={styleClasses.name}>{row.driverName}</Typography>
+                                                <Typography color = "textSecondary" variant = "body2">{row.startLocation}</Typography>
+                                                <Typography color = "textSecondary" variant = "body2">{row.endLocation}</Typography>
+                                            </Grid>
+
                                         </Grid>
-                                        <Grid item lg = {10}>
-                                            <Typography className={styleClasses.name}>{row.driverName}</Typography>
-                                            <Typography color = "textSecondary" variant = "body2">{row.startLocation}</Typography>
-                                            <Typography color = "textSecondary" variant = "body2">{row.endLocation}</Typography>
-                                        </Grid>
 
-                                    </Grid>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography color = "primary" variant = "subtitle2">{row.startTime}</Typography>
+                                        <Typography color = "primary" variant = "subtitle2">{row.endTime}</Typography>
+                                    </TableCell>
+                                    <TableCell >
+                                        {row.driverRate}
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography
+                                            className = {styleClasses.status}
+                                            style={{
+                                                backgroundColor :
+                                                    ((row.price === 'Active' && 'green') ||
+                                                        (row.price === 'Pending' && 'blue') ||
+                                                        (row.price === 'Blocked' && 'orange')) || "red"
+                                            }}
+                                        >
+                                            {row.price}
+                                        </Typography>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                                        <Collapse in={open} timeout="auto" unmountOnExit>
+                                            <Box sx={{ margin: 1 }}>
+                                                <Typography variant="h6" gutterBottom component="div">
+                                                    Customers
+                                                </Typography>
+                                                <Table size="small" aria-label="purchases">
+                                                    <TableHead>
+                                                        <TableRow>
+                                                            <TableCell>Customer Name</TableCell>
+                                                            <TableCell>Join Date</TableCell>
+                                                            <TableCell>Rate </TableCell>
+                                                            <TableCell>Email </TableCell>
+                                                            <TableCell>Phone Number </TableCell>
+                                                            {/*<TableCell align="right">Amount</TableCell>
+                                                            <TableCell align="right">Total price ($)</TableCell>*/}
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody>
 
-                                </TableCell>
-                                <TableCell>
-                                    <Typography color = "primary" variant = "subtitle2">{row.startTime}</Typography>
-                                    <Typography color = "primary" variant = "subtitle2">{row.endTime}</Typography>
-                                </TableCell>
-                                <TableCell >
-                                    {row.driverRate}
-                                </TableCell>
-                                <TableCell>
-                                    <Typography
-                                        className = {styleClasses.status}
-                                        style={{
-                                            backgroundColor :
-                                                ((row.price === 'Active' && 'green') ||
-                                                    (row.price === 'Pending' && 'blue') ||
-                                                    (row.price === 'Blocked' && 'orange')) || "red"
-                                        }}
-                                    >
-                                        {row.price}
-                                    </Typography>
-                                </TableCell>
-                            </TableRow>
+                                                        {
+                                                            customers.get(row.id as number)?.map((customerDTO) => (
+                                                                <TableRow key={customerDTO.customerId}>
+                                                                    <TableCell component="th" scope="row">
+                                                                        {customerDTO.name}
+                                                                    </TableCell>
+                                                                    <TableCell>{customerDTO.joinedDate}</TableCell>
+                                                                    <TableCell>{customerDTO.rate}</TableCell>
+                                                                    <TableCell>{customerDTO.email}</TableCell>
+                                                                    <TableCell>{customerDTO.phone}</TableCell>
+                                                                </TableRow>
+                                                            ))
+
+                                                        }
+                                                    </TableBody>
+                                                </Table>
+                                            </Box>
+                                        </Collapse>
+                                    </TableCell>
+                                </TableRow>
+
+
+                            </>
+
                         ))}
                 </TableBody>
                 <TableFooter>

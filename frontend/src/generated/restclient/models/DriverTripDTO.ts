@@ -11,6 +11,10 @@
  * Do not edit the class manually.
  */
 
+import {
+    CustomerDTO,
+} from './';
+
 /**
  * @export
  * @interface DriverTripDTO
@@ -22,8 +26,8 @@ export interface DriverTripDTO {
      */
     tripId?: number;
     /**
-     * @type {Array<number>}
+     * @type {Array<CustomerDTO>}
      * @memberof DriverTripDTO
      */
-    customerIds?: Array<number>;
+    customerDTOS?: Array<CustomerDTO>;
 }

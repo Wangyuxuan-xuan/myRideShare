@@ -85,6 +85,7 @@ function TripResultTable({tripResultService} : TripTableProps) {
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const [tripTable , setTripTable] = useState<tripTable[]>([])
+    const [loading, setLoading] = useState(false);
 
     let trips : TripDTO[] | null = null;
 
@@ -117,7 +118,7 @@ function TripResultTable({tripResultService} : TripTableProps) {
                             price: trips[i].price,
                         }
                     }
-                    // setLoading(true);
+                    setLoading(true);
                     // console.log(tripTable);
                 }
             }else {
