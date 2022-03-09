@@ -63,6 +63,8 @@ public class TripService {
 
     @Transactional
     public PublicTrip createTrip(PublicTrip publicTrip){
+        publicTrip.setStartLocation(publicTrip.getStartLocation().toLowerCase());
+        publicTrip.setEndLocation(publicTrip.getEndLocation().toLowerCase());
         return tripRepository.save(publicTrip);
     }
 

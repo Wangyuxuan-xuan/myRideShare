@@ -48,8 +48,8 @@ public class TripController {
                                      @RequestParam String destination ,
                                      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime){
 
-        List<PublicTrip> publicTrips = tripService.searchTrips(departure,
-                destination,
+        List<PublicTrip> publicTrips = tripService.searchTrips(departure.toLowerCase(),
+                destination.toLowerCase(),
                 dateTime);
         return mapper.entityToGetDTO(publicTrips);
     }
