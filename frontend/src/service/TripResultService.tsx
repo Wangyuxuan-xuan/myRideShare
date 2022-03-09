@@ -20,21 +20,24 @@ export class TripResultService {
 
         const {searchBarStore} = this;
 
-        const {departure , destination} = searchBarStore;
+        const {departure , destination , selectedDate ,selectedTime} = searchBarStore;
 
-        console.log("params : " + departure + destination)
+        // console.log("params : " + selectedDate + selectedTime)
+        const dateTime = new Date(selectedDate.getFullYear(),selectedDate.getMonth(),selectedDate.getDate()
+            ,selectedTime.getHours(),selectedTime.getMinutes());
 
+        console.log(dateTime.toISOString());
         try {
 
             tripResultStore.tripDTOs = await this.tripApi
                 .searchTrips({
                     departure : departure,
                     destination : destination,
-                    dateTime : "2022-03-02 09:26:19.927Z"
+                    dateTime : dateTime.toISOString()
                 })
                 .toPromise()
 
-            console.log(tripResultStore.tripDTOs);
+            // console.log(tripResultStore.tripDTOs);
             return true
 
         }catch (e){

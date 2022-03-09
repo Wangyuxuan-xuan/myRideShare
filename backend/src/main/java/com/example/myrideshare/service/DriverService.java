@@ -1,7 +1,12 @@
 package com.example.myrideshare.service;
 
+import com.example.myrideshare.mapper.DriverMapper;
 import com.example.myrideshare.model.Driver;
+import com.example.myrideshare.model.DriverTrip;
+import com.example.myrideshare.model.PublicTrip;
 import com.example.myrideshare.repository.DriverRepository;
+import com.example.myrideshare.repository.DriverTripRepository;
+import com.example.myrideshare.repository.TripRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +19,8 @@ import java.util.List;
 public class DriverService {
 
     private final DriverRepository driverRepository;
+    private final DriverTripRepository driverTripRepository;
+    private final DriverMapper mapper;
 
     public List<Driver> getAllDrivers(){
         return driverRepository.findAll();
@@ -51,5 +58,21 @@ public class DriverService {
         }
 
         return driver;
+    }
+
+    public List<DriverTrip> getDriverTripByDriverId(Long driverId){
+
+        return driverTripRepository.getAllByDriver(driverRepository.getById(driverId));
+    }
+
+    public DriverTrip getDriverTripByTrip(PublicTrip publicTrip){
+
+        return driverTripRepository.getByPublicTrip(publicTrip);
+    }
+
+    public DriverTrip createDriverTrip(PublicTrip trip){
+
+        DriverTrip driverTrip = mapper.DriverTripPostDTOToEntity(trip,trip.getDriver());
+        return driverTripRepository.save(driverTrip);
     }
 }

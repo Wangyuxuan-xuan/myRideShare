@@ -4,8 +4,14 @@ import "./Navbar.css"
 import {CustomButton} from "../button/CustomButton";
 import {Link} from "react-router-dom";
 
+interface NavbarProps{
+    isDriverLoggedIn : boolean,
+    isCustomerLoggedIn : boolean
+    changeDriverLogInState : any,
+    changeCustomerLogInState : any
+}
 
-const Navbar = () => {
+const Navbar = ({isDriverLoggedIn,isCustomerLoggedIn,changeCustomerLogInState,changeDriverLogInState} : NavbarProps) => {
 
     const [click , setClick] = useState(false); //should be false
     const [button , setButton] = useState(true);
@@ -66,17 +72,34 @@ const Navbar = () => {
                         </Link>
                     </li>
                 </ul>
-                <Link to="/sign-up" className= "sign-up-btn">
-                    {button && <CustomButton buttonStyle = "btn--outline">
-                        SIGN UP
-                    </CustomButton>}
-                </Link>
+                {
+                    !(isCustomerLoggedIn || isDriverLoggedIn) &&
+                    <Link to="/sign-up" className= "sign-up-btn">
+                        {button && <CustomButton buttonStyle = "btn--outline">
+                            SIGN UP
+                        </CustomButton>}
+                    </Link>
+                }
+                {
+                    !(isCustomerLoggedIn || isDriverLoggedIn) &&
+                    <Link to="/sign-in" className= "sign-in-btn">
+                        {button && <CustomButton buttonStyle = "btn--primary">
+                            SIGN IN
+                        </CustomButton>}
+                    </Link>
+                }
 
-                <Link to="/sign-in" className= "sign-in-btn">
-                    {button && <CustomButton buttonStyle = "btn--primary">
-                        SIGN IN
-                    </CustomButton>}
-                </Link>
+                {
+                    (isCustomerLoggedIn || isDriverLoggedIn) &&
+                    <Link to="/" className= "sign-up-btn">
+                        {button && <CustomButton buttonStyle = "btn--outline"
+                                                 onclick = {()=>{changeDriverLogInState(false); changeCustomerLogInState(false);}}
+                        >
+                            SIGN OUT
+                        </CustomButton>}
+                    </Link>
+                }
+
             </nav>
         </>
 

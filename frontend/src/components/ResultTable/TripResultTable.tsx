@@ -21,6 +21,7 @@ import {TripResultStore} from "../../store/TripResultStore";
 import {TripResultService} from "../../service/TripResultService";
 import {Configuration, TripControllerApi, TripDTO} from "../../generated/restclient";
 import {BACKEND_API_URL} from "../../utils/config";
+import {useNavigate} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     table : {
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface tripTable {
-    id : number ;
+    id : number | undefined;
     driverName: string | undefined;
     startLocation: string| undefined;
     endLocation: string| undefined;
@@ -70,10 +71,12 @@ interface tripTable {
 }
 
 interface TripTableProps{
-    tripResultService : TripResultService;
+    tripResultService : TripResultService,
 }
 
 function TripResultTable({tripResultService} : TripTableProps) {
+
+    const navigate = useNavigate();
 
     const {tripResultStore} = tripResultService;
 
@@ -82,10 +85,9 @@ function TripResultTable({tripResultService} : TripTableProps) {
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const [tripTable , setTripTable] = useState<tripTable[]>([])
+    const [loading, setLoading] = useState(false);
 
-    let trips : TripDTO[] | null ;
-
-    const [loading , setLoading] = useState(false);
+    let trips : TripDTO[] | null = null;
 
     useEffect(() => {
 
@@ -106,7 +108,7 @@ function TripResultTable({tripResultService} : TripTableProps) {
 
                     for (let i = 0; i < trips.length; i++) {
                         tripTable[i] = {
-                            id : i,
+                            id : trips[i].tripId,
                             driverName: trips[i].driverName,
                             startLocation: trips[i].startLocation,
                             endLocation: trips[i].endLocation,
@@ -117,14 +119,14 @@ function TripResultTable({tripResultService} : TripTableProps) {
                         }
                     }
                     setLoading(true);
-                    console.log(tripTable);
+                    // console.log(tripTable);
                 }
             }else {
-                console.log("no data")
+                console.log("no data");
             }
         })
-        // console.log("use effect ran")
-    })
+        // console.log("use effect ran");
+    },[trips,tripTable])
 
 
 
@@ -153,7 +155,13 @@ function TripResultTable({tripResultService} : TripTableProps) {
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row) => (
                         <TableRow
-                            key={row.driverName}
+                            key={row.id}
+                            hover = {true}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                navigate(`/trip/${row.id}`);
+
+                            }}
                         >
                             <TableCell component="th" scope="row">
                                 <Grid container>

@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class DriverTrip extends BaseEntity{
 
-    @OneToOne(targetEntity = PublicTrip.class ,fetch = FetchType.LAZY ,optional = true)
+    @OneToOne(targetEntity = Driver.class ,fetch = FetchType.LAZY ,optional = true)
     @JoinColumn(name = "driver_id")
     private Driver driver;
 

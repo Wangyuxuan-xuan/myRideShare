@@ -2,14 +2,17 @@ package com.example.myrideshare.mapper;
 
 import com.example.myrideshare.dto.request.DriverPostDTO;
 import com.example.myrideshare.dto.request.DriverUpdateDTO;
+import com.example.myrideshare.dto.response.CustomerDTO;
 import com.example.myrideshare.dto.response.DriverDTO;
-import com.example.myrideshare.model.Driver;
+import com.example.myrideshare.dto.response.DriverTripDTO;
+import com.example.myrideshare.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = MultipartFileMapper.class)
@@ -18,8 +21,12 @@ public abstract class DriverMapper {
     @Autowired
     private MultipartFileMapper multipartFileMapper;
 
+    @Autowired
+    private CustomerMapper customerMapper;
+
     private final LocalDate joinedDate = LocalDate.now();
 
+    @Mapping(target = "driverId", source = "driver.id")
     public abstract DriverDTO entityToGetDTO(Driver driver);
 
     public abstract List<DriverDTO> entityToGetDTO(List<Driver> driver);
@@ -33,11 +40,11 @@ public abstract class DriverMapper {
         driver.setName(driverPostDTO.getName());
         driver.setEmail(driverPostDTO.getEmail());
         driver.setPassword(driverPostDTO.getPassword());
-        driver.setAddress(driverPostDTO.getAddress());
+        driver.setAddress("addr");
         driver.setPhone(driverPostDTO.getPhone());
-        driver.setDriverLicenseNo(driverPostDTO.getDriverLicenseNo());
-        driver.setAvatar(multipartFileMapper.fileToByteArray(driverPostDTO.getAvatar()));
-
+        driver.setDriverLicenseNo("license no");
+//        driver.setAvatar(multipartFileMapper.fileToByteArray(driverPostDTO.getAvatar()));
+        driver.setAvatar(null);
         driver.setActive(false);
         driver.setJoinedDate(joinedDate);
 
@@ -53,4 +60,47 @@ public abstract class DriverMapper {
     @Mapping(target = "cars", ignore = true)
     @Mapping(target = "active", ignore = true)
     public abstract void updateEntityFromUpdateDTO(DriverUpdateDTO driverUpdateDTO , @MappingTarget Driver driver);
+
+    public DriverTrip DriverTripPostDTOToEntity(PublicTrip publicTrip,Driver driver){
+
+        DriverTrip driverTrip = new DriverTrip();
+
+        driverTrip.setDriver(driver);
+        driverTrip.setPublicTrip(publicTrip);
+
+        return driverTrip;
+    }
+
+    public DriverTripDTO entityToDriverTripDTO(DriverTrip driverTrip){
+
+        DriverTripDTO driverTripDTO = new DriverTripDTO();
+
+        driverTripDTO.setTripId(driverTrip.getPublicTrip().getId());
+
+        List<CustomerDTO> customerDTOS = new ArrayList<>();
+
+        if (driverTrip.getCustomerTrips().isEmpty()){
+            driverTripDTO.setCustomerDTOS(customerDTOS);
+            return driverTripDTO;
+        }
+
+        for (CustomerTrip customerTrip : driverTrip.getCustomerTrips()){
+            customerDTOS.add(customerMapper.entityToGetDTO(customerTrip.getCustomer()));
+        }
+
+        driverTripDTO.setCustomerDTOS(customerDTOS);
+
+        return driverTripDTO;
+    }
+
+    public List<DriverTripDTO> entityToDriverTripDTO(List<DriverTrip> driverTrips){
+
+        List<DriverTripDTO> driverTripDTOS = new ArrayList<>();
+
+        for (DriverTrip driverTrip : driverTrips){
+            driverTripDTOS.add(entityToDriverTripDTO(driverTrip));
+        }
+
+        return driverTripDTOS;
+    }
 }

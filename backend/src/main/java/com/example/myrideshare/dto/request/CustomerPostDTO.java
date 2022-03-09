@@ -12,9 +12,9 @@ public class CustomerPostDTO {
 
     private String password;
 
-    private String address;
+//    private String address;
 
     private String phone;
 
-    private MultipartFile avatar;
+//    private MultipartFile avatar;
 }

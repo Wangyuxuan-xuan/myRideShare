@@ -4,14 +4,18 @@ import {LoginInService} from "../../service/LoginInService";
 
 interface SignInPageProps {
     loginService : LoginInService,
-    changeLogInState : any
+    changeDriverLogInState : any,
+    changeCustomerLogInState : any,
+    setCurrentCustomer : any,
+    setCurrentDriver : any
 }
-function SignInPage({loginService,changeLogInState} : SignInPageProps){
+function SignInPage({loginService,changeDriverLogInState ,changeCustomerLogInState,setCurrentCustomer , setCurrentDriver} : SignInPageProps){
 
     return (
 
-        <div className="sign-in">
-                <SignInForm loginService={loginService} changeLogInState={changeLogInState}/>
+        <div>
+            <h1 className="sign-in">SIGNUP</h1>
+                <SignInForm loginService={loginService} changeDriverLogInState={changeDriverLogInState} changeCustomerLogInState={changeCustomerLogInState} setCurrentCustomer={setCurrentCustomer} setCurrentDriver={setCurrentDriver}/>
         </div>
 
 

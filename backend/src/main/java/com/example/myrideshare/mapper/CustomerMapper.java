@@ -1,15 +1,18 @@
 package com.example.myrideshare.mapper;
 
 import com.example.myrideshare.dto.request.CustomerPostDTO;
+import com.example.myrideshare.dto.request.CustomerTripPostDTO;
 import com.example.myrideshare.dto.request.CustomerUpdateDTO;
 import com.example.myrideshare.dto.response.CustomerDTO;
-import com.example.myrideshare.model.Customer;
+import com.example.myrideshare.dto.response.CustomerTripDTO;
+import com.example.myrideshare.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = MultipartFileMapper.class)
@@ -25,12 +28,8 @@ public abstract class CustomerMapper {
 
     public abstract List<CustomerDTO> EntityToGetDTO(List<Customer> customer);
 
-    @Mapping(target = "avatar", ignore = true)
-    @Mapping(target = "version", ignore = true)
-    @Mapping(target = "id", source = "customerId")
-    public abstract Customer GetDTOToEntity(CustomerDTO customerDTO);
 
-    public Customer PostDTOToEntity(CustomerPostDTO customerPostDTO){
+    public Customer postDTOToEntity(CustomerPostDTO customerPostDTO){
         if (customerPostDTO == null){
             return null;
         }
@@ -40,10 +39,11 @@ public abstract class CustomerMapper {
         customer.setName(customerPostDTO.getName());
         customer.setEmail(customerPostDTO.getEmail());
         customer.setPassword(customerPostDTO.getPassword());
-        customer.setAddress(customerPostDTO.getAddress());
+//        customer.setAddress(customerPostDTO.getAddress());
+        customer.setAddress("addr");
         customer.setPhone(customerPostDTO.getPhone());
-        customer.setAvatar(multipartFileMapper.fileToByteArray(customerPostDTO.getAvatar()));
-
+//        customer.setAvatar(multipartFileMapper.fileToByteArray(customerPostDTO.getAvatar()));
+        customer.setAvatar(null);
         customer.setJoinedDate(joinedDate);
         customer.setActive(false);
 
@@ -58,7 +58,38 @@ public abstract class CustomerMapper {
     @Mapping(target = "active", ignore = true)
     public abstract void updateEntityFromUpdateDTO(CustomerUpdateDTO customerUpdateDTO, @MappingTarget Customer customer);
 
-    public void std(){
+    public CustomerTrip customerTripPostDTOToEntity(CustomerTripPostDTO customerTripPostDTO , Customer customer ,PublicTrip trip , DriverTrip driverTrip){
 
+        if (customerTripPostDTO == null){
+            return null;
+        }
+        CustomerTrip customerTrip = new CustomerTrip();
+
+        customerTrip.setCustomer(customer);
+        customerTrip.setPublicTrip(trip);
+        customerTrip.setDriverTrip(driverTrip);
+
+        return customerTrip;
+    }
+
+    public CustomerTripDTO entityToCustomerTripDTO(CustomerTrip customerTrip){
+        CustomerTripDTO customerTripDTO = new CustomerTripDTO();
+
+        if (customerTrip == null){
+            return customerTripDTO;
+        }
+
+        customerTripDTO.setTripId(customerTrip.getPublicTrip().getId());
+
+        return customerTripDTO;
+    }
+
+    public List<CustomerTripDTO> entityToCustomerTripDTO(List<CustomerTrip> customerTrips){
+        List<CustomerTripDTO> customerTripDTOS = new ArrayList<>();
+        for (CustomerTrip customerTrip : customerTrips){
+            customerTripDTOS.add(entityToCustomerTripDTO(customerTrip));
+        }
+
+        return customerTripDTOS;
     }
 }

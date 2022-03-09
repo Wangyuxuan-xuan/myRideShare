@@ -4,9 +4,10 @@ import {LoginInService} from "./service/LoginInService";
 
 interface IPrivateRouteProps {
     isDriverLoggedIn : boolean
+    isCustomerLoggedIn : boolean
     user : string;
 }
-export default function PrivateRoute({isDriverLoggedIn,user} : IPrivateRouteProps){
+export default function PrivateRoute({isDriverLoggedIn,isCustomerLoggedIn,user} : IPrivateRouteProps){
 
     let auth ;
     if (user === "driver"){
@@ -15,7 +16,7 @@ export default function PrivateRoute({isDriverLoggedIn,user} : IPrivateRouteProp
 
         return auth ? <Outlet/> : <Navigate to="/sign-in"/>
     }else {
-        auth = isDriverLoggedIn;
+        auth = isCustomerLoggedIn;
 
         return auth ? <Outlet/> : <Navigate to="/sign-in"/>
     }

@@ -10,7 +10,8 @@ import Container from '@material-ui/core/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./SignInForm.css"
 import {LoginInService} from "../../service/LoginInService";
-import {Link as ReactLink} from "react-router-dom";
+import {Link as ReactLink,Navigate,useNavigate  } from "react-router-dom";
+import {from} from "rxjs";
 function Copyright(props: any) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -28,13 +29,17 @@ const theme = createTheme();
 
 interface SignInFormProps{
     loginService : LoginInService,
-    changeLogInState : any
+    changeDriverLogInState : any
+    changeCustomerLogInState : any,
+    setCurrentCustomer : any
+    setCurrentDriver : any
 }
 
-function SignInForm({loginService ,changeLogInState} : SignInFormProps){
+function SignInForm({loginService ,changeDriverLogInState ,changeCustomerLogInState, setCurrentCustomer , setCurrentDriver} : SignInFormProps){
 
     const {loginStore} = loginService;
     console.log("store : "+loginStore.isDriverLoggedIn);
+    const navigate = useNavigate();
 
     return (
         <ThemeProvider theme={theme}>
@@ -86,49 +91,53 @@ function SignInForm({loginService ,changeLogInState} : SignInFormProps){
                         {/*    control={<Checkbox value="remember" color="primary" />}*/}
                         {/*    label="Remember me"*/}
                         {/*/>*/}
-                        <Button
-                            type="submit"
-                            color="secondary"
-                            variant="outlined"
-                            onClick={async (e) => {
-                                e.preventDefault();
-                                console.log("email :" + loginStore.email + "password : " + loginStore.password);
-                                const res = await loginService.loginAsCustomer();
-                                if (res){
-                                    changeLogInState(true);
-                                }else {
-                                    changeLogInState(false);
-                                }
-                            }}
-                        >
-                            Customer Sign in
-                        </Button>
-                        <Button
-                            type="submit"
-                            color="primary"
-                            variant="outlined"
-                            onClick={async (e) => {
-                                e.preventDefault();
-                                console.log("email :" + loginStore.email + "password : " + loginStore.password);
-                                const res = await loginService.loginAsDriver();
-                                if (res){
-                                    changeLogInState(true);
-                                }else {
-                                    changeLogInState(false);
-                                }
-                            }}
-                        >
-                            Driver Sign in
-                        </Button>
-                        <ReactLink to="/trip/new">
-                            <Button
-                                type="submit"
-                                color="secondary"
-                                variant="outlined"
-                            >
-                                To new trip
-                            </Button>
-                        </ReactLink>
+                        <Grid container spacing={2}>
+                            <Grid item xs = {12} sm = {6}>
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    color="secondary"
+                                    variant="outlined"
+                                    onClick={async (e) => {
+                                        e.preventDefault();
+                                        console.log("email :" + loginStore.email + "password : " + loginStore.password);
+                                        const res = await loginService.loginAsCustomer();
+                                        if (res){
+                                            changeCustomerLogInState(true);
+                                            setCurrentCustomer(loginStore.currentCustomerDTO);
+                                            navigate("/");
+                                        }else {
+                                            changeCustomerLogInState(false);
+                                        }
+                                    }}
+                                >
+                                    Customer Sign in
+                                </Button>
+                            </Grid>
+                            <Grid item xs = {12} sm = {6}>
+                                    <Button
+                                        type="submit"
+                                        fullWidth
+                                        color="primary"
+                                        variant="outlined"
+                                        onClick={async (e) => {
+                                            e.preventDefault();
+                                            console.log("email :" + loginStore.email + "password : " + loginStore.password);
+                                            const res = await loginService.loginAsDriver();
+                                            if (res){
+                                                changeDriverLogInState(true);
+                                                setCurrentDriver(loginStore.currentDriverDTO);
+                                                navigate("/");
+                                            }else {
+                                                changeDriverLogInState(false);
+                                            }
+                                        }}
+                                    >
+                                        Driver Sign in
+                                    </Button>
+                            </Grid>
+                        </Grid>
+
 
                         <Grid container>
                             <Grid item xs>

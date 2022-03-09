@@ -1,7 +1,9 @@
 package com.example.myrideshare.service;
 
 import com.example.myrideshare.model.Customer;
+import com.example.myrideshare.model.CustomerTrip;
 import com.example.myrideshare.repository.CustomerRepository;
+import com.example.myrideshare.repository.CustomerTripRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.util.List;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final CustomerTripRepository customerTripRepository;
 
     public List<Customer> getAllCustomers(){
         return customerRepository.findAll();
@@ -51,5 +54,16 @@ public class CustomerService {
         }
 
         return customer;
+    }
+
+    public CustomerTrip createCustomerTrip(CustomerTrip customerTrip){
+        return customerTripRepository.save(customerTrip);
+    }
+
+    public List<CustomerTrip> getCustomerTripByCustomerId(Long customerId){
+
+        Customer customer = customerRepository.getById(customerId);
+
+        return customerTripRepository.getAllByCustomer(customer);
     }
 }

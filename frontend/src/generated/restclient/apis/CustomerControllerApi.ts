@@ -15,6 +15,8 @@ import { Observable } from 'rxjs';
 import { BaseAPI, HttpHeaders, throwIfNullOrUndefined, encodeURI, OperationOpts, RawAjaxResponse } from '../runtime';
 import {
     CustomerDTO,
+    CustomerTripDTO,
+    CustomerTripPostDTO,
     CustomerUpdateDTO,
 } from '../models';
 
@@ -22,12 +24,18 @@ export interface CreateCustomerRequest {
     name?: string;
     email?: string;
     password?: string;
-    address?: string;
     phone?: string;
-    avatar?: Blob;
+}
+
+export interface CreateCustomerTripRequest {
+    customerTripPostDTO: CustomerTripPostDTO;
 }
 
 export interface DeleteCustomerByIdRequest {
+    customerId: number;
+}
+
+export interface GetAllCustomerTripsByCustomerIdRequest {
     customerId: number;
 }
 
@@ -46,22 +54,39 @@ export class CustomerControllerApi extends BaseAPI {
 
     /**
      */
-    createCustomer({ name, email, password, address, phone, avatar }: CreateCustomerRequest): Observable<CustomerDTO>
-    createCustomer({ name, email, password, address, phone, avatar }: CreateCustomerRequest, opts?: OperationOpts): Observable<RawAjaxResponse<CustomerDTO>>
-    createCustomer({ name, email, password, address, phone, avatar }: CreateCustomerRequest, opts?: OperationOpts): Observable<CustomerDTO | RawAjaxResponse<CustomerDTO>> {
+    createCustomer({ name, email, password, phone }: CreateCustomerRequest): Observable<CustomerDTO>
+    createCustomer({ name, email, password, phone }: CreateCustomerRequest, opts?: OperationOpts): Observable<RawAjaxResponse<CustomerDTO>>
+    createCustomer({ name, email, password, phone }: CreateCustomerRequest, opts?: OperationOpts): Observable<CustomerDTO | RawAjaxResponse<CustomerDTO>> {
 
         const formData = new FormData();
         if (name !== undefined) { formData.append('name', name as any); }
         if (email !== undefined) { formData.append('email', email as any); }
         if (password !== undefined) { formData.append('password', password as any); }
-        if (address !== undefined) { formData.append('address', address as any); }
         if (phone !== undefined) { formData.append('phone', phone as any); }
-        if (avatar !== undefined) { formData.append('avatar', avatar as any); }
 
         return this.request<CustomerDTO>({
             url: '/api/customers/create',
             method: 'POST',
             body: formData,
+        }, opts?.responseOpts);
+    };
+
+    /**
+     */
+    createCustomerTrip({ customerTripPostDTO }: CreateCustomerTripRequest): Observable<void>
+    createCustomerTrip({ customerTripPostDTO }: CreateCustomerTripRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>>
+    createCustomerTrip({ customerTripPostDTO }: CreateCustomerTripRequest, opts?: OperationOpts): Observable<void | RawAjaxResponse<void>> {
+        throwIfNullOrUndefined(customerTripPostDTO, 'customerTripPostDTO', 'createCustomerTrip');
+
+        const headers: HttpHeaders = {
+            'Content-Type': 'application/json',
+        };
+
+        return this.request<void>({
+            url: '/api/customers/new/customerTrip',
+            method: 'POST',
+            headers,
+            body: customerTripPostDTO,
         }, opts?.responseOpts);
     };
 
@@ -75,6 +100,19 @@ export class CustomerControllerApi extends BaseAPI {
         return this.request<void>({
             url: '/api/customers/{customerId}'.replace('{customerId}', encodeURI(customerId)),
             method: 'DELETE',
+        }, opts?.responseOpts);
+    };
+
+    /**
+     */
+    getAllCustomerTripsByCustomerId({ customerId }: GetAllCustomerTripsByCustomerIdRequest): Observable<Array<CustomerTripDTO>>
+    getAllCustomerTripsByCustomerId({ customerId }: GetAllCustomerTripsByCustomerIdRequest, opts?: OperationOpts): Observable<RawAjaxResponse<Array<CustomerTripDTO>>>
+    getAllCustomerTripsByCustomerId({ customerId }: GetAllCustomerTripsByCustomerIdRequest, opts?: OperationOpts): Observable<Array<CustomerTripDTO> | RawAjaxResponse<Array<CustomerTripDTO>>> {
+        throwIfNullOrUndefined(customerId, 'customerId', 'getAllCustomerTripsByCustomerId');
+
+        return this.request<Array<CustomerTripDTO>>({
+            url: '/api/customers/customerTrip/{customerId}'.replace('{customerId}', encodeURI(customerId)),
+            method: 'GET',
         }, opts?.responseOpts);
     };
 
