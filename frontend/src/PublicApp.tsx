@@ -44,7 +44,7 @@ function PublicApp(props : IPublicProps) {
 
     const {data : trips, isPending , error} = useFetchAllTrips("http://localhost:8080/api/trips/trips/all");
     const tripDTOs : TripDTO[] | undefined = trips;
-    console.log(tripDTOs);
+    // console.log(tripDTOs);
   return (
 
           <Router>

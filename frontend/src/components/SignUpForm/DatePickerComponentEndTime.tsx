@@ -11,14 +11,15 @@ import {
 import {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 import {PublicAppStore} from "../../store/PublicAppStore";
 import {TripResultService} from "../../service/TripResultService";
+import {TripPostService} from "../../service/TripPostService";
 
 interface DatePickerComponentProps {
-    tripResultService : TripResultService;
+    tripPostService : TripPostService
 }
-export const DatePickerComponent = ({tripResultService} : DatePickerComponentProps) => {
+export const DatePickerComponentEndTime = ({tripPostService} : DatePickerComponentProps) => {
     // const [dateValue, setDateValue] = useState(null);
 
-    const {searchBarStore} = tripResultService;
+    const {newTripFormStore} = tripPostService;
 
     const [selectedDate,setSelectedDate] = useState(Date.now);
     const [selectedTime,setSelectedTime] = useState(Date.now);
@@ -26,15 +27,13 @@ export const DatePickerComponent = ({tripResultService} : DatePickerComponentPro
     const handleDateChange = (date : any) => {
         setSelectedDate(date)
 
-        searchBarStore.selectedDate = date;
-        console.log(searchBarStore.selectedDate)
+        newTripFormStore.endTimeDate = date;
     }
 
     const handleTimeChange = (time : any) => {
         setSelectedTime(time)
 
-        searchBarStore.selectedTime = time;
-        console.log(searchBarStore.selectedTime)
+        newTripFormStore.endTimeTime = time;
     }
 
     return(

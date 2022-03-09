@@ -19,7 +19,7 @@ function SearchBar({tripResultService} : SearchBarProps) {
 
 
     const handleSearchClick = () => {
-        console.log("clicked ");
+
         let departure =  (document.getElementById("text-departure") as HTMLInputElement).value;
         let destination =  (document.getElementById("text-destination") as HTMLInputElement).value;
         // let startTime =  (document.getElementById("text-departure") as HTMLInputElement).value;
@@ -67,7 +67,7 @@ function SearchBar({tripResultService} : SearchBarProps) {
                                        searchBarStore.updateDestination(e);
                                    }}
                             />
-                            <DatePickerComponent/>
+                            <DatePickerComponent tripResultService={tripResultService}/>
                             <Link to= "/result">
                                 <CustomButton type = "submit" buttonStyle = "btn--primary" className = "search-btn" onclick = {handleSearchClick}>
                                     Search

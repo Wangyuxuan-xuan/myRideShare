@@ -5,9 +5,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles';
 import {ChangeEvent, useState} from "react";
-import {DatePickerComponent} from "./DatePickerComponent";
 import {TripPostService} from "../../service/TripPostService";
 import {DriverDTO} from "../../generated/restclient";
+import {DatePickerComponentEndTime} from "../SignUpForm/DatePickerComponentEndTime";
+import {DatePickerComponentStartTime} from "../SignUpForm/DatePickerComponentStartTime";
 
 const useStyles = makeStyles({
     field : {
@@ -134,10 +135,10 @@ function NewTripForm({tripPostService , currentDriverDTO} : NewTripFormProps) {
 
                     </ul>
                     <ul>
-                        <DatePickerComponent/>
+                        <DatePickerComponentStartTime tripPostService={tripPostService}/>
                     </ul>
                     <ul>
-                        <DatePickerComponent/>
+                        <DatePickerComponentEndTime tripPostService={tripPostService}/>
                     </ul>
 
                 </div>

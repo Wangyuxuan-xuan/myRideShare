@@ -32,7 +32,7 @@ const useFetchAllTrips = (url : string) => {
                 return res.json();  //json obj to js obj
             })
             .then((data) => {
-                console.log(data);
+                // console.log(data);
                 setData(data);
                 setIsPending(false);
             } )

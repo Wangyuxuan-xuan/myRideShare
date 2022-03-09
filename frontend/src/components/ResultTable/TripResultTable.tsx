@@ -125,7 +125,7 @@ function TripResultTable({tripResultService} : TripTableProps) {
                 console.log("no data");
             }
         })
-        console.log("use effect ran");
+        // console.log("use effect ran");
     },[trips,tripTable])
 
 
