@@ -19,6 +19,9 @@ export class UserProfileStore {
     driverTrips : DriverTripDTO[] | null = null;
 
     @observable
+    customers : Map<number,CustomerDTO[]> = new Map<number,CustomerDTO[]>();
+
+    @observable
     isLoading : boolean =  false;
 
     constructor() {
