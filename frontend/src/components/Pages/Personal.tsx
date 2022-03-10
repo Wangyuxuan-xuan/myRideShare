@@ -30,7 +30,7 @@ function Personal({userProfileService,currentCustomerDTO,currentDriverDTO,isCust
           return (
               <div>
                   <DriverProfile userProfileService={userProfileService} currentDriverDTO={currentDriverDTO}/>
-                  <DriverTrips userProfileService={userProfileService} currentDriverDTO={currentDriverDTO} tripDTOs={tripDTOs}/>
+                  <DriverTrips userProfileService={userProfileService} currentDriverDTO={currentDriverDTO}/>
               </div>
 
           )
