@@ -39,7 +39,6 @@ services:
     working_dir: /backend
     command: mvn clean spring-boot:run
     depends_on:
-#      - pgadmin
       - postgres
     environment:
       POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
