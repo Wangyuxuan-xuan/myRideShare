@@ -173,7 +173,6 @@ export default function SignUpForm({signUpService} : SignUpFormProps) {
                                     error={rePasswordError}
                                 />
                             </Grid>
-
                             <Grid item xs={12} sm={6}>
                                 <Button
                                     type="submit"
@@ -206,9 +205,7 @@ export default function SignUpForm({signUpService} : SignUpFormProps) {
                                     Driver Sign up
                                 </Button>
                             </Grid>
-
                         </Grid>
-
 
                         <Grid container justifyContent="flex-end">
                             <Grid item>
