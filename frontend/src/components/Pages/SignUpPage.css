@@ -1,0 +1,11 @@
+.sign-up-outer{
+    display: flex;
+    height: 65vh;
+    align-items: center;
+    justify-content: center;
+    /*background: #dfe3e3;*/
+    /*background-image: url("../../../public/images/img-9.jpg");*/
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
