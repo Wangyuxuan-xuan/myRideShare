@@ -42,36 +42,47 @@ export const DatePickerComponent = ({tripResultService} : DatePickerComponentPro
         <div>
             <MuiPickersUtilsProvider utils={DateFnsUtils} >
                 <Grid container justifyContent="space-around">
-                    <KeyboardDatePicker
-                        // disableToolbar
-                        variant = "inline"
-                        format = "MM/dd/yyy"
-                        margin = "normal"
-                        // margin-right = "20px"
-                        id = "date-picker"
-                        label = "Date Picker"
-                        value = {selectedDate}
-                        onChange={handleDateChange}
-                        KeyboardButtonProps = {
-                            {
-                                "aria-label" : "change date"
+                    <Grid item xs={12} sm = {6}>
+                        <KeyboardDatePicker
+                            style = {{
+                                marginRight : 14
+                            }}
+                            // disableToolbar
+                            variant = "inline"
+                            format = "MM/dd/yyy"
+                            margin = "normal"
+                            // margin-right = "20px"
+                            id = "date-picker"
+                            label = "Date Picker"
+                            value = {selectedDate}
+                            onChange={handleDateChange}
+                            KeyboardButtonProps = {
+                                {
+                                    "aria-label" : "change date"
+                                }
                             }
-                        }
-                    />
-
-                    <KeyboardTimePicker
-                        margin = "normal"
-                        id = "time-picker"
-                        ampm={false}
-                        label = "Time Picker"
-                        value = {selectedTime}
-                        onChange={handleTimeChange}
-                        KeyboardButtonProps = {
-                            {
-                                "aria-label" : "change date"
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm = {6}>
+                        <KeyboardTimePicker
+                            style = {{
+                                marginLeft : 14
+                            }}
+                            margin = "normal"
+                            id = "time-picker"
+                            ampm={false}
+                            label = "Time Picker"
+                            value = {selectedTime}
+                            onChange={handleTimeChange}
+                            KeyboardButtonProps = {
+                                {
+                                    "aria-label" : "change date"
+                                }
                             }
-                        }
-                    />
+                            fullWidth
+                        />
+                    </Grid>
                 </Grid>
             </MuiPickersUtilsProvider>
         </div>

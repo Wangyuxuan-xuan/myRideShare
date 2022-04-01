@@ -8,7 +8,15 @@ import {SearchBarStore} from "../../store/SearchBarStore";
 import {Observer} from "mobx-react-lite";
 import {PublicAppService} from "../../service/PublicAppService";
 import {TripResultService} from "../../service/TripResultService";
-
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
 interface SearchBarProps {
     tripResultService : TripResultService;
 }
@@ -16,7 +24,7 @@ interface SearchBarProps {
 function SearchBar({tripResultService} : SearchBarProps) {
 
     const {searchBarStore} = tripResultService;
-
+    const theme = createTheme();
 
     const handleSearchClick = () => {
 
@@ -49,36 +57,84 @@ function SearchBar({tripResultService} : SearchBarProps) {
     return(
 
         <Observer>{() =>
-            <div className="main">
-                <h1>search bar</h1>
-                <div className= "search-bar">
-                    <div className = "input-areas">
-                        <form className = "input-form">
-                            <input type="text" name = "text" id = "text-departure"
-                                   placeholder="Departure place" className = "search-input"
-                                   onChange={(e) => {
-                                       searchBarStore.updateDeparture(e);
-                                   }}
+            <div className="search-bar-outer">
+                <ThemeProvider theme={theme}>
+                    <Container component="main" maxWidth="xl" className="search-bar-container">
+                        <CssBaseline />
+                        <Box
+                            sx={{
+                                marginTop: 8,
+                                padding : 20,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Typography component="h1" variant="h4">
+                                Search for Trip Offers
+                            </Typography>
+                            <Box component="form" sx={{ mt: 3 }} >
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12} sm = {6}>
 
-                            />
-                            <input type="text" name = "text" id = "text-destination"
-                                   placeholder="Destination" className = "search-input"
-                                   onChange={(e) => {
-                                       searchBarStore.updateDestination(e);
-                                   }}
-                            />
-                            <DatePickerComponent tripResultService={tripResultService}/>
-                            <Link to= "/result">
-                                <CustomButton type = "submit" buttonStyle = "btn--primary" className = "search-btn" onclick = {handleSearchClick}>
-                                    Search
-                                </CustomButton>
-                            </Link>
 
-                        </form>
-                    </div>
-                </div>
+                                        <TextField
+                                            onChange={(e) => {
+                                                searchBarStore.updateDeparture(e);
+                                            }}
+                                            className="departure-textField"
+                                            placeholder="Departure place"
+                                            variant="outlined"
+                                            color="primary"
+                                            name=""
+                                            required
+                                            fullWidth
+                                            label=""
+                                            autoFocus
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm = {6}>
+                                        <TextField
+                                            onChange={(e) => {
+                                                searchBarStore.updateDestination(e);
+                                            }}
+                                            type="text"
+                                            placeholder="Destination"
+                                            className = "destination-textField"
+                                            variant="outlined"
+                                            color="primary"
+                                            name=""
+                                            required
+                                            fullWidth
+                                            label=""
+                                            autoFocus
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} >
+                                        <DatePickerComponent tripResultService={tripResultService}/>
+                                    </Grid>
+                                    <Grid item xs={12} alignItems= "center">
+                                        <Link to= "/result">
+                                            <Button
+                                                type="submit"
+                                                color="primary"
+                                                variant="contained"
+                                                onClick={handleSearchClick}
+                                                className="search-btn"
+                                                fullWidth
+                                            >
+                                                Search
+                                            </Button>
+                                        </Link>
+                                    </Grid>
 
+                                </Grid>
+                            </Box>
+                        </Box>
+                    </Container>
+                </ThemeProvider>
             </div>
+
         }
 
         </Observer>
