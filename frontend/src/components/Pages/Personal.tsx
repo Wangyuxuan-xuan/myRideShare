@@ -39,7 +39,7 @@ function Personal({userProfileService,currentCustomerDTO,currentDriverDTO,isCust
 
     return(
         <div>
-            <h1 className="personal">PERSONAL</h1>
+            {/*<h1 className="personal">PERSONAL</h1>*/}
             {whoLoggedIn(currentCustomerDTO,currentDriverDTO)}
         </div>
     )

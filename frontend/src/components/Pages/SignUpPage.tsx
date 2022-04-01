@@ -9,7 +9,7 @@ function SignUpPage({signUpService} : SignUpPageProps) {
 
     return(
         <div>
-            <h1 className="sign-up">SIGNUP</h1>
+            {/*<h1 className="sign-up">SIGNUP</h1>*/}
             <SignUpForm signUpService={signUpService}/>
         </div>
 

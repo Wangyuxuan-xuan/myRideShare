@@ -14,7 +14,7 @@ function SignInPage({loginService,changeDriverLogInState ,changeCustomerLogInSta
     return (
 
         <div>
-            <h1 className="sign-in">SIGNUP</h1>
+            {/*<h1 className="sign-in">SIGNUP</h1>*/}
                 <SignInForm loginService={loginService} changeDriverLogInState={changeDriverLogInState} changeCustomerLogInState={changeCustomerLogInState} setCurrentCustomer={setCurrentCustomer} setCurrentDriver={setCurrentDriver}/>
         </div>
 

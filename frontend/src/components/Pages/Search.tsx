@@ -9,7 +9,7 @@ function Search({services} : SearchProps) {
 
     return(
         <>
-            <h1 className="search">SEARCH</h1>
+            {/*<h1 className="search">SEARCH</h1>*/}
             <SearchBar tripResultService={services}/>
         </>
 
