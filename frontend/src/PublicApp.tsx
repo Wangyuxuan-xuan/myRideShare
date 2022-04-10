@@ -62,13 +62,15 @@ function PublicApp(props : IPublicProps) {
                           <Routes>
                               <Route path = "/" element={<Home/>}/>
                               <Route path = "/search" element={<Search services={props.services.tripResultService}/>}/>
-                              <Route path = "/personal" element={<Personal userProfileService={props.services.userProfileService}
-                                                                           currentDriverDTO={currentDriverDTO}
-                                                                           currentCustomerDTO={currentCustomerDTO}
-                                                                           isCustomerLoggedIn={isCustomerLoggedIn}
-                                                                           isDriverLoggedIn={isDriverLoggedIn}
-                                                                           tripDTOs={tripDTOs}
-                              />}/>
+                              <Route path = "/" element={<PrivateRoute isDriverLoggedIn={isDriverLoggedIn} isCustomerLoggedIn={isCustomerLoggedIn} user="driver"/>} >
+                                  <Route path = "/personal" element={<Personal userProfileService={props.services.userProfileService}
+                                                                               currentDriverDTO={currentDriverDTO}
+                                                                               currentCustomerDTO={currentCustomerDTO}
+                                                                               isCustomerLoggedIn={isCustomerLoggedIn}
+                                                                               isDriverLoggedIn={isDriverLoggedIn}
+                                                                               tripDTOs={tripDTOs}
+                                  />}/>
+                              </Route>
                               <Route path = "/sign-up" element={<SignUpPage signUpService={props.services.signUpService}/>}/>
                               <Route path = "/sign-in" element={<SignInPage loginService={props.services.loginService}
                                                                             changeDriverLogInState={(isLoggedIn : boolean) => {

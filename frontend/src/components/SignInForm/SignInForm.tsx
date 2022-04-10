@@ -43,7 +43,7 @@ function SignInForm({loginService ,changeDriverLogInState ,changeCustomerLogInSt
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs" className="sign-in-form">
+            <Container component="main" maxWidth="xs" className="sign-in-form-container">
                 <CssBaseline />
                 <Box
                     sx={{

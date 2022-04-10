@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {Link as ReactLink} from "react-router-dom";
 import {SignUpService} from "../../service/SignUpService";
 import {useState} from "react";
+import "./SignUpForm.css";
 
 interface SignUpFormProps {
     signUpService : SignUpService
@@ -75,7 +76,7 @@ export default function SignUpForm({signUpService} : SignUpFormProps) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="xs">
+            <Container component="main" maxWidth="xs" className="sign-up-form-container">
                 <CssBaseline />
                 <Box
                     sx={{
@@ -173,7 +174,6 @@ export default function SignUpForm({signUpService} : SignUpFormProps) {
                                     error={rePasswordError}
                                 />
                             </Grid>
-
                             <Grid item xs={12} sm={6}>
                                 <Button
                                     type="submit"
@@ -206,9 +206,7 @@ export default function SignUpForm({signUpService} : SignUpFormProps) {
                                     Driver Sign up
                                 </Button>
                             </Grid>
-
                         </Grid>
-
 
                         <Grid container justifyContent="flex-end">
                             <Grid item>

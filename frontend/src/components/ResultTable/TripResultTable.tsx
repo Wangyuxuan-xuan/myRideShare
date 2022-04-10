@@ -107,16 +107,21 @@ function TripResultTable({tripResultService} : TripTableProps) {
                     // console.log(trips.length);
 
                     for (let i = 0; i < trips.length; i++) {
-                        tripTable[i] = {
-                            id : trips[i].tripId,
-                            driverName: trips[i].driverName,
-                            startLocation: trips[i].startLocation,
-                            endLocation: trips[i].endLocation,
-                            startTime: trips[i].startTime,
-                            endTime: trips[i].endTime,
-                            driverRate: trips[i].driverCurrentRate,
-                            price: trips[i].price,
+                        const startTime = trips[i].startTime;
+                        const endTime = trips[i].endTime
+                        if (startTime !== undefined && endTime !== undefined){
+                            tripTable[i] = {
+                                id : trips[i].tripId,
+                                driverName: trips[i].driverName,
+                                startLocation: trips[i].startLocation,
+                                endLocation: trips[i].endLocation,
+                                startTime: startTime.replace("T"," "),
+                                endTime: endTime.replace("T"," "),
+                                driverRate: trips[i].driverCurrentRate,
+                                price: trips[i].price,
+                            }
                         }
+
                     }
                     setLoading(true);
                     // console.log(tripTable);
@@ -178,8 +183,7 @@ function TripResultTable({tripResultService} : TripTableProps) {
 
                             </TableCell>
                             <TableCell>
-                                <Typography color = "primary" variant = "subtitle2">{row.startTime}</Typography>
-                                <Typography color = "primary" variant = "subtitle2">{row.endTime}</Typography>
+                                <Typography color = "primary" variant = "subtitle2">{`${row.startTime} - ${row.endTime}`}</Typography>
                             </TableCell>
                             <TableCell >
                                 {row.driverRate}
@@ -188,10 +192,7 @@ function TripResultTable({tripResultService} : TripTableProps) {
                                 <Typography
                                     className = {styleClasses.status}
                                     style={{
-                                        backgroundColor :
-                                            ((row.price === 'Active' && 'green') ||
-                                                (row.price === 'Pending' && 'blue') ||
-                                                (row.price === 'Blocked' && 'orange')) || "red"
+                                        backgroundColor : "coral"
                                     }}
                                 >
                                     {row.price}

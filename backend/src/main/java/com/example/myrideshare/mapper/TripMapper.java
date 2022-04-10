@@ -30,18 +30,45 @@ public abstract class TripMapper {
     @Autowired
     CustomerRepository customerRepository;
 
-    @Mapping(target = "tripId", source = "publicTrip.id")
-    @Mapping(target = "driverPhone", source = "driver.phone")
-    @Mapping(target = "driverName", source = "driver.name")
-    @Mapping(target = "driverJoinedDate", source = "driver.joinedDate")
-    @Mapping(target = "driverCurrentRate", source = "driver.rate")
-    @Mapping(target = "carNumOfPassenger", source = "car.numOfPassenger")
-    @Mapping(target = "carModel", source = "car.model")
-    @Mapping(target = "carLicensePlate", source = "car.licensePlate")
-    @Mapping(target = "carCarType", source = "car.carType")
-    @Mapping(target = "driverId", source = "driver.id")
-    @Mapping(target = "carId", source = "car.id")
-    public abstract TripDTO entityToGetDTO(PublicTrip publicTrip, Driver driver, Car car);
+    public TripDTO entityToGetDTO(PublicTrip publicTrip, Driver driver, Car car) {
+        if ( publicTrip == null && driver == null && car == null ) {
+            return null;
+        }
+
+        TripDTO tripDTO = new TripDTO();
+
+        if ( publicTrip != null ) {
+            tripDTO.setTripId( publicTrip.getId() );
+            tripDTO.setStartLocation( publicTrip.getStartLocation().substring(0,1).toUpperCase() + publicTrip.getStartLocation().substring(1) );
+            tripDTO.setEndLocation( publicTrip.getEndLocation().substring(0,1).toUpperCase() + publicTrip.getEndLocation().substring(1) );
+            tripDTO.setStartTime( publicTrip.getStartTime() );
+            tripDTO.setEndTime( publicTrip.getEndTime() );
+            tripDTO.setCustomerRate( publicTrip.getCustomerRate() );
+            tripDTO.setDriverRate( publicTrip.getDriverRate() );
+            tripDTO.setPaymentStatus( publicTrip.getPaymentStatus() );
+            tripDTO.setTripStatus( publicTrip.getTripStatus() );
+            tripDTO.setPrice( publicTrip.getPrice() );
+            tripDTO.setMaxNumOfPassengers( publicTrip.getMaxNumOfPassengers() );
+            tripDTO.setDescription( publicTrip.getDescription() );
+        }
+        if ( driver != null ) {
+            tripDTO.setDriverPhone( driver.getPhone() );
+            tripDTO.setDriverName( driver.getName() );
+            tripDTO.setDriverJoinedDate( driver.getJoinedDate() );
+            tripDTO.setDriverCurrentRate( driver.getRate() );
+            tripDTO.setDriverId( driver.getId() );
+        }
+        if ( car != null ) {
+            tripDTO.setCarNumOfPassenger( car.getNumOfPassenger() );
+            tripDTO.setCarModel( car.getModel() );
+            tripDTO.setCarLicensePlate( car.getLicensePlate() );
+            tripDTO.setCarCarType( car.getCarType() );
+            tripDTO.setCarId( car.getId() );
+        }
+
+        return tripDTO;
+
+    }
 
     public List<TripDTO> entityToGetDTO(List<PublicTrip> publicTrips){
 

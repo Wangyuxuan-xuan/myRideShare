@@ -30,6 +30,7 @@ import {Configuration, CustomerDTO, DriverDTO, TripControllerApi, TripDTO} from 
 import {BACKEND_API_URL} from "../../utils/config";
 import {useNavigate} from "react-router-dom";
 import {UserProfileService} from "../../service/UserProfileService";
+import useFetchAllTrips from "../../Hooks/useFetchAllTrips";
 
 const useStyles = makeStyles((theme) => ({
     table : {
@@ -81,14 +82,15 @@ interface tripTable {
 interface DriverTripProps {
     userProfileService : UserProfileService,
     currentDriverDTO : DriverDTO |undefined,
-    tripDTOs : TripDTO[] | undefined
 }
 
 interface MyHashMap {
 
 }
 
-function DriverTrips({tripDTOs : trips,userProfileService,currentDriverDTO} : DriverTripProps) {
+function DriverTrips({userProfileService,currentDriverDTO} : DriverTripProps) {
+
+    let {data : trips, isPending , error} = useFetchAllTrips("http://localhost:8080/api/trips/trips/all");
 
     const {userProfileStore} = userProfileService;
     let tripIds : number[] = [];
